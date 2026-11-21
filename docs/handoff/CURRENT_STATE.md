@@ -174,8 +174,8 @@ Do not silently consider an ADR accepted because related implementation has star
 
 ## 7. Carryover Items
 
-- [ ] Confirm AG-002.3 Docker commit and remote branch.
-- [ ] Confirm AG-002.4 integration-test commit and remote branch.
+- [x] Confirm AG-002.3 Docker commit and remote branch.
+- [x] Confirm AG-002.4 integration-test commit and remote branch.
 - [ ] Review Git status, stacked-branch ancestry and merge state.
 - [ ] Record actual AG-002.4 unit and smoke-test outputs.
 - [ ] Record final backend pytest and frontend regression outputs.
