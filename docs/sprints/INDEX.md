@@ -17,8 +17,8 @@ The schedule is a planning target, not a guarantee that all planned scope will b
 
 | Sprint | Goal | Status | Report |
 |---|---|---|---|
-| S00 | PRD, architecture, engineering rules, Git foundation | IN_PROGRESS | [S00.md](S00.md) |
-| S01 | FastAPI, React and Docker project foundation | PLANNED | Not created |
+| S00 | PRD, architecture, engineering rules, Git foundation | PENDING_CLOSEOUT | [S00.md](S00.md) |
+| S01 | FastAPI, React and Docker project foundation | IN_PROGRESS | [S01.md](S01.md) |
 | S02 | PostgreSQL, authentication and migrations | PLANNED | Not created |
 | S03 | Research task API and dashboard | PLANNED | Not created |
 | S04 | Single-agent LangGraph baseline | PLANNED | Not created |
