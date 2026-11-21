@@ -1,0 +1,52 @@
+# Git metadata
+.git
+**/.git
+.gitignore
+
+# Local environment and credentials
+.env
+.env.*
+**/.env
+**/.env.*
+.aws
+**/.aws
+
+# Python virtual environments
+.venv
+venv
+env
+**/.venv
+**/venv
+**/env
+
+# Python caches and packaging output
+__pycache__
+**/__pycache__
+*.py[cod]
+**/*.py[cod]
+*.egg-info
+**/*.egg-info
+.pytest_cache
+**/.pytest_cache
+.mypy_cache
+**/.mypy_cache
+.ruff_cache
+**/.ruff_cache
+.coverage
+.coverage.*
+coverage
+htmlcov
+build
+dist
+
+# Unneeded runtime-image content
+tests
+node_modules
+**/node_modules
+
+# Editor and operating-system files
+.vscode
+.idea
+.DS_Store
+**/.DS_Store
+*.log

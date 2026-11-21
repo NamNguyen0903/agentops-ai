@@ -1,0 +1,58 @@
+
+services:
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+
+    ports:
+      - "127.0.0.1:8000:8000"
+
+    init: true
+
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import json, sys, urllib.request;
+          response = urllib.request.urlopen(
+          "http://127.0.0.1:8000/api/v1/health", timeout=2);
+          payload = json.load(response);
+          sys.exit(0 if response.status == 200 and payload ==
+          {"status": "ok", "service": "agentops-api"} else 1)
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+
+    environment:
+      API_PROXY_TARGET: "http://api:8000"
+      VITE_API_BASE_URL: "/api/v1"
+
+    ports:
+      - "127.0.0.1:5173:5173"
+
+    init: true
+
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - >-
+          fetch("http://127.0.0.1:5173/")
+          .then(response => {
+            process.exit(response.ok ? 0 : 1);
+          })
+          .catch(() => process.exit(1));
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
