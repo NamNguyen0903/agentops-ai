@@ -1,24 +1,25 @@
 # AgentOps AI — Sprint Index
 
-**Version:** 1.1
+**Version:** 1.2
 **Updated:** 2026-11-21
-**Current sprint:** S00
-**Sprint status:** IN_PROGRESS
-**Current ticket:** AG-001.5
+**Latest sprint:** S01 — CLOSED
+**Verification status:** PARTIALLY_VERIFIED
+**Current implementation ticket:** None
+**Next planned sprint:** S02 — Database & Authentication
 **Product baseline:** PRD v0.2
 
 **Current handoff:** [CURRENT_STATE.md](../handoff/CURRENT_STATE.md)
 
+> Sprint closure means the planned scope received user signoff. It does not automatically establish full technical verification, Git merge completion or production readiness.
+
 ## 1. Sprint Roadmap
 
-Each sprint represents one planned working day.
-
-The schedule is a planning target, not a guarantee that all planned scope will be completed within one calendar day.
+Each sprint represents one planned working day. The schedule is a planning target, not a guarantee of completion within a calendar day.
 
 | Sprint | Goal | Status | Report |
 |---|---|---|---|
 | S00 | PRD, architecture, engineering rules, Git foundation | PENDING_CLOSEOUT | [S00.md](S00.md) |
-| S01 | FastAPI, React and Docker project foundation | IN_PROGRESS | [S01.md](S01.md) |
+| S01 | FastAPI, React, TypeScript, Docker Compose and integration tests | CLOSED — PARTIALLY_VERIFIED | [S01.md](S01.md) |
 | S02 | PostgreSQL, authentication and migrations | PLANNED | Not created |
 | S03 | Research task API and dashboard | PLANNED | Not created |
 | S04 | Single-agent LangGraph baseline | PLANNED | Not created |
@@ -28,100 +29,148 @@ The schedule is a planning target, not a guarantee that all planned scope will b
 | S08 | AI evaluation, security and integration testing | PLANNED | Not created |
 | S09 | CI/CD and AWS staging preparation | PLANNED | Not created |
 
-Future reports must only be linked when the corresponding files exist.
+Future sprint reports must only be linked when their files exist. The roadmap remains subject to acceptance evidence and approved scope changes.
 
-The milestone plan remains subject to acceptance evidence and explicitly approved scope changes.
+## 2. Sprint S01 Closeout Summary
 
-AWS staging preparation in S09 does not imply successful deployment.
+**Closeout date:** 2026-11-21
+**Scope status:** CLOSED — User signoff received
+**Technical verification:** PARTIALLY_VERIFIED
+**Git merge into `main`:** PENDING_EVIDENCE
 
-## 2. Standard Status Definitions
+| Ticket | Description | Commit |
+|---|---|---|
+| AG-002.1 | FastAPI Backend Foundation | `48aca5f` |
+| AG-002.2 | React + TypeScript Frontend | `dee1f9b` |
+| AG-002.3 | Docker Compose Foundation | `08b027a` |
+| AG-002.4 | Integration Tests & Sprint Handoff | `ab8cd01` |
+
+### Confirmed Git Evidence
+
+- AG-002.4 was committed as `ab8cd01`.
+- Branch `feat/ag-002-4-integration-tests` was successfully pushed to `origin`.
+- Local HEAD and the remote-tracking branch were observed at the same commit.
+- The supplied `git status -sb` showed no outstanding local file changes at that checkpoint.
+- The known commit sequence includes all four S01 tickets.
+
+### Confirmed Runtime Evidence
+
+- FastAPI returned HTTP 200 with the expected health JSON.
+- React/Vite frontend returned HTTP 200.
+- Vite API proxy returned HTTP 200 with the expected backend JSON.
+- Docker Compose reported both API and Web containers healthy.
+
+### Outstanding Verification
+
+- Final backend pytest output.
+- Final frontend regression-test and build outputs.
+- Exact AG-002.4 unittest and integration-test outputs.
+- Docker restart, recovery, shutdown and rebuild evidence.
+- Browser rendering and responsive UI review.
+- Pull request review and merge into `main`.
+
+These items remain open. Do not interpret Sprint scope closure as full technical verification.
+
+## 3. Standard Status Definitions
 
 | Status | Meaning |
 |---|---|
 | `PLANNED` | Work is defined but not started |
 | `IN_PROGRESS` | Work has started; acceptance remains incomplete |
-| `REPORTED_COMPLETE` | User reports completion; supporting verification is pending |
-| `REVIEWED` | Specified content or evidence received documented review |
-| `VERIFIED` | Acceptance criteria supported by inspection or execution evidence |
+| `REPORTED_COMPLETE` | User reports completion; exact verification evidence may still be pending |
+| `REVIEWED` | Specified source or documentation has been reviewed |
+| `VERIFIED` | A specific criterion is supported by observed execution or inspection evidence |
+| `PARTIALLY_VERIFIED` | Some criteria are verified while others remain unresolved |
 | `BLOCKED` | A named dependency prevents the required next action |
+| `PENDING_CLOSEOUT` | Implementation or documentation signoff is not fully recorded |
+| `CLOSED` | Sprint scope received explicit user signoff |
 
-For tickets, review status and verification status may be recorded separately.
+Ticket workflow status and verification evidence must be recorded separately where appropriate.
 
 A sprint is not closed merely because its planned day has ended.
 
-Sprint closeout additionally requires recorded acceptance and user signoff.
-
-## 3. Sprint Lifecycle
+## 4. Sprint Lifecycle
 
 ### Planning
 
-- Confirm objective and scope.
-- Identify dependencies.
+- Confirm the objective, scope and dependencies.
+- Review relevant PRD and ADR sections.
 - Select the first ticket.
 - Define acceptance criteria.
 
 ### Execution
 
 - Work on one ticket at a time.
-- Keep changes reviewable.
-- Record failures and important decisions.
+- Keep Git changes reviewable.
+- Run applicable checks.
+- Record important decisions and failures.
 - Carry over incomplete work explicitly.
 
 ### Review
 
-- Compare outputs against acceptance criteria.
-- Inspect supplied test and Git evidence.
-- Separate generated content from verified local artifacts.
+- Compare actual outputs against acceptance criteria.
+- Inspect test, Git and runtime evidence.
+- Distinguish generated code from verified implementation.
 - Record unresolved issues.
 
 ### Closeout
 
 - Complete the sprint report.
-- Record actual Git evidence.
+- Record actual commits and verification evidence.
 - Record deferred scope.
 - Update the current handoff.
-- Update this index.
-- Identify one next ticket.
-- Obtain user approval.
+- Update this Sprint Index.
+- Obtain user signoff.
+- Identify one next action.
 
-## 4. Handoff and Git Consistency
+## 5. Handoff and Git Consistency
 
 At the beginning of a new session:
 
 1. Read `AGENTS.md`.
 2. Read [CURRENT_STATE.md](../handoff/CURRENT_STATE.md).
-3. Read this index.
-4. Read the current sprint report.
+3. Read this Sprint Index.
+4. Read the current or most recently completed Sprint report.
 5. Read relevant PRD and ADR sections.
-6. Reconcile recorded Git state with current user-supplied evidence.
+6. Reconcile the recorded branch, HEAD, working tree and remote against fresh Git evidence.
 
-If the handoff appears stale:
+Do not assume that committed code has been merged into `main`.
 
-- Inspect the difference.
-- Do not overwrite uncommitted work.
-- Do not invent missing information.
-- Update the checkpoint from evidence before continuing.
+Do not overwrite uncommitted work or invent missing verification evidence.
 
-## 5. Incomplete Sprint Work
+## 6. Documentation Update Rules
 
-If acceptance criteria are not met:
+After each ticket:
 
-- Keep the ticket open or mark it BLOCKED.
-- Record the missing evidence.
-- Identify the next required action.
-- Carry scope to another sprint only with an explicit decision.
-- Do not treat a generated document or unexecuted command as completed implementation.
+- Update `docs/sprints/SXX.md` with implementation status, actual tests, issues and commit evidence.
+- Update `docs/handoff/CURRENT_STATE.md` with the latest verified checkpoint and immediate next action.
+- Update this Sprint Index when a sprint begins, changes status or closes.
+- Update `README.md` when developer setup or user-facing usage instructions materially change.
+- Update ADRs only through an explicit architecture decision or approval process.
 
-## 6. Current Resume Point
+The user performs all local file edits, tests, Git actions and deployments.
 
-**Current sprint:** S00 — IN_PROGRESS.
+## 7. Current Resume Point
 
-**Current ticket:** AG-001.5 — Engineering Rules and Sprint Handoff.
+**Latest completed scope:** Sprint S01 — Project Foundation.
 
-**Immediate action:** Save and review the revised four documentation files.
+**Current implementation ticket:** None.
 
-**Next ticket:** AG-001.6 — Initial Git Commit, GitHub Push & Sprint S00 Closeout.
+**Current repository milestone:** AG-002.4 commit `ab8cd01` was pushed on branch `feat/ag-002-4-integration-tests`.
 
-**First AG-001.6 action:** Inspect the real Git branch, status, HEAD and remote configuration before staging or committing.
+**Immediate action:** Review and merge the Sprint S01 pull request into `main`, subject to required review and checks.
 
-Do not begin S01 until S00 has been closed with recorded acceptance and user signoff.
+**Pull request base:** `main`
+**Pull request compare:** `feat/ag-002-4-integration-tests`
+
+After the merge:
+
+1. Verify the updated `main` branch and Git history.
+2. Record PR and merge evidence in `S01.md` and `CURRENT_STATE.md`.
+3. Resolve remaining S01 evidence carryover.
+4. Review authentication and database architecture decisions.
+5. Plan Sprint S02 before creating its first implementation branch.
+
+**Next planned sprint:** S02 — Database & Authentication.
+
+Do not record S02 as `IN_PROGRESS` until work actually begins. Do not mark S01 `FULLY_VERIFIED` until its remaining acceptance evidence has been reviewed.
