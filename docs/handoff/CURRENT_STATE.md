@@ -46,8 +46,8 @@ S01 work has started by user direction while S00 documentation closeout remains 
 | AG-001.5 | Engineering Rules and Handoff | REVIEWED | Documentation committed; final adoption/signoff not separately recorded |
 | AG-001.6 | First Commit and GitHub Push | VERIFIED for baseline publication | `main` and `origin/main` pointed to the same observed commit |
 | AG-002.1 | FastAPI Backend Foundation | REPORTED_COMPLETE | User reported successful local execution; actual test and HTTP outputs not supplied |
-| AG-002.2 | React + TypeScript Frontend | IN_PROGRESS | Current ticket; implementation not yet verified |
-| AG-002.3 | Docker Compose Foundation | PLANNED | Not started |
+| AG-002.2 | React + TypeScript Frontend | REPORTED_COMPLETE | Current ticket; implementation not yet verified |
+| AG-002.3 | Docker Compose Foundation | REPORTED_COMPLETE | Not started |
 | AG-002.4 | Integration Tests and Sprint Handoff | PLANNED | Not started |
 
 `REPORTED_COMPLETE` means successful execution reported by the user; independent verification evidence remains pending.

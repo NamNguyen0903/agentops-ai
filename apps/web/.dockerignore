@@ -1,0 +1,45 @@
+# Git metadata
+.git
+**/.git
+.gitignore
+
+# Local environment and credentials
+.env
+.env.*
+**/.env
+**/.env.*
+.aws
+**/.aws
+
+# Dependencies and generated output
+node_modules
+**/node_modules
+dist
+**/dist
+build
+coverage
+**/coverage
+.vite
+**/.vite
+.vitest
+**/.vitest
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# Python environments and caches
+.venv
+venv
+**/.venv
+**/venv
+__pycache__
+**/__pycache__
+.pytest_cache
+**/.pytest_cache
+
+# Editor and operating-system files
+.vscode
+.idea
+.DS_Store
+**/.DS_Store
+*.log
+npm-debug.log*
