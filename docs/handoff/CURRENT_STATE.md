@@ -3,8 +3,8 @@
 **Checkpoint date:** 2026-11-22\
 **Current sprint:** S02 — Database & Authentication (`IN_PROGRESS`)\
 **Verification:** `PARTIALLY_VERIFIED`\
-**Current ticket:** AG-003.1B.3 — Authlib OIDC Compatibility PoC (`IN_PROGRESS`)\
-**Next planned gate:** AG-003.1B.3 closeout review → explicit architecture decision\
+**Current ticket:** AG-003.3B — Identity Models & Initial Migrations (`IN_PROGRESS`)\
+**Next planned gate:** Multi-connection concurrency → migration rollback → AG-003.3B closeout\
 **Implementation owner:** User controls Mac-local edits, tests, Git and deployment.
 
 > This handoff combines historical user evidence with observed repository inspection and execution on 2026-11-22. VERIFIED means an actual test/log was reviewed; USER_REPORTED means the user confirmed success without full final output. Isolated PoCs are not production auth.
@@ -18,7 +18,7 @@
 | Frontend/backend | React/TypeScript/Vite + FastAPI |
 | Database | PostgreSQL 17 Docker Compose; readiness and least-privilege app role observed |
 | ORM | Async SQLAlchemy 2.x/Psycopg 3, `autobegin=False`; AG-003.3A commit `cfab615` historically observed |
-| Alembic | Guarded infrastructure only; no application migration revisions or identity tables |
+| Alembic | Guarded initial revision `0291ce4556fe`; upgrade user-reported PASS on disposable `agentops_migration_test`; four identity tables and 19 constraints observed; production/development migrations not authorized |
 | Auth architecture | Google OIDC + Authlib 1.9.10 + FastAPI BFF + PostgreSQL opaque sessions **preferred proposal only** |
 | Auth implementation | NOT_IMPLEMENTED; ADR-0002 still `PROPOSED` |
 | AI/workers/cloud | Future sprint scope; not implemented/verified |
@@ -36,7 +36,7 @@
 | AG-003.1B.3 | `IN_PROGRESS` | 56 passed, 1 stock-security xfailed; offline integration verified; closeout review pending |
 | AG-003.2 | `REPORTED_COMPLETE` | HTTP readiness/role verification observed; persistence marker/commit evidence pending |
 | AG-003.3A | `REPORTED_COMPLETE` | Commit `cfab615`, push user-reported; backend regression 31/31 verified |
-| AG-003.3B | `BLOCKED` | ADR approval, schema/migration role, auth compatibility |
+| AG-003.3B | `IN_PROGRESS — PARTIALLY_VERIFIED` | 38 backend tests PASS (user-reported); initial upgrade PASS (user-reported); 19 constraints observed; 7 negative tests PASS; runtime permission checks passed; concurrency/rollback and Git closeout pending |
 | AG-003.4 | `PLANNED — BLOCKED` | Production login/session/CSRF not implemented |
 | AG-003.5 | `PLANNED` | Authorization and security tests pending |
 | AG-003.6 | `PLANNED` | Integration, regression, Git and sprint closeout pending |
@@ -60,28 +60,66 @@
 - Latest backend regression output: **31 passed, 1 Starlette `httpx`/TestClient warning, 6.69 s** (VERIFIED).
 - Earlier callback verification gap is superseded by the closeout evidence below; live Google and PostgreSQL-backed authentication remain UNVERIFIED.
 
+### AG-003.3B — Latest implementation evidence
+
+- Four identity models and initial Alembic revision created.
+- Backend tests: 38 PASS (user-reported).
+- Initial migration upgrade: PASS (user-reported).
+- PostgreSQL catalog: 19 constraints observed.
+- Seven negative constraint cases PASS with transaction rollback.
+- Five tables owned by `agentops_migrator`.
+- Runtime role lacks schema CREATE permission.
+- Excessive DML grants on `app.alembic_version` revoked.
+- Default DML privileges revoked in disposable database.
+- Runtime permission regression PASS (user-reported).
+- SQL tests: `apps/api/tests/sql/identity_constraints.sql`.
+- Reproducible permission provisioning remains unresolved.
+- Multi-connection concurrency and migration rollback pending.
+- AG-003.3B not committed or pushed at latest Git checkpoint.
+
+- Multi-connection concurrency: PASS (user-reported).
+- Transactional DDL rollback: PASS (user-reported).
+- Isolated Alembic upgrade/downgrade/upgrade:
+  PASS (user-reported).
+- Reproducible migration DML grants: implemented;
+  fresh isolated permission regression PASS (user-reported).
+- Existing test DB permission matrix: PASS (observed).
+- Latest full backend regression:
+  39 passed, 1 skipped, 2 warnings.
+- Current stage: source review, default privilege
+  verification, documentation and Git closeout.
+
+
+
 ## 4. Git checkpoint
 
 - GitHub: https://github.com/NamNguyen0903/agentops-ai
 - AG-003.3A commit historically observed: `cfab6154b10299c5f4640afea81e4b88cd452e90`; push USER_REPORTED.
 - User later confirmed AG-003.1A commit after staged-file review; **SHA and push output not supplied**. Do not mark remote merge verified.
-- Observed 2026-11-22: branch `feat/ag-003-1b-authlib-oidc-poc`, HEAD `c6703e967f36aef38586e8864fbffd0058b28096`. Four tracked documentation files modified; PoC untracked; index empty. Root README edits predate this pass. No commit/push performed. Environments and caches ignored. Remote state not reverified.
+- Latest observed branch: `feat/ag-003-3b-identity-migrations`; HEAD `f8c10cd`.
+- Working tree contains modified and untracked AG-003.3B implementation files. New SQL test file was subsequently created; current Git status requires rechecking.
+- No AG-003.3B commit or push verified.
 - Never stage `.venv/`, `.venv-broken/`, `.pytest_cache/`, `__pycache__/`, `*.egg-info/`, `.env.postgres` or secrets. Review scoped staged diff before commit/push.
 
 ## 5. Architecture gates and remaining work
 
-1. AG-003.1B.3: Tech Lead reviews completed offline security closeout; advisory and production integration gates remain open.
-2. Explicitly approve or revise ADR-0002 and `app` schema/migration role. Until approval, AG-003.3B and AG-003.4 are BLOCKED.
-3. AG-003.3B: identity/session models and reviewed Alembic migration with a least-privilege migration role.
-4. AG-003.4: Google login/callback, app session, logout, CSRF and fail-closed behavior.
-5. AG-003.5: authorization and security tests.
-6. AG-003.6: cross-component integration, frontend/backend regression, persistence/recovery, documentation/Git closeout and user signoff.
+1. AG-003.3B: Complete multi-connection concurrency and rollback verification.
+2. Ensure least-privilege provisioning is reproducible, not only manually repaired.
+3. Run backend regression and review Git changes.
+4. Complete AG-003.3B documentation and Git closeout.
+5. Resolve explicit ADR-0002 approval and remaining authentication security gates before AG-003.4.
+6. AG-003.4: Implement approved Google OIDC login/session/logout/CSRF.
+7. AG-003.5 and AG-003.6: Security, integration and sprint closeout.
 
 **One-day acceleration:** a target only; no security gate, negative test, or owner approval is waived.
 
 ## 6. Exactly one immediate next action
 
-Tech Lead reviews AG-003.1B.3 closeout and conditional adoption gates. No next implementation ticket is authorized.
+Review and stage AG-003.3B implementation, tests and
+documentation. Verify the staged diff, default privileges
+and absence of secrets before commit.
+
+Preserve unrelated root README.md changes.
 
 ## 7. Documentation update rules
 

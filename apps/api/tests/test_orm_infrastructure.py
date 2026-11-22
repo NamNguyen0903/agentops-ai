@@ -31,9 +31,32 @@ def db_settings() -> Settings:
     )
 
 
-def test_metadata_is_empty() -> None:
+def test_metadata_registers_approved_identity_models() -> None:
+    from agentops_api.models.identity import (
+        AuthIdentity,
+        AuthSession,
+        OIDCLoginTransaction,
+        User,
+    )
+
     assert Base.metadata.schema == APP_SCHEMA
-    assert len(Base.metadata.tables) == 0
+
+    expected_tables = {
+        "app.users",
+        "app.auth_identities",
+        "app.auth_sessions",
+        "app.oidc_login_transactions",
+    }
+
+    assert set(Base.metadata.tables) == expected_tables
+
+    for model in (
+        User,
+        AuthIdentity,
+        AuthSession,
+        OIDCLoginTransaction,
+    ):
+        assert model.__table__.schema == APP_SCHEMA
 
 
 def test_primary_key_naming() -> None:

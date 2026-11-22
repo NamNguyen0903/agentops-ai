@@ -4,7 +4,7 @@
 **Updated:** 2026-11-22  
 **Latest closed sprint:** S01 — CLOSED (`PARTIALLY_VERIFIED`)  
 **Current sprint:** S02 — Database & Authentication (`IN_PROGRESS`)  
-**Current implementation ticket:** AG-003.3A — SQLAlchemy & Alembic Infrastructure  
+**Current implementation ticket:** AG-003.3B — Identity Models & Initial Migrations
 **Product baseline:** PRD v0.2  
 **Current handoff:** [CURRENT_STATE.md](../handoff/CURRENT_STATE.md)
 
@@ -46,13 +46,13 @@ The AG-002.4 branch `feat/ag-002-4-integration-tests` was reported pushed to ori
 |---|---|---|
 | AG-003.1 | DESIGN_REVIEWED, approval pending | ADR-0002 still PROPOSED |
 | AG-003.2 | REPORTED_COMPLETE | HTTP direct/proxied health/readiness and Postgres role-verifier output observed; outage/recovery user-reported passed; Git SHA/persistence evidence pending |
-| AG-003.3A | IN_PROGRESS | **31/31 backend pytest passed**, 1 warning, 6.47s; Alembic discovery empty; SQLAlchemy PostgreSQL integration and S01 smoke user-reported passed |
-| AG-003.3B | BLOCKED | Approved identity schema/auth library and migration role required |
+| AG-003.3A | REPORTED_COMPLETE — COMMITTED | Commit `cfab615`; backend 31/31 PASS; remote push user-reported |
+| AG-003.3B | IN_PROGRESS — CLOSEOUT_PENDING | Identity models, negative constraints, concurrency, transactional DDL rollback, isolated Alembic lifecycle and runtime permission checks passed; backend 39 passed, 1 skipped, 2 warnings; final Git review pending |
 | AG-003.4 | PLANNED — BLOCKED | Authentication solution/ADR approval required |
 | AG-003.5 | PLANNED | Not started |
 | AG-003.6 | PLANNED | Not started |
 
-No migration revisions, identity/authentication models, login/logout endpoints or production deployment are claimed. Alembic migration execution remains disabled in AG-003.3A.
+Initial identity migration and four identity models now exist in the AG-003.3B working tree. Migration execution is restricted to the disposable test database. Production authentication, deployment and AG-003.3B Git closeout remain unverified.
 
 ## 4. Status Definitions
 
@@ -99,9 +99,29 @@ Do not assume any S02 commit SHA, remote push or merge without supplied Git evid
 - Update `README.md` when runnable developer setup changes.
 - Update ADRs only through an explicit decision; non-decision progress notes must preserve `PROPOSED` status.
 
+
 ## 8. Current Resume Point
 
-**Current sprint:** S02 — IN_PROGRESS.  
-**Current ticket:** AG-003.3A — Git/documentation closeout.  
-**Next action:** Inspect current branch, working tree, migration revisions and secret handling, then review staged AG-003.3A changes before commit.  
-**Blocking architecture:** ADR-0002 is PROPOSED; identity models and auth remain deferred.
+**Current sprint:** S02 — IN_PROGRESS.
+
+**Current ticket:** AG-003.3B — Identity Models & Initial Migrations.
+
+**Current stage:** AG-003.3B documentation and Git closeout.
+
+**Latest observed branch:** `feat/ag-003-3b-identity-migrations`.
+
+**Latest observed HEAD:** `f8c10cd`.
+
+**Verification:** 38 backend tests user-reported PASS;
+initial migration upgrade user-reported PASS;
+19 constraints observed; 7 negative tests PASS;
+runtime permission regression user-reported PASS.
+
+**Next action:** Implement multi-connection concurrency tests
+on the disposable PostgreSQL migration-test database.
+
+**Remaining blocker:** Reproducible least-privilege provisioning,
+rollback verification, final regression and Git closeout.
+
+**Architecture:** ADR-0002 remains PROPOSED;
+production authentication is not yet approved.

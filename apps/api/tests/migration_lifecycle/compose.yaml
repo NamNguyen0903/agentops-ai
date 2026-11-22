@@ -1,0 +1,33 @@
+
+services:
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: isolated-test-only-postgres
+      POSTGRES_DB: postgres
+    tmpfs:
+      - /var/lib/postgresql/data
+    volumes:
+      - ./bootstrap.sql:/docker-entrypoint-initdb.d/01-bootstrap.sql:ro
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -h 127.0.0.1 -U postgres -d postgres
+      interval: 2s
+      timeout: 2s
+      retries: 20
+
+  runner:
+    image: python:3.12-slim-bookworm
+    working_dir: /workspace
+    environment:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+      AGENTOPS_MIGRATION_DATABASE_URL: postgresql+psycopg://agentops_migrator:isolated-test-only-migrator@db:5432/agentops_migration_test
+    volumes:
+      - ../../:/workspace:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["sh", "tests/migration_lifecycle/run.sh"]
