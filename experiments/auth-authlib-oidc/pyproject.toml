@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=75,<81"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentops-authlib-oidc-poc"
+version = "0.1.0"
+description = "Isolated Google OIDC/Authlib contract experiment (no production integration)"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "authlib==1.9.10",
+  "fastapi==0.165.0",
+  "starlette==1.10.0",
+  "sqlalchemy==2.0.58",
+  "httpx2==2.16.2",
+  "cryptography>=44,<52",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.2.0", "httpx==0.28.1"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers --tb=short"
+xfail_strict = true
