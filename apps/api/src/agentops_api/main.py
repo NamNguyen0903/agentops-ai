@@ -1,4 +1,9 @@
 
+"""AgentOps AI FastAPI application factory."""
+
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+
 from fastapi import APIRouter, FastAPI
 
 from agentops_api.api.routes.health import (
@@ -9,25 +14,44 @@ from agentops_api.api.routes.readiness import (
 )
 from agentops_api.core.config import Settings
 from agentops_api.core.database import DatabaseProbe
+from agentops_api.core.orm import OrmDatabase
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
-    """Create the API without network access."""
+    """Construct the application without database network I/O."""
+
     if settings is None:
         settings = Settings()
+
+    @asynccontextmanager
+    async def lifespan(
+        application: FastAPI,
+    ) -> AsyncIterator[None]:
+        database = OrmDatabase(settings)
+        application.state.orm_database = database
+
+        try:
+            yield
+        finally:
+            await database.dispose()
 
     application = FastAPI(
         title=settings.app_name,
         version="0.1.0",
+        lifespan=lifespan,
     )
 
-    application.state.database_probe = DatabaseProbe(settings)
+    # Existing AG-003.2 readiness infrastructure.
+    application.state.database_probe = DatabaseProbe(
+        settings
+    )
 
     api_router = APIRouter(prefix="/api/v1")
     api_router.include_router(health_router)
     api_router.include_router(readiness_router)
 
     application.include_router(api_router)
+
     return application
 
 
