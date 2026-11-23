@@ -376,3 +376,27 @@ Do not change ADR-0002 to ACCEPTED or Sprint S02 to CLOSED without explicit appr
 ### Exactly one next action
 
 Perform final scoped Git review. Review changed and untracked S02 files, confirm documentation consistency and security-sensitive content, then prepare an explicit staging allowlist. Do not stage the root `README.md` or commit before Tech Lead review.
+
+## Git delivery checkpoint — 2026-11-23
+
+### Verified Git state
+
+- Branch: `feat/ag-003-3b-identity-migrations`.
+- Commit: `cd77474`.
+- Commit message: `feat(auth): implement review-gated authentication with security regressions`.
+- Commit contains 26 approved S02 files.
+- Local HEAD and `origin/feat/ag-003-3b-identity-migrations` both reference `cd77474`.
+- Root `README.md` remains modified locally and was excluded from the commit.
+- No merge into `main` has been performed.
+
+### Current project status
+
+- Sprint S02: **IN_PROGRESS**.
+- AG-003.6: **READY_FOR_PR_REVIEW**.
+- ADR-0002: **PROPOSED**.
+- Authentication: **disabled by default**.
+- Production authentication: **NOT_APPROVED**.
+
+### Exactly one next action
+
+Review the GitHub Pull Request status for `feat/ag-003-3b-identity-migrations` targeting `main`. Do not merge before reviewing the PR diff, CI checks, ADR-0002 decision and outstanding S02 acceptance gates.
