@@ -16,6 +16,10 @@ dependencies = [
     "psycopg[binary]>=3.2,<4.0",
     "SQLAlchemy[asyncio]>=2.0.40,<2.1",
     "alembic>=1.16,<2.0",
+    "Authlib==1.9.10",
+    "httpx2==2.16.2",
+    "cryptography>=50.0.2,<52",
+    "joserfc>=1.8.0,<2",
 ]
 
 [project.optional-dependencies]
@@ -35,3 +39,5 @@ namespaces = false
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra"
+
+markers = ["integration: requires explicitly disposable PostgreSQL infrastructure"]

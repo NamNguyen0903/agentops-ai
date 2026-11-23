@@ -1114,3 +1114,267 @@ proposed PostgreSQL atomic-consumption/concurrency/crash/expiry contract.
 The adapter remains memory-only; production multi-worker behavior is UNVERIFIED.
 Recommendation ADOPT_CONDITIONALLY; ADR-0002 remains PROPOSED and S02 IN_PROGRESS.
 No production auth, identity models, revisions or database changes were made.
+
+## 21. AG-003.3B Implementation Reconciliation — 2026-11-22
+
+**Decision status:** PROPOSED — APPROVAL_PENDING.
+
+**Implementation checkpoint:**
+- PostgreSQL 17, SQLAlchemy 2.x and Alembic are implemented.
+- Four identity foundation tables have been created:
+  `users`, `auth_identities`, `auth_sessions`,
+  `oidc_login_transactions`.
+- Initial migration revision: `0291ce4556fe`.
+- Migration and identity implementation commit: `bae6fb0`.
+- Push successful per user report; merge into main unverified.
+- Backend regression: 39 passed, 1 skipped, 2 warnings.
+- Negative constraints, concurrency, transaction rollback
+  and isolated migration lifecycle tests passed.
+- Runtime permissions verified on disposable database.
+
+These implementation results do not establish that the
+authentication architecture has been formally approved.
+
+**Authentication remains NOT_IMPLEMENTED.**
+
+### Preferred Authentication Direction
+
+Google OIDC + Authlib 1.9.10 + FastAPI BFF remains
+the preferred conditional design.
+
+Application sessions remain PostgreSQL-backed, opaque,
+revocable and protected using digest-only token storage.
+
+### Outstanding Security Gates
+
+1. Verify PostgreSQL-backed atomic OIDC state consumption.
+2. Verify replay prevention, nonce and PKCE validation.
+3. Verify browser binding and callback failure handling.
+4. Eliminate the OIDC-P10 token/log exposure risk.
+5. Complete dependency advisory and compatibility review.
+6. Approve CSRF, cookie, session and provisioning contracts.
+7. Record explicit ADR-0002 approval before AG-003.4.
+
+**Next ticket:** AG-003.1B — Authentication Security
+and Architecture Approval.
+
+## 2026-11-23 autonomous execution checkpoint
+
+**Verdict: PARTIALLY_COMPLETE_WITH_BLOCKERS.** S02 remains IN_PROGRESS;
+ADR-0002 remains PROPOSED. The latest task authorized independent implementation
+and verification, but explicitly retained the architecture/security gate before
+AG-003.4. Approval was requested and has not been received. No auth endpoints,
+sessions, CSRF implementation, migrations or normal-development DB changes were made.
+
+### Delivered and verified
+
+- Preserved the pre-existing untracked OIDC state service. Added package discovery,
+  forced fresh ORM row values under the lock, and sanitized SQLAlchemy failures
+  without returning context after a failed/uncertain commit.
+- Actual PostgreSQL service tests: independent connections produce one winner;
+  replay, expiry and binding mismatch reject; consumed ciphertext is cleared;
+  fresh connections observe consumption; lock wait followed by expiry rejects;
+  rollback before commit leaves state available. No provider I/O occurs in the service.
+- These tests use synthetic ciphertext, not verified encryption. They do not prove
+  process-kill recovery, unknown-commit resolution, provider integration or exactly-once login.
+- Added an opt-in allowlisted security log formatter and four tests for arbitrary
+  payloads/arguments/extras/exception messages. It preserves severity and stack
+  frame function/line information but deliberately omits free-form messages.
+  Not installed on production handlers: end-to-end logging confidentiality remains
+  UNVERIFIED and stock OIDC-P10 remains FAIL.
+
+### Execution evidence
+
+| Check | Actual result |
+|---|---|
+| Full backend `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest -q` from apps/api | 51 passed, 2 skipped, 2 warnings, 15.40s; exit 0 |
+| Disposable PostgreSQL `test_oidc_state_postgres.py` and `test_identity_db_integration.py` with opt-in | 2 passed, 0.51s; exit 0 |
+| Isolated migration lifecycle | empty → upgrade → downgrade → upgrade PASS; role DML/schema/Alembic-table checks PASS; exit 0 |
+| Authlib PoC `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest -q` | 56 passed, 1 xfailed, 1 warning, 0.95s; exit 0; XFAIL remains security FAIL |
+| Both `.venv/bin/python -m pip check` | No broken requirements, exit 0; pip cache disabled warnings |
+| Frontend typecheck/lint/test/build | All exit 0; 17 tests, 2 files, 1.41s; Vite build 558ms |
+| `python3 scripts/test_integration.py` | 3/3 passed, exit 0, after permitting local HTTP access |
+| Normal stack read-only health | api/db/web running healthy |
+| `git diff --check` | No whitespace diagnostics |
+
+Two backend opt-in tests skipped in the full local run were separately executed
+successfully in the disposable PostgreSQL run. Existing warnings: deprecated
+httpx TestClient and unregistered integration marker. Existing concurrency test
+ran against agentops_migration_test with rollback-only writes. No mocked test
+is classified as database evidence.
+
+Failures preserved: initial Docker/local HTTP access denied by execution permissions;
+reruns with permission succeeded. First disposable test setup omitted SQLAlchemy's
+async extra and failed for missing greenlet; rerun installed declared project
+dependencies and passed. One append used a wrong working-directory-relative path;
+no file changed in that failed append; corrected path and rerun passed.
+
+### Security decision package — approval required
+
+1. Approve proposed session/cookie/CSRF/Origin/provisioning contracts before AG-003.4.
+   No public signup or email linking; stable issuer/subject mapping; inactive users
+   denied; 30-minute idle and 12-hour absolute expiry remain proposed.
+2. Approve encryption: use a maintained AEAD implementation, random nonce, versioned
+   key identifier, and authenticate state/browser/provider context as associated data.
+   Keep keys outside DB/Git; fail closed on missing key, unknown version or invalid tag.
+   Retain previous decrypt keys only for maximum transaction TTL plus bounded skew;
+   test tamper, wrong-key, rotation and cross-record substitution before integration.
+   No custom cipher or encryption implementation is approved by this note.
+3. Authorize install/review of safe formatting on every application, HTTP, exception
+   and collector handler. The new formatter is an isolated boundary, not universal
+   redaction. Test raw URL/code/header/token suppression across deployed paths.
+4. Fixed Google discovery URI, HTTPS certificate verification, validated trusted
+   issuer/token/JWKS endpoints, no arbitrary issuer URLs or redirects; bound HTTP
+   timeouts/size and maintain approved endpoint policy. Use confidential-client
+   authentication (proposed client_secret_post per discovery), never test-provider
+   auth method none. Verify actual Google configuration separately without exposing credentials.
+5. Approve dependency policy and complete transitive advisory review. Source review
+   on 2026-11-23: Authlib stable changelog documents security fixes through 1.9.10;
+   maintenance policy says 1.9 receives security fixes. This does NOT establish
+   absence of vulnerabilities or approve transitive dependencies.
+
+Sources reviewed:
+- https://docs.authlib.org/en/stable/upgrades/changelog.html
+- https://docs.authlib.org/en/latest/community/security.html
+- https://github.com/authlib/authlib/security
+- https://developers.google.com/identity/openid-connect/openid-connect
+
+### Git and safety
+
+Observed branch: feat/ag-003-3b-identity-migrations.
+Initial/final HEAD: 69486b88ffd1a9e25ee13d4d1bcac9e997d26fae.
+No commits, staging, push or merge. Root README edits preserved unchanged.
+Revision 0291ce4556fe and models unchanged. Destructive downgrade occurred ONLY in
+isolated Compose project agentops-s02-review, database agentops_migration_test.
+That project's tmpfs containers/network were removed; normal stack was not stopped
+or reset. Ciphertext clearing is logical removal, not erasure from WAL/backups.
+
+### Ticket outcomes and next action
+
+- AG-003.1B: IN_PROGRESS; independent state/logging checks VERIFIED in stated scopes;
+  encryption, deployed logging, advisory completion and owner decision BLOCKED.
+- AG-003.4: BLOCKED; endpoints/session implementation NOT_IMPLEMENTED.
+- AG-003.5: IN_PROGRESS for state/logging tests; session/CSRF/authorization tests BLOCKED.
+- AG-003.6: PARTIALLY_VERIFIED; foundation regression passed; full authentication
+  integration, live Google, abuse controls and process-crash tests not executed.
+
+Exactly one next action: owner/Tech Lead reviews this decision package and resolves
+AG-003.1B approval gates before authorizing AG-003.4. No sprint closure implied.
+
+## Owner-authorized review implementation — 2026-11-23 (supersedes earlier gate-only checkpoint)
+
+Owner explicitly replied: **"Authorize review-only implementation with ADR still
+PROPOSED"**. This authorizes code/tests for review, not live rollout or ADR acceptance.
+The earlier checkpoint remains historical. ADR-0002 remains PROPOSED; S02 IN_PROGRESS.
+
+### Delivered review implementation
+
+Authentication routes are absent unless `Settings.auth_review_enabled` is true.
+The five proposed routes are implemented using the existing async database factory.
+Login uses real Authlib code/S256/nonce handling with fixed Google discovery and
+strict HTTPS metadata/endpoint allowlists, explicit client_secret_post, RS256,
+issuer/audience/expiry checks, 1 MiB HTTP response bound and 5-second request timeouts.
+Routes bound login/callback to 10/15 seconds. No real Google calls were made.
+
+Existing PostgreSQL identity rows are the provisioning allowlist: no registration,
+email linking or new users are created. Inactive users are denied. Sessions use
+random opaque tokens with SHA-256 digests only, 30-minute rolling idle/12-hour
+absolute expiry, explicit commit, rotation/revocation and DB fail-closed behavior.
+HttpOnly Secure SameSite=Lax host-only cookies are used for HTTPS; explicitly
+configured loopback development uses separate non-Secure cookie names. Auth
+responses are no-store. Logout validates exact Origin and session CSRF proof;
+repeated logout without a valid session is safe. CSRF GET allows missing Origin
+for same-origin browser GET compatibility, rejects explicit foreign Origin and
+cross-site Fetch Metadata, and relies on browser SOP with no CORS enabled.
+It rotates the stored CSRF digest; parallel tabs must refetch after rotation.
+
+OIDC context uses cryptography AES-GCM, 256-bit external key, random 96-bit nonce,
+version byte and authenticated state/browser-binding digests. Tamper, version,
+wrong-key and cross-record substitution tests reject. The single configured key
+has no online key-ring rotation; replacement invalidates pending login state.
+Key management remains a release gate. Logical clearing does not erase WAL/backups.
+
+Existing configured log handlers receive an allowlisted formatter during enabled
+application lifespan and restore afterward. Arbitrary messages, args, extras and
+exception values are omitted; severity and traceback function/line metadata remain.
+Actual configured-handler regression covers the stock verifier event and exception
+secret. Later-added handlers/collectors are not covered; no universal logging claim.
+Stock OIDC-P10 remains FAIL; tested application handler mitigation passes.
+
+Process-local bounded login/callback throttles are implemented. They are not a
+multi-worker abuse-control solution. No real Google credentials or migrations added.
+
+### Final observed evidence
+
+| Command / scope | Result |
+|---|---|
+| `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest -q --tb=short` in apps/api | **77 passed, 3 skipped**, 1 existing unregistered integration-marker warning, **16.25s**, exit 0 |
+| Disposable PostgreSQL pytest: test_oidc_state_postgres.py, test_identity_db_integration.py, test_auth_postgres.py | **3 passed, 0.64s**, exit 0; includes actual API/service/database login→me→CSRF→logout with fake provider |
+| Offline actual Google adapter/Authlib tests and transport rejection | 11 passed, 0.89s, exit 0; also included in full suite |
+| Existing Authlib PoC | 56 passed, 1 security xfailed, 0.95s; unchanged source |
+| Backend and PoC pip check after dependency installation | Both exit 0, no broken requirements; cache disabled warning |
+| Frontend | 17 tests passed; typecheck/lint/build exit 0 (unchanged frontend) |
+| Existing smoke | 3/3 passed with local HTTP access |
+| Isolated migration lifecycle | Upgrade/downgrade/upgrade and permission assertions passed; revision unchanged |
+
+The three opt-in tests skipped by the default suite passed separately in disposable
+PostgreSQL. Do not label default skips PASS. Test layers distinguish fake HTTP,
+fake route storage, actual database services and actual library validation.
+Backend Python 3.12.2, PoC Python 3.12.9, disposable PostgreSQL 17.12 arm64.
+Authlib 1.9.10/httpx2 2.16.2/cryptography 50.0.2/joserfc 1.8.0 installed in backend.
+Existing TestClient warning disappeared after httpx2 installation.
+
+A new oversized-response test initially used a pre-consumed MockTransport body and
+raised StreamConsumed; corrected to a streaming test body, then rejection passed.
+Several shell append attempts used a root-relative path from apps/api and failed
+without editing files; corrected absolute paths and full final run passed.
+Dependency installation initially failed under network restrictions; permitted
+rerun succeeded. No runtime test failure is omitted or relabeled as a security pass.
+
+### Review gates and deviations
+
+- Review-only implementation authorized; production activation NOT authorized.
+- No key-ring rotation, operator provisioning command/UI, distributed throttling,
+  cleanup scheduling or account-wide revocation API. Inactive users are denied,
+  but operator lifecycle procedures remain to be approved.
+- No live Google, DNS/TLS attack simulation, process-kill/uncertain-commit recovery,
+  normal-stack outage/recovery or research-resource ownership tests executed.
+- Context validation is tested; deployed secret distribution and collector coverage
+  remain unverified. Fixed endpoint policy requires review when Google metadata changes.
+- Auth dependency advisory review is partial; sources are in the earlier decision
+  package. pip check is not a security audit; no "no vulnerabilities" assertion.
+- CSRF GET Origin handling above is an explicit review choice for browser compatibility.
+- New tests use synthetic values; production database agentops was not migrated,
+  reset, dropped or populated. Disposable test projects were removed after tests.
+
+**Ticket status:** AG-003.1B IN_PROGRESS (release security gates); AG-003.4
+IMPLEMENTED_FOR_REVIEW / disabled by default; AG-003.5 PARTIALLY_VERIFIED;
+AG-003.6 PARTIALLY_COMPLETE_WITH_BLOCKERS. No commits/staging/push/merge performed.
+Exactly one next action: Tech Lead reviews the implementation and resolves the
+remaining activation/security gates. Sprint closeout still requires user signoff.
+
+### Review-only configuration (no live secrets provided)
+
+`AGENTOPS_AUTH_REVIEW_ENABLED=true` is the explicit opt-in. Configuration also
+requires existing database settings and `AGENTOPS_AUTH_CLIENT_ID`,
+`AGENTOPS_AUTH_CLIENT_SECRET`, `AGENTOPS_AUTH_CONTEXT_KEY` (base64 of 32 random
+bytes), `AGENTOPS_AUTH_ORIGIN` (exact origin). `AGENTOPS_AUTH_DEVELOPMENT_HTTP=true`
+is permitted only for localhost/127.0.0.1 HTTP. Store secrets outside Git/logs.
+No example key is supplied and no normal Compose configuration enables auth.
+Do not enable with real credentials until Tech Lead approval.
+
+## Development MVP security reconciliation — 2026-11-23
+
+Status remains **PROPOSED**. Recommendation **REVISE** before owner acceptance:
+record User → AuthSession lock ordering across principal/login/disable, and explicit
+local-only versus staging/real-user gates. Account-wide revocation service and
+per-client Google transport are implemented and verified within the stated tests;
+older statements saying they are absent are historical. No operator provisioning
+UI/CLI, full collector coverage, distributed throttling or key-ring rotation is claimed.
+
+Latest evidence: 102 backend passed/6 opt-in skipped/0 warnings; 6 PostgreSQL cases
+passed separately including observed account-row contention; lifecycle and role
+checks passed. No production activation, migration or real Google sign-in occurred.
+See [source-grounded review and decision package](../sprints/S02_SECURITY_REVIEW.md)
+for findings, advisory sources, tests and remaining gates. These observations are
+not ADR acceptance or permission to enable authentication.

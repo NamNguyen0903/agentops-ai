@@ -15,13 +15,26 @@ from agentops_api.api.routes.readiness import (
 from agentops_api.core.config import Settings
 from agentops_api.core.database import DatabaseProbe
 from agentops_api.core.orm import OrmDatabase
+from agentops_api.core.security_logging import (
+    acquire_logging_protection,
+    release_logging_protection,
+)
 
-
-def create_app(settings: Settings | None = None) -> FastAPI:
+def create_app(settings: Settings | None = None, *, auth_settings=None, auth_provider=None) -> FastAPI:
     """Construct the application without database network I/O."""
 
     if settings is None:
         settings = Settings()
+
+    if settings.auth_review_enabled:
+        from agentops_api.core.auth_config import AuthSettings
+        from agentops_api.services.auth import AuthService, ContextCipher
+        from agentops_api.services.google_oidc import GoogleOIDC
+        from agentops_api.api.routes.auth import make_router
+        auth_settings = auth_settings or AuthSettings()
+        auth_provider = auth_provider or GoogleOIDC(auth_settings)
+        if not settings.database_enabled:
+            raise ValueError("Review authentication requires database configuration")
 
     @asynccontextmanager
     async def lifespan(
@@ -30,10 +43,33 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         database = OrmDatabase(settings)
         application.state.orm_database = database
 
+        previous_formatters = []
+        pkce_logger = None
+        pkce_filter = None
+        logging_acquired = False
+
         try:
+            if settings.auth_review_enabled:
+                acquire_logging_protection()
+                logging_acquired = True
+
+                application.state.auth_service = AuthService(
+                    database.session_factory,
+                    ContextCipher(
+                        auth_settings.context_key.get_secret_value()
+                    ),
+                )
+                application.state.auth_session_cookie_name = (
+                    auth_settings.session_cookie
+                )
+
             yield
         finally:
-            await database.dispose()
+            try:
+                await database.dispose()
+            finally:
+                if logging_acquired:
+                    release_logging_protection()
 
     application = FastAPI(
         title=settings.app_name,
@@ -49,6 +85,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     api_router = APIRouter(prefix="/api/v1")
     api_router.include_router(health_router)
     api_router.include_router(readiness_router)
+
+    if settings.auth_review_enabled:
+        api_router.include_router(make_router(auth_settings, auth_provider))
 
     application.include_router(api_router)
 

@@ -12,7 +12,7 @@ cp /workspace/pyproject.toml /tmp/agentops-build/
 cp -R /workspace/src /tmp/agentops-build/
 
 python -m pip install --no-cache-dir \
-    /tmp/agentops-build \
+    "/tmp/agentops-build[dev]" \
     "alembic>=1.13,<2" \
     "psycopg[binary]>=3.2,<4"
 
@@ -172,3 +172,15 @@ python -m alembic -c alembic.ini upgrade head
 check_state upgraded
 
 echo "PASS: Alembic migration lifecycle"
+echo "=== 5. PostgreSQL Integration Tests ==="
+
+export AGENTOPS_RUN_DB_INTEGRATION=1
+export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
+
+python -m pytest -p no:cacheprovider -q --tb=short \
+    tests/test_auth_postgres.py \
+    tests/test_identity_db_integration.py \
+    tests/test_oidc_state_postgres.py \
+    tests/test_auth_disable_concurrency.py
+
+echo "PASS: PostgreSQL integration tests"
