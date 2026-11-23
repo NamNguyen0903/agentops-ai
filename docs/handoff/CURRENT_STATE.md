@@ -1,18 +1,34 @@
 # AgentOps AI — Current State
 
 **Date:** 2026-11-23 (Asia/Ho_Chi_Minh)
-**Sprint:** S02 — IN_PROGRESS / PARTIAL
-**Current ticket:** AG-003.6 — READY_FOR_TECH_LEAD_REVIEW
+**Sprint:** S02 — Database & Authentication — IN_PROGRESS / PARTIAL
+**Closeout:** S02 is NOT DONE; production authentication is NOT APPROVED.
+**Current ticket:** AG-003.6 — Tech Lead / owner security and acceptance review
+**Review status:** READY_FOR_TECH_LEAD_REVIEW; acceptance pending.
 **Acceptance:** 8/11 existing S02 success criteria verified (72.7%, rounded 73%).
 This is not production readiness or test coverage. See the
 [acceptance matrix and execution evidence](../sprints/S02_CLOSEOUT.md).
+
+## Start here in the next session
+
+This is the authoritative resume checkpoint, not an override of the PRD or approved
+ADRs. Read AGENTS.md, this file, [INDEX.md](../sprints/INDEX.md),
+[S02.md](../sprints/S02.md), [S02_CLOSEOUT.md](../sprints/S02_CLOSEOUT.md),
+[security review](../sprints/S02_SECURITY_REVIEW.md) and
+[ADR-0002](../adr/0002-authentication.md) before continuing.
+**Inspect Git status, branch, HEAD and relevant diffs before changing any file**;
+reconcile them with the checkpoint below and preserve existing changes. Use
+user-supplied Git output if the session does not authorize command execution.
+Historical next actions in other documents are not instructions to repeat completed
+work or begin S03. Do not rerun tests solely because older checkpoints list them as pending.
 
 ## Baselines and authority
 
 PRD v0.2; architecture v1.1; ADR-0001 and ADR-0002 remain PROPOSED.
 Authentication is implemented for review and disabled by default. The preceding closeout task
 authorized isolated edits/tests/local commits, but no push, merge, ADR approval or
-activation. This follow-up authorizes documentation correction only, without a commit.
+activation. This checkpoint authorizes documentation updates only; no features,
+application tests, Docker changes, commits, pushes, merges or sprint closure.
 
 ## Historical evidence preservation
 
@@ -27,9 +43,21 @@ SEC-LOG-04/05 checkpoints, exact historical test results and commit references.
 SEC-10's supplied excerpt lacked a final Compose exit code; old 102/6 results
 predated that fix. The newer closeout runs below do not retroactively fill that gap.
 
-## Latest evidence
+## Completed implementation for review
 
-- Backend: 100 passed / 8 skipped on local source and freshly installed Python 3.11.
+PostgreSQL 17 Compose, bounded readiness/least-privilege access, async SQLAlchemy
+with explicit transactions, identity models and guarded Alembic migrations exist.
+Review-only Google OIDC/Authlib routes, atomic database state consumption, encrypted
+OIDC context, opaque digest-backed sessions, CSRF/logout, principal resolution,
+account disable/revocation and scoped logging mitigation are implemented. Auth is
+disabled by default; live-provider or production acceptance is not implied.
+The package-discovery fix, isolated DB regression runner and extended CI exist;
+remote closeout CI has not been verified. Detailed ticket outcomes follow below.
+
+## Recorded verification evidence — not rerun in this checkpoint
+
+- Backend Python 3.11 (fresh installed package): 100 passed / 8 skipped.
+- Backend Python 3.12 (local source): 100 passed / 8 skipped.
 - PostgreSQL: 7 passed; migration upgrade/downgrade/upgrade and least privilege passed.
 - Authlib PoC: 56 passed / 1 xfailed / 1 warning. Stock DEBUG disclosure remains security FAIL.
 - Node 22: 17 passed; typecheck/lint/build passed.
@@ -39,6 +67,13 @@ predated that fix. The newer closeout runs below do not retroactively fill that 
 - Missing auth dependency package marker repaired after a fresh-install collection failure.
 - Legacy shared Compose test now opt-in; equivalent isolated contention assertions passed.
 - New CI workflow has three jobs; remote execution of this branch remains unverified.
+
+Source: preceding observed closeout execution recorded in
+[S02_CLOSEOUT.md](../sprints/S02_CLOSEOUT.md), including exact commands, failures and
+exit codes. Eight default skips comprise seven opt-in DB cases (passed separately)
+and one legacy shared-stack case (not run). Offline/fake-provider results are not
+live Google or browser verification. Stock XFAIL remains security FAIL; no new
+application tests or remote checks were executed for this documentation checkpoint.
 
 ## Ticket state
 
@@ -55,17 +90,36 @@ predated that fix. The newer closeout runs below do not retroactively fill that 
 ## Observed Git checkpoint
 
 - Worktree: `/Users/namnguyen/.codex/worktrees/s02-closeout/agentops-ai`.
-- Branch: `codex/s02-closeout`; starts at identity branch commit `d2bed54`.
+- Branch: `feat/s02-sprint-closeout` (locally renamed from `codex/s02-closeout`);
+  starts at identity branch commit `d2bed54`. The worktree path is unchanged.
 - Last observed verified code commit: `2b677e2`; CI import `5f7d180`.
-- Observed HEAD: `0d4dc1f6d2a8aa0fc5c20f4ee399bec89a9d4c26` (closeout documentation).
-- This historical-evidence correction is uncommitted; no new test execution is claimed.
+- Observed HEAD: `cc13f8a6f884652bc4f561e39ea01d4650ec947e` (historical handoff
+  archive correction); preceding closeout documentation commit: `0d4dc1f`.
+- At this checkpoint's start, five files were already modified: the four documents
+  listed below and `.github/workflows/backend-ci.yml` from the previous rename work.
+  This documentation pass preserves that existing workflow edit without modifying it.
+- Uncommitted checkpoint documents: `docs/handoff/CURRENT_STATE.md`,
+  `docs/sprints/S02.md`, `docs/sprints/INDEX.md`, `docs/sprints/S02_CLOSEOUT.md`.
+  Observed HEAD is the latest verified Git identity, not a claim that these uncommitted
+  changes were tested or committed. `2b677e2` remains the recorded code checkpoint.
+- Removed the obsolete `codex/**` push filter after inspecting repository workflows,
+  scripts and local/remote-tracking refs: no dependency found. Existing `feat/**`
+  covers this branch; pull-request triggers and CI jobs remain unchanged.
 - Original worktree remains on `feat/ag-003-3b-identity-migrations`.
 - Original modified README and untracked .github content hashes unchanged.
 - Last remote observation during the preceding 2026-11-23 closeout: PR #3 OPEN into
   main, two existing checks SUCCESS; PR #4 MERGED into PostgreSQL
   branch at `fa03f27cf986a638f52bdb48ef054478e0e2ddd8` (read-only GitHub evidence).
-  Remote status was not refreshed in this documentation-only correction.
+  GitHub status was not refreshed in this documentation checkpoint.
 - No closeout push/PR/merge. Proposed PR base: identity branch; owner must review full stack.
+
+## Pending acceptance and security gates
+
+The unchanged closeout matrix has 8/11 verified criteria. Criterion 4 (approved
+authentication architecture) remains BLOCKED; criteria 5 (conditional adoption and
+integration acceptance) and 10 (reviewed Git incorporation) remain PARTIAL.
+Owner signoff is still required. Documentation synchronization does not approve
+ADR-0002, waive security gates or close S02.
 
 ## Blockers and restrictions
 
@@ -84,6 +138,7 @@ its user-owned changes were intentionally preserved.
 
 ## Exactly one next action
 
-**AG-003.6:** Owner/Tech Lead reviews [S02_CLOSEOUT.md](../sprints/S02_CLOSEOUT.md),
-resolves acceptance/security gates and authorizes the proposed publication plan.
+**AG-003.6:** Conduct the Tech Lead / owner review of
+[S02_CLOSEOUT.md](../sprints/S02_CLOSEOUT.md) and its linked security/ADR decision
+package, recording explicit decisions on the remaining acceptance and release gates.
 Do not mark S02 CLOSED before approval and the unchanged sprint criteria are met.

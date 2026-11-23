@@ -6,6 +6,28 @@ migration, push, new PR, merge, shared-container mutation or Docker deletion occ
 The owner authorized local implementation, testing and commits for this closeout;
 that authorization overrides the older manual-copy workflow only for this task.
 
+## Next-session checkpoint — documentation only
+
+[CURRENT_STATE.md](../handoff/CURRENT_STATE.md) is the authoritative starting point
+for resuming; it does not override the PRD or approved ADRs. **S02 is NOT DONE.**
+Current ticket: **AG-003.6 — Tech Lead / owner security and acceptance review**.
+Current branch: `feat/s02-sprint-closeout`; observed HEAD:
+`cc13f8a6f884652bc4f561e39ea01d4650ec947e`. Recorded code checkpoint: `2b677e2`.
+The worktree path remains `/Users/namnguyen/.codex/worktrees/s02-closeout/agentops-ai`.
+Inspect Git before editing; four checkpoint documents and the preceding CI-trigger
+change are uncommitted. This pass edits documentation only and preserves that CI edit.
+
+All test results and commands below are retained prior execution evidence, not new
+runs. GitHub has not been refreshed: PR #3 was OPEN with basic checks passing at
+last observation; PR #4 was MERGED at `fa03f27`. Extended closeout CI remains
+UNVERIFIED on GitHub. ADR-0002 remains PROPOSED; production authentication is NOT
+APPROVED; review-only authentication stays disabled by default. XFAIL remains security FAIL.
+
+The [402-line historical handoff](../handoff/S02_HISTORY_2026-11-23.md) is preserved
+verbatim with provenance. Earlier branch names, execution paths and security findings
+remain audit evidence. The future push/PR examples below are proposals, not permission
+to execute them during this documentation task.
+
 ## Acceptance accounting
 
 These are the eleven existing success criteria in S02.md, equally weighted for a
@@ -152,7 +174,16 @@ research-resource authorization that has not been implemented.
 ## Git and PR integration
 
 - Starting base: `d2bed54`, existing identity branch; user work preserved in main worktree.
-- New branch: `codex/s02-closeout`; local-only, no remote publication.
+- Current branch: `feat/s02-sprint-closeout`, locally renamed from the original
+  `codex/s02-closeout`; local-only, no remote publication observed. Original command
+  paths and execution evidence above are preserved.
+- Rename synchronization observed HEAD `cc13f8a` (historical handoff archive), after
+  closeout documentation commit `0d4dc1f`; no new application tests were run.
+- The historical CI change above originally added `codex/**`. During rename
+  synchronization, repository workflow/script and local/remote-tracking ref inspection
+  found no dependency on that prefix. Its push filter was removed; existing `feat/**`
+  covers the renamed branch. Pull-request triggers and all three jobs are unchanged.
+  This local inspection does not claim verification of external automation.
 - CI import: `5f7d180` (equivalent patch to CI-001 `6fdf637`).
 - Verified code checkpoint: `2b677e2`; this documentation follows in a separate commit.
 - PR #3 OPEN: `feat/ag-003-2-postgresql-compose` → `main`; two Backend Tests checks
@@ -167,8 +198,8 @@ research-resource authorization that has not been implemented.
 Only after owner authorization, proposed commands from the isolated worktree:
 
 ```sh
-git push -u origin codex/s02-closeout
-gh pr create --base feat/ag-003-3b-identity-migrations --head codex/s02-closeout --title "S02: isolate verification and repair auth package discovery" --body-file docs/sprints/S02_CLOSEOUT.md
+git push -u origin feat/s02-sprint-closeout
+gh pr create --base feat/ag-003-3b-identity-migrations --head feat/s02-sprint-closeout --title "S02: isolate verification and repair auth package discovery" --body-file docs/sprints/S02_CLOSEOUT.md
 ```
 
 ### Retained isolated resources
@@ -181,6 +212,7 @@ synthetic marker data. Standalone frontend and two Python 3.11 check containers 
 exited. Resource removal requires a separate owner action; no cleanup command is executed.
 Shared AgentOps api/db/web remained running healthy after verification.
 
-**Exactly one next ticket/action:** AG-003.6 — owner/Tech Lead reviews this closeout
-package, resolves ADR/security acceptance and authorizes the proposed publication plan.
+**Exactly one recommended next action:** AG-003.6 — conduct the Tech Lead / owner
+security and acceptance review of this report and its linked decision package,
+recording explicit decisions on the remaining acceptance and release gates.
 S02 is ready for that review, not genuinely ready to close under its unchanged criteria.

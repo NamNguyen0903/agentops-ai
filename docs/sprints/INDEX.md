@@ -3,14 +3,27 @@
 **Version:** 1.5
 **Updated:** 2026-11-23
 **Latest closed sprint:** S01 — CLOSED (`PARTIALLY_VERIFIED`)
-**Current sprint:** S02 — Database & Authentication (`IN_PROGRESS`)
-**Current implementation ticket:** AG-003.6 — READY_FOR_TECH_LEAD_REVIEW
+**Current sprint:** S02 — Database & Authentication (`IN_PROGRESS / PARTIAL`)
+**Current ticket:** AG-003.6 — Tech Lead / owner security and acceptance review (READY_FOR_TECH_LEAD_REVIEW)
 **Product baseline:** PRD v0.2
 **Current handoff:** [CURRENT_STATE.md](../handoff/CURRENT_STATE.md)
 
 > Sprint closure means user scope signoff, not proof of full technical verification, remote merge or production readiness. Keep observed evidence distinct from user-reported success.
 
 ## Current isolated closeout checkpoint — 2026-11-23
+
+**Resume authority:** Start with [CURRENT_STATE.md](../handoff/CURRENT_STATE.md).
+**S02 is NOT DONE; production authentication is NOT APPROVED.** Inspect Git before
+changing files. Current branch: `feat/s02-sprint-closeout`; observed HEAD: `cc13f8a`.
+The four checkpoint documents and a pre-existing CI-trigger edit remain uncommitted.
+This is documentation reconciliation, not new test execution or architecture approval.
+
+**Exactly one recommended next action:** AG-003.6 — conduct the Tech Lead / owner
+security and acceptance review using [S02_CLOSEOUT.md](S02_CLOSEOUT.md), recording
+explicit decisions on open gates. Do not start S03 or close S02.
+Historical run results and prior next actions below describe their original checkpoints;
+this resume notice and CURRENT_STATE govern continuation. The complete earlier handoff
+is preserved in the [historical archive](../handoff/S02_HISTORY_2026-11-23.md).
 
 **PARTIAL — 8/11 existing acceptance criteria VERIFIED (72.7%, rounded 73%).**
 S02 remains IN_PROGRESS; ADR-0002 PROPOSED; auth disabled by default. See
@@ -24,9 +37,11 @@ lint and build passed. Isolated foundation readiness/least privilege/named-volum
 restart passed. Shared-stack HTTP smoke passed read-only.
 
 Fixed missing auth-dependency package marker, isolated legacy Compose tests, added
-concurrency coverage and expanded CI. PR #3 remains OPEN with its existing two checks
-SUCCESS; PR #4 MERGED (`fa03f27`) and CI-001 imported locally. New workflow remote
-execution remains UNVERIFIED. Code commit `2b677e2`; branch `codex/s02-closeout`.
+concurrency coverage and expanded CI. At the last GitHub observation, PR #3 was OPEN
+with two existing checks SUCCESS; PR #4 was MERGED (`fa03f27`). GitHub status has not
+been refreshed in this documentation checkpoint. CI-001 was imported locally. New workflow remote
+execution remains UNVERIFIED. Code commit `2b677e2`; current branch `feat/s02-sprint-closeout`
+(locally renamed from `codex/s02-closeout`; historical command paths unchanged).
 Original README and untracked .github preserved. No push, merge or activation.
 Earlier checkpoints below are historical and do not supersede this evidence.
 
@@ -104,7 +119,12 @@ Use separate workflow and verification status. Do not claim the sprint is fully 
 
 ## 6. Handoff and Git Consistency
 
-Start a new session with `AGENTS.md`, [CURRENT_STATE.md](../handoff/CURRENT_STATE.md), this index, [S02.md](S02.md), PRD and relevant ADRs. AG-003.3B commit `bae6fb0` was observed on branch `feat/ag-003-3b-identity-migrations`, with push reported successful. The root `README.md` was the only uncommitted working-tree change at the last checkpoint; later documentation edits are not part of that commit until separately committed.
+Start with `AGENTS.md` and [CURRENT_STATE.md](../handoff/CURRENT_STATE.md), then
+this index and its linked S02 documents. Inspect Git branch/status/HEAD and relevant
+diffs before editing. The observed local checkpoint is `cc13f8a` on
+`feat/s02-sprint-closeout`, with four modified checkpoint documents and an existing
+workflow-trigger edit; do not assume a clean tree. Earlier `bae6fb0`/identity-branch
+observations and reported pushes remain historical evidence, not the current resume point.
 
 ```bash
 git branch --show-current
@@ -124,7 +144,7 @@ Do not assume a PR merge or remote state without evidence.
 - Update ADRs only through an explicit decision; progress notes must preserve `PROPOSED` until accepted.
 
 
-## 8. Current Resume Point
+## 8. Historical Resume Point — superseded by CURRENT_STATE
 
 **Checkpoint date:** 2026-11-23.
 
@@ -158,7 +178,7 @@ Do not assume a PR merge or remote state without evidence.
 
 **Sprint closeout:** NOT AUTHORIZED. User approval required.
 
-## 2026-11-23 checkpoint
+## Historical 2026-11-23 checkpoint
 
 S02 remains IN_PROGRESS. Current gate: AG-003.1B security/architecture approval;
 AG-003.4 remains BLOCKED. Independent state-consumption, regression and frontend
@@ -172,9 +192,9 @@ owner authorization. AG-003.6 handoff is PARTIALLY_COMPLETE_WITH_BLOCKERS; S02
 remains IN_PROGRESS. ADR-0002 remains PROPOSED. See the final S02 addendum and
 CURRENT_STATE; earlier gate-only checkpoint is historical, not the current status.
 
-## Latest resume point — supersedes earlier checkpoints
+## Historical review sequence — superseded by the current closeout checkpoint
 
-## Current review checkpoint — 2026-11-23
+## Historical review checkpoint — 2026-11-23
 
 **READY_FOR_TECH_LEAD_REVIEW** for disabled Development MVP implementation; S02
 remains IN_PROGRESS and ADR-0002 PROPOSED. Latest observed: backend **102 passed,
