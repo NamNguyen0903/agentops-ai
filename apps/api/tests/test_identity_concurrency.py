@@ -6,6 +6,7 @@ Only the disposable migration-test database is permitted.
 All test writes are rolled back.
 """
 
+import os
 import secrets
 import subprocess
 import time
@@ -56,6 +57,10 @@ def validate_target():
     )
 
 
+@pytest.mark.skipif(
+    os.getenv("AGENTOPS_RUN_LEGACY_COMPOSE_TESTS") != "1",
+    reason="Legacy shared Compose test requires separate explicit opt-in",
+)
 @pytest.mark.integration
 def test_concurrent_unique_insert_and_rollback():
     validate_target()

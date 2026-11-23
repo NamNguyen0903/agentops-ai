@@ -180,6 +180,7 @@ export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
 python -m pytest -p no:cacheprovider -q --tb=short \
     tests/test_auth_postgres.py \
     tests/test_identity_db_integration.py \
+    tests/test_identity_unique_postgres.py \
     tests/test_oidc_state_postgres.py \
     tests/test_auth_disable_concurrency.py
 
