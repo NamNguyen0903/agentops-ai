@@ -1378,3 +1378,16 @@ checks passed. No production activation, migration or real Google sign-in occurr
 See [source-grounded review and decision package](../sprints/S02_SECURITY_REVIEW.md)
 for findings, advisory sources, tests and remaining gates. These observations are
 not ADR acceptance or permission to enable authentication.
+
+
+## Isolated S02 closeout follow-up — 2026-11-23
+
+ADR-0002 remains PROPOSED; auth disabled by default. Conditional adoption has not
+become approval. Fresh installed-package verification found and repaired a missing
+`api/dependencies/__init__.py`; source-path tests alone had masked package omission.
+Current backend result is 100 passed / 8 skipped; seven opt-in PostgreSQL cases
+passed separately. Stock Authlib DEBUG disclosure remains security FAIL despite
+the expected xfail. No auth/schema policy change, production rollout or remote
+integration is implied. Owner approval and deployment security gates remain open.
+See [S02 closeout evidence](../sprints/S02_CLOSEOUT.md) for execution, failures and
+acceptance accounting; older test totals above remain historical checkpoints.

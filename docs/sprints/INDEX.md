@@ -10,6 +10,26 @@
 
 > Sprint closure means user scope signoff, not proof of full technical verification, remote merge or production readiness. Keep observed evidence distinct from user-reported success.
 
+## Current isolated closeout checkpoint — 2026-11-23
+
+**PARTIAL — 8/11 existing acceptance criteria VERIFIED (72.7%, rounded 73%).**
+S02 remains IN_PROGRESS; ADR-0002 PROPOSED; auth disabled by default. See
+[closeout evidence and exact commands](S02_CLOSEOUT.md) for the denominator,
+failures, limits, retained resources and PR plan.
+
+Current observed results: backend **100 passed / 8 skipped** on source Python 3.12
+and fresh installed Python 3.11; **7 real PostgreSQL cases passed** with migration
+lifecycle; PoC **56 passed / 1 security xfailed**; Node 22 **17 tests**, typecheck,
+lint and build passed. Isolated foundation readiness/least privilege/named-volume
+restart passed. Shared-stack HTTP smoke passed read-only.
+
+Fixed missing auth-dependency package marker, isolated legacy Compose tests, added
+concurrency coverage and expanded CI. PR #3 remains OPEN with its existing two checks
+SUCCESS; PR #4 MERGED (`fa03f27`) and CI-001 imported locally. New workflow remote
+execution remains UNVERIFIED. Code commit `2b677e2`; branch `codex/s02-closeout`.
+Original README and untracked .github preserved. No push, merge or activation.
+Earlier checkpoints below are historical and do not supersede this evidence.
+
 ## 1. Sprint Roadmap
 
 | Sprint | Goal | Workflow status | Report |
@@ -40,7 +60,7 @@ The sprint schedule is a planning target, not a guarantee. Do not link future re
 
 The AG-002.4 branch was reported pushed. Final merge confirmation and remaining frontend/browser evidence are outstanding.
 
-## 3. S02 Progress (2026-11-23)
+## 3. Historical S02 Progress (superseded by closeout checkpoint above)
 
 | Ticket | Workflow | Evidence |
 |---|---|---|
