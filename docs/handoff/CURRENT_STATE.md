@@ -10,8 +10,22 @@ This is not production readiness or test coverage. See the
 ## Baselines and authority
 
 PRD v0.2; architecture v1.1; ADR-0001 and ADR-0002 remain PROPOSED.
-Authentication is implemented for review and disabled by default. Latest owner task
-authorized isolated edits/tests/local commits; no push, merge, ADR approval or activation.
+Authentication is implemented for review and disabled by default. The preceding closeout task
+authorized isolated edits/tests/local commits, but no push, merge, ADR approval or
+activation. This follow-up authorizes documentation correction only, without a commit.
+
+## Historical evidence preservation
+
+The complete **402-line** handoff from identity-branch commit
+`d2bed54825d83e17efad5b6cde442e8ff470665f` is preserved verbatim in the
+[historical handoff archive](S02_HISTORY_2026-11-23.md), with provenance, content hash
+and an evidence guide. Its older next actions and Git/approval statements are historical.
+
+The archive retains FastAPI Users AUTH-P failures/gaps, Authlib OIDC-P10 exposure
+and forced-XFAIL evidence, owner review-only authorization, SEC-03–07/SEC-10 and
+SEC-LOG-04/05 checkpoints, exact historical test results and commit references.
+SEC-10's supplied excerpt lacked a final Compose exit code; old 102/6 results
+predated that fix. The newer closeout runs below do not retroactively fill that gap.
 
 ## Latest evidence
 
@@ -43,11 +57,14 @@ authorized isolated edits/tests/local commits; no push, merge, ADR approval or a
 - Worktree: `/Users/namnguyen/.codex/worktrees/s02-closeout/agentops-ai`.
 - Branch: `codex/s02-closeout`; starts at identity branch commit `d2bed54`.
 - Last observed verified code commit: `2b677e2`; CI import `5f7d180`.
-- Documentation is committed after that checkpoint; no self-referential final SHA claim.
+- Observed HEAD: `0d4dc1f6d2a8aa0fc5c20f4ee399bec89a9d4c26` (closeout documentation).
+- This historical-evidence correction is uncommitted; no new test execution is claimed.
 - Original worktree remains on `feat/ag-003-3b-identity-migrations`.
 - Original modified README and untracked .github content hashes unchanged.
-- PR #3 OPEN into main, two existing checks SUCCESS; PR #4 MERGED into PostgreSQL
+- Last remote observation during the preceding 2026-11-23 closeout: PR #3 OPEN into
+  main, two existing checks SUCCESS; PR #4 MERGED into PostgreSQL
   branch at `fa03f27cf986a638f52bdb48ef054478e0e2ddd8` (read-only GitHub evidence).
+  Remote status was not refreshed in this documentation-only correction.
 - No closeout push/PR/merge. Proposed PR base: identity branch; owner must review full stack.
 
 ## Blockers and restrictions
@@ -56,6 +73,10 @@ ADR acceptance, conditional auth adoption/security controls and reviewed remote
 integration remain incomplete. Live Google, deployed log collectors, key lifecycle,
 operator provisioning/disable procedures, retention jobs, distributed abuse protection,
 full advisory audit and process-kill/transport failure recovery are not verified.
+Multi-tab CSRF proof rotation remains a known limitation. Broader global/indirect
+default-privilege review and backup-restore verification remain incomplete. Tested
+account-wide revocation does not establish approved operator lifecycle procedures;
+configured-handler mitigation does not resolve stock PKCE logging exposure.
 No normal development DB migration, production enablement or S03 work occurred.
 Stopped isolated test containers/volumes remain; see closeout report for exact names.
 Never remove shared resources as cleanup. Root README may contain old status text;
