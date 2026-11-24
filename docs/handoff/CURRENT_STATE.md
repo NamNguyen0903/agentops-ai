@@ -1,14 +1,14 @@
 # AgentOps AI — Current State
 
-## Authoritative resume checkpoint — 2026-11-24, S04-WP02 merged
+## Authoritative resume checkpoint — 2026-11-24, S04-WP03 delivered
 
 - S01: CLOSED; S02: CLOSED, 11/11; S03: CLOSED, 12/12 (Development MVP only).
 - S03 application PR #8: MERGED at `f533857b97dc0d6bd4024063779daec52c752bf4`; main CI `45346656444` PASS.
 - S03 final docs PR #9: MERGED at `6544f35dc23e5389447a14df8846611a6c3682ef`; main CI `45347328155` PASS.
 - Final S03 docs synchronization: **COMPLETE**. Do not open an additional S03 closeout PR.
-- Owner-verified merge: `main` at `151af7ee18b4d3448810fce948dbbae223a64a14`, clean after fast-forward; current documentation branch: `docs/s04-wp02-closeout`; exactly one canonical worktree `/Users/namnguyen/agentops-ai`.
+- Owner-verified WP03 merge: `main` at `f4b162568ee67d9f15ded9b4ce14270b04961d3c`; main CI `45402438307` PASS; current documentation branch: `docs/s04-wp03-delivery`; exactly one canonical worktree `/Users/namnguyen/agentops-ai`.
 - Existing `stash@{0}` is a backup from S03 worktree consolidation; preserve untouched.
-- S04 — Single-agent LangGraph: **WP01/WP02 VERIFIED and MERGED; WP03 NEXT / NOT_STARTED**. [S04 approved contract](../sprints/S04.md), [ADR-0004 ACCEPTED — Development MVP only](../adr/0004-langgraph-state-and-agent-boundaries.md).
+- S04 — Single-agent LangGraph: **WP01/WP02/WP03 DELIVERED; WP04 NEXT**. [S04 approved contract](../sprints/S04.md), [ADR-0004 ACCEPTED — Development MVP only](../adr/0004-langgraph-state-and-agent-boundaries.md).
 - `AGENTS.md` v1.2 governs engineering; owner performs commit, push and merge manually.
 
 ## Verified S03 capability and evidence (retained)
@@ -103,7 +103,7 @@ Retained from the S03 baseline for traceability. The later S03 final docs PR #9 
 - WP02: VERIFIED, PR #10 MERGED.
 - Source commit: `0dd3c58b94d0c5ecb4779ed6730151d841bb4761`.
 - Main merge commit: `151af7ee18b4d3448810fce948dbbae223a64a14`.
-- WP03: NEXT / NOT_STARTED.
+- WP03: DELIVERED; PR #12 MERGED; main CI PASS.
 - WP04: NOT_STARTED.
 - Production authorization: NOT APPROVED.
 
@@ -123,8 +123,23 @@ Retained from the S03 baseline for traceability. The later S03 final docs PR #9 
 
 ## Exactly one next action
 
-Review the S04-WP03 staged file inventory and diff.
-Commit the owner-approved WP03 changes only after
-staging verification. Then push the feature branch,
-open an owner-controlled PR and verify all CI gates.
-Do not merge before successful PR CI and owner review.
+Begin S04-WP04 Final Acceptance and Sprint Closeout.
+Review AC01–AC10, ADR-0004, implementation evidence,
+open security limitations and the Sprint Contract.
+Keep S04 IN_PROGRESS until WP04 owner sign-off,
+documentation closeout, PR CI and main CI are verified.
+
+## S04-WP03 delivered checkpoint
+
+- Date: 2026-11-24.
+- PR #12: MERGED into main.
+- Merge commit: `f4b162568ee67d9f15ded9b4ce14270b04961d3c`.
+- PR CI: 8/8 PASS.
+- Main CI run `45402438307`: 4/4 jobs SUCCESS.
+- Focused regression: 70 PASS.
+- Backend regression: 194 PASS, 49 SKIP.
+- Dependency audits: 7/7 PASS.
+- AC05–AC08: owner-approved Development MVP acceptance.
+- Owner-approved 30-second soft deadline is non-interrupting.
+- WP04: NEXT; S04 remains IN_PROGRESS.
+- No production approval or live-provider authorization.
