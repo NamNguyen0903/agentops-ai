@@ -1,16 +1,28 @@
 # AgentOps AI — Sprint Index
 
-## Authoritative active roadmap — 2026-11-24 (S04-WP04 IN_PROGRESS)
+## Authoritative active roadmap — 2026-11-24 (S04 CLOSED; S05 NEXT)
 
 | Sprint | Status | Evidence / contract |
 |---|---|---|
 | S01 | CLOSED | Historical sprint record |
 | S02 | CLOSED, 11/11 | [S02 closeout](S02_CLOSEOUT.md) |
 | S03 | CLOSED, 12/12 | PR #8 / #9 MERGED, main CI PASS; [S03 closeout](S03_CLOSEOUT.md) |
-| S04 — Single-agent LangGraph | **IN_PROGRESS; WP01–WP03 DELIVERED, WP04 IN_PROGRESS** | [S04 approved contract](S04.md), [ADR-0004 ACCEPTED — Development MVP only](../adr/0004-langgraph-state-and-agent-boundaries.md) |
+| S04 — Single-agent LangGraph | **CLOSED; WP01–WP04 DELIVERED — DEVELOPMENT MVP ONLY** | [S04 approved contract](S04.md), [ADR-0004 ACCEPTED — Development MVP only](../adr/0004-langgraph-state-and-agent-boundaries.md) |
 | S05–S09 | PLANNED | Historical roadmap below; no implementation implied |
 
-Owner approved S04 contract and ADR-0004 on 2026-11-24 for Development MVP; WP01/WP02 verified and merged via PR #10, merge `151af7e`, main CI `45377051431` PASS; WP03 delivered via PR #12, merge f4b1625, main CI 45402438307 PASS; WP04 is in progress; AC09 owner-approved, AC10 conditionally approved; closeout delivery pending. All S02/S03 security gates continue; production NOT APPROVED. Single canonical worktree and backup stash preserved. The sections after the following divider are **historical snapshots** (including earlier 'current' headings and pending actions) and do not supersede this active roadmap or [CURRENT_STATE](../handoff/CURRENT_STATE.md).
+Owner approved S04 contract and ADR-0004 on 2026-11-24 for Development MVP; WP01/WP02 verified and merged via PR #10, merge `151af7e`, main CI `45377051431` PASS; WP03 delivered via PR #12, merge f4b1625, main CI 45402438307 PASS; WP04 DELIVERED; AC09 and AC10 accepted for Development MVP; PR #14 MERGED and post-merge main CI 45417693955 PASS; S04 CLOSED. All S02/S03 security gates continue; production NOT APPROVED. Single canonical worktree and backup stash preserved. The sections after the following divider are **historical snapshots** (including earlier 'current' headings and pending actions) and do not supersede this active roadmap or [CURRENT_STATE](../handoff/CURRENT_STATE.md).
+
+### S04 final closeout checkpoint
+
+- Date: 2026-11-24.
+- Sprint S04: CLOSED — Development MVP only.
+- WP01–WP04: DELIVERED.
+- AC01–AC10: accepted within Development MVP scope.
+- Closeout PR #14: MERGED.
+- PR CI run 45417304467: 4/4 PASS.
+- Post-merge main CI run 45417693955: 4/4 PASS.
+- S05: NEXT; not started or approved by this checkpoint.
+- Production authorization: NOT APPROVED.
 
 ---
 
