@@ -1,6 +1,41 @@
+## Authoritative resume checkpoint — 2026-11-24, S04 CLOSED; S05 NEXT
+
+- Repository: NamNguyen0903/agentops-ai.
+- S04: CLOSED — Development MVP only.
+- WP01–WP04: DELIVERED.
+- AC01–AC10: accepted within Development MVP scope.
+- AC10 conditional owner sign-off: FULFILLED.
+- Final closeout PR #14: MERGED.
+- PR CI run 45417304467: 4/4 PASS.
+- Merge commit:
+  549d838530e6d36ad3c24158454d2184aa52ad2b.
+- Post-merge main CI run 45417693955: 4/4 PASS.
+- Final-state documentation sync: IN_PROGRESS
+  on branch docs/s04-final-state-sync.
+- S05: NEXT; NOT STARTED.
+- S05 scope and implementation require separate
+  contract review and owner approval.
+- Production authorization: NOT APPROVED.
+- Soft execution deadline is not a hard timeout.
+- No live AI provider, durable worker recovery,
+  real publication or production activation is approved.
+- Preserve existing security gates and limitations.
+- Preserve backup stash@{0}; do not pop or drop.
+- Use one canonical repository worktree.
+
+### Exactly one next action
+
+Complete S04 final-state documentation sync:
+review four Markdown files, commit, push, open PR,
+verify PR CI, merge and verify post-merge main CI.
+After final sync, prepare S05 contract review;
+do not start S05 implementation without owner approval.
+
+---
+
 # AgentOps AI — Current State
 
-## Authoritative resume checkpoint — 2026-11-24, S04-WP03 delivered
+## Historical resume checkpoint — 2026-11-24, S04-WP03 delivered
 
 - S01: CLOSED; S02: CLOSED, 11/11; S03: CLOSED, 12/12 (Development MVP only).
 - S03 application PR #8: MERGED at `f533857b97dc0d6bd4024063779daec52c752bf4`; main CI `45346656444` PASS.
@@ -121,7 +156,7 @@ Retained from the S03 baseline for traceability. The later S03 final docs PR #9 
 - AC05–AC10: PENDING.
 - Existing Authlib strict XFAIL and release gates remain.
 
-## Exactly one next action
+## Historical next action — superseded by S04 final checkpoint
 
 Review and deliver S04-WP04 final closeout documentation.
 AC09 is owner-approved and AC10 is conditionally approved.
@@ -144,7 +179,7 @@ Keep S04 IN_PROGRESS until post-merge main CI succeeds.
 - WP04: NEXT; S04 remains IN_PROGRESS.
 - No production approval or live-provider authorization.
 
-## S04-WP04 AC10 readiness checkpoint
+## Historical S04-WP04 AC10 readiness checkpoint
 
 - Date: 2026-11-24.
 - WP01–WP03: DELIVERED.
