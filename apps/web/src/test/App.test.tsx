@@ -1,6 +1,5 @@
 
 import {
-  fireEvent,
   render,
   screen,
   within,
@@ -39,7 +38,7 @@ describe("frontend routes", () => {
 
     expect(
       screen.getByRole("heading", {
-        name: "No research history yet",
+        name: "View your saved research",
       }),
     ).toBeInTheDocument();
 
@@ -86,7 +85,7 @@ describe("frontend routes", () => {
     );
 
     const scope = screen.getByLabelText(
-      /Research scope \(optional\)/,
+      /Geography/,
     );
 
     await user.click(question);
@@ -150,71 +149,18 @@ describe("frontend routes", () => {
     );
   });
 
-  it("prevents research submission", async () => {
+  it("does not submit a blank question", async () => {
     const user = userEvent.setup();
 
     renderRoute("/research/new");
 
-    await user.type(
-      screen.getByLabelText(
-        /Research question \(required\)/,
-      ),
-      "Compare product positioning",
+    await user.click(
+      screen.getByRole("button", { name: "Submit research" }),
     );
 
-    const button = screen.getByRole(
-      "button",
-      { name: "Submit research — unavailable" },
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Enter a research question.",
     );
-
-    expect(button).toBeDisabled();
-
-    await user.click(button);
-
-    const form = screen.getByRole(
-      "form",
-      { name: "Research question" },
-    );
-
-    const event = new Event("submit", {
-      bubbles: true,
-      cancelable: true,
-    });
-
-    fireEvent(form, event);
-
-    expect(event.defaultPrevented).toBe(true);
-
-    expect(fetch).not.toHaveBeenCalled();
-
-    expect(
-      screen.getByRole("heading", {
-        name: "Submission is not available yet",
-      }),
-    ).toBeInTheDocument();
-  });
-
-  it("shows an honest research history empty state", () => {
-    renderRoute("/research/history");
-
-    expect(
-      screen.getByRole("heading", {
-        level: 1,
-        name: "Research history",
-      }),
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByRole("heading", {
-        name: "No research history yet",
-      }),
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText(
-        /Backend history integration is planned/,
-      ),
-    ).toBeInTheDocument();
 
     expect(fetch).not.toHaveBeenCalled();
   });

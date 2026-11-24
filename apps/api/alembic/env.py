@@ -14,8 +14,8 @@ from sqlalchemy.pool import NullPool
 
 from agentops_api.core.orm import APP_SCHEMA, Base
 
-# Register all identity tables with SQLAlchemy metadata.
-from agentops_api.models import identity  # noqa: F401
+# Register the identity and research persistence tables with SQLAlchemy metadata.
+from agentops_api.models import identity, research, queue  # noqa: F401
 
 
 EXPECTED_ROLE = "agentops_migrator"
@@ -51,9 +51,13 @@ def run_migrations_online() -> None:
             "is authorized at this stage."
         )
 
-    if len(Base.metadata.tables) != 4:
+    if set(Base.metadata.tables) != {
+        "app.users", "app.auth_identities", "app.auth_sessions",
+        "app.oidc_login_transactions", "app.research_tasks",
+        "app.queue_control",
+    }:
         raise CommandError(
-            "Expected four approved identity models."
+            "Expected identity, research and queue coordination models."
         )
 
     engine = create_engine(

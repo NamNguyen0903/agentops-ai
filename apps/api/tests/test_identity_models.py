@@ -79,5 +79,11 @@ def test_security_check_constraints_exist():
         assert checks
 
 
-def test_model_import_does_not_create_migrations():
-    assert len(Base.metadata.tables) == 4
+def test_model_import_registers_only_expected_tables():
+    from agentops_api.models import research, queue  # noqa: F401
+
+    assert set(Base.metadata.tables) == {
+        "app.users", "app.auth_identities", "app.auth_sessions",
+        "app.oidc_login_transactions", "app.research_tasks",
+        "app.queue_control",
+    }

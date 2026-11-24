@@ -1,5 +1,27 @@
 # AgentOps AI — Sprint Index
 
+## Current roadmap — 2026-11-24, S03-WP03
+
+Start with [CURRENT_STATE.md](../handoff/CURRENT_STATE.md), then inspect actual Git.
+S02 is CLOSED, 11/11 accepted by the owner; PR #7 merge/final main CI are
+owner-reported. Remote main was fetched once and matches
+`7e20e73c32db8287447445d5d48e9331d211ff7c`.
+
+| Sprint | Current status | Report |
+|---|---|---|
+| S02 — Database & Authentication | CLOSED — Development MVP only | [S02](S02.md) |
+| S03 — Research Task API and Dashboard | IN_PROGRESS; WP01–WP03 VERIFIED_LOCALLY; AC01–AC10 verified, AC11–AC12 pending | [S03](S03.md) |
+| S04–S09 | PLANNED; existing roadmap goals retained | Reports not yet created |
+
+Exactly one next work package: **S03-WP04 — Integration, CI & Closeout**.
+Branch: `feat/s03-research-persistence`; see the handoff for its worktree and
+observed Git checkpoint. No push, merge, deployment or S03 closeout is implied.
+ADR-0002 remains ACCEPTED — DEVELOPMENT MVP ONLY; authentication stays disabled
+by default. Stock PKCE logging remains security FAIL. All release gates remain.
+
+Everything below is historical checkpoint evidence, including older tables and
+next actions. It does not override this current roadmap or CURRENT_STATE.
+
 ## 2026-11-24 — Final owner acceptance and S02 closeout
 
 ### Current sprint roadmap
@@ -535,3 +557,52 @@ Next action: complete documentation synchronization and final regression.
 ### Exactly one next action
 
 Synchronize `docs/handoff/CURRENT_STATE.md`, then perform final scoped Git review and staging. Preserve unrelated root `README.md` changes.
+
+
+### S03-WP04 local integration checkpoint
+
+- WP01–WP03: VERIFIED_LOCALLY and committed.
+- WP04 local runtime/browser integration: VERIFIED.
+- AC01–AC10 verified; AC11 remote CI pending; AC12 pending.
+- Sprint S03 remains IN_PROGRESS, 10/12 formal acceptance.
+- Next: scoped WP04 local delivery commit and owner-authorized remote CI.
+- Production approval: NOT APPROVED.
+
+
+### S03 remote CI and closeout checkpoint — 2026-11-24
+
+- S03: IN_PROGRESS; CLOSEOUT_PREPARED.
+- WP01–WP04 implementation and integration: VERIFIED.
+- AC01–AC11: VERIFIED.
+- AC12: OWNER_APPROVED; FINAL_DELIVERY_PENDING.
+- Formal acceptance: 11/12 (91.7%).
+- PR #8.
+- Verified source: f414786.
+- Remote push CI: 45345545692, PASS.
+- Remote PR CI: 45345553676, PASS.
+- Main CI: PENDING.
+- Production approval: NOT APPROVED.
+- Next: final closeout commit, PR CI and merge verification.
+- S04 remains pending S03 closure.
+
+See [S03_CLOSEOUT.md](S03_CLOSEOUT.md).
+
+## Owner sign-off — 2026-11-24
+
+- Decision: APPROVED.
+- Approver: Project Owner.
+- Scope: Development MVP only.
+- Owner statement:
+
+  "Tôi đồng ý nghiệm thu Sprint S03 trong phạm vi
+  Development MVP, giữ nguyên các release gates
+  và cho phép hoàn tất closeout."
+
+- Implementation and verification: ACCEPTED.
+- Existing release gates: PRESERVED.
+- Production approval: NOT APPROVED.
+- Closeout execution: AUTHORIZED.
+- Final closeout commit CI: PENDING.
+- Pull request merge: PENDING.
+- Main CI verification: PENDING.
+- Sprint closure: PENDING final delivery verification.

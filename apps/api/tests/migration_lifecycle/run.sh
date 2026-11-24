@@ -2,7 +2,7 @@
 #!/bin/sh
 set -eu
 
-echo "=== AG-003.3B: Migration Lifecycle ==="
+echo "=== S03-WP02: Admission Migration Lifecycle ==="
 
 # Copy source into a writable temporary directory.
 # Keep the repository mount read-only.
@@ -42,9 +42,18 @@ expected_tables = {
     "auth_identities",
     "auth_sessions",
     "oidc_login_transactions",
+    "research_tasks",
+    "queue_control",
 }
 
-revision = "0291ce4556fe"
+revision = "94e4c1a20902"
+if phase == "research":
+    expected_tables.remove("queue_control")
+    revision = "83d3b0f10901"
+elif phase == "identity":
+    expected_tables.remove("queue_control")
+    expected_tables.remove("research_tasks")
+    revision = "0291ce4556fe"
 
 try:
     with engine.connect() as connection:
@@ -85,7 +94,7 @@ try:
             assert tables == set(), tables
             assert current_revision is None
 
-        elif phase == "upgraded":
+        elif phase in {"upgraded", "research", "identity"}:
             assert tables == expected_tables, tables
             assert current_revision == revision
 
@@ -97,7 +106,7 @@ try:
 
             assert constraints >= 19, constraints
 
-            # Runtime role must have DML on identity tables.
+            # Runtime role must have DML, but no DDL or Alembic access.
             for table_name in expected_tables:
                 for privilege in (
                     "SELECT", "INSERT", "UPDATE", "DELETE"
@@ -116,10 +125,28 @@ try:
                         },
                     ).scalar_one()
 
-                    assert permitted, (
-                        f"Missing {privilege} "
+                    expected = (
+                        table_name != "queue_control"
+                        or privilege in {"SELECT", "UPDATE"}
+                    )
+                    assert permitted == expected, (
+                        f"Unexpected {privilege} permission "
                         f"on app.{table_name}"
                     )
+
+            if "queue_control" in expected_tables:
+                rows = connection.execute(text(
+                    "SELECT id FROM app.queue_control"
+                )).scalars().all()
+                assert rows == [1], rows
+
+                assert connection.scalar(text(
+                    "SELECT id FROM app.queue_control "
+                    "WHERE id = 1 FOR UPDATE"
+                )) == 1
+
+                print("PASS: queue singleton, grants and migrator lock")
+
 
             # No runtime schema creation.
             can_create = connection.execute(
@@ -167,6 +194,43 @@ echo "=== 1. Verify empty database ==="
 check_state empty
 
 echo "=== 2. Upgrade to head ==="
+python -m alembic -c alembic.ini upgrade 0291ce4556fe
+check_state identity
+python - <<'PY'
+import os
+from sqlalchemy import create_engine, text
+engine = create_engine(os.environ["AGENTOPS_MIGRATION_DATABASE_URL"], hide_parameters=True)
+try:
+    with engine.begin() as connection:
+        connection.execute(text("INSERT INTO app.users (id) VALUES ('00000000-0000-0000-0000-000000000303')"))
+finally:
+    engine.dispose()
+PY
+python -m alembic -c alembic.ini upgrade head
+check_state upgraded
+python -m alembic -c alembic.ini check
+
+echo "=== 2a. Queue-only downgrade preserves WP01 schema ==="
+python -m alembic -c alembic.ini downgrade 83d3b0f10901
+check_state research
+python -m alembic -c alembic.ini upgrade head
+check_state upgraded
+python -m alembic -c alembic.ini check
+
+echo "=== 2b. Research-only downgrade preserves S02 identity data ==="
+python -m alembic -c alembic.ini downgrade 0291ce4556fe
+check_state identity
+python - <<'PY'
+import os
+from sqlalchemy import create_engine, text
+engine = create_engine(os.environ["AGENTOPS_MIGRATION_DATABASE_URL"], hide_parameters=True)
+try:
+    with engine.connect() as connection:
+        assert connection.scalar(text("SELECT count(*) FROM app.users WHERE id = '00000000-0000-0000-0000-000000000303'")) == 1
+        print("PASS: S02 identity row survives additive upgrade/downgrade")
+finally:
+    engine.dispose()
+PY
 python -m alembic -c alembic.ini upgrade head
 check_state upgraded
 
@@ -189,6 +253,9 @@ python -m pytest -p no:cacheprovider -q --tb=short \
     tests/test_identity_db_integration.py \
     tests/test_identity_unique_postgres.py \
     tests/test_oidc_state_postgres.py \
-    tests/test_auth_disable_concurrency.py
+    tests/test_auth_disable_concurrency.py \
+    tests/test_research_postgres.py \
+    tests/test_research_api_postgres.py \
+    tests/test_research_runtime_postgres.py
 
 echo "PASS: PostgreSQL integration tests"

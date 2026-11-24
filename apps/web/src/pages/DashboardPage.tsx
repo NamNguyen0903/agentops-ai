@@ -11,8 +11,8 @@ export default function DashboardPage() {
         </p>
         <p className="muted">
           AgentOps AI is being built to organize competitor and market research
-          around traceable evidence. This frontend preview lets you explore the
-          workspace and prepare a question.
+          around traceable evidence. Submit a question and review
+          your saved research tasks.
         </p>
       </section>
 
@@ -31,7 +31,7 @@ export default function DashboardPage() {
         <div className="hero-note">
           <strong>Research execution is not connected yet.</strong>
           <p>
-            Preparing a question does not submit a task or generate a report.
+            Accepted research tasks are saved, but AI execution and reports remain unavailable.
           </p>
         </div>
       </section>
@@ -45,10 +45,10 @@ export default function DashboardPage() {
           <span className="empty-symbol" aria-hidden="true">
             ↗
           </span>
-          <h3>No research history yet</h3>
+          <h3>View your saved research</h3>
           <p>
-            No records are loaded in this preview. Saved research will appear
-            after backend history integration is implemented.
+            Open research history to retrieve tasks belonging to your
+            authenticated account.
           </p>
         </div>
       </section>

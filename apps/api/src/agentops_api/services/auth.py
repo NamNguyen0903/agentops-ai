@@ -79,40 +79,56 @@ class AuthService:
         return token
 
     async def principal(self, token, *, csrf=None, logout=False, new_csrf=False):
+        async with self.factory() as session, session.begin():
+            return await self.principal_in_transaction(
+                session, token, csrf=csrf, logout=logout,
+                new_csrf=new_csrf,
+            )
+
+    async def principal_in_transaction(
+        self, session, token, *, csrf=None,
+        logout=False, new_csrf=False, require_csrf=False,
+    ):
+        """Authenticate under caller-owned transaction and existing lock order."""
+        if not session.in_transaction():
+            raise RuntimeError("Authentication requires an explicit transaction")
         if not token or len(token) > 256:
             return None
-        async with self.factory() as session, session.begin():
-            # All account/session mutations lock User before AuthSession.
-            # The initial lookup is advisory only; revalidate the session under lock.
-            owner_id = await session.scalar(select(AuthSession.user_id).where(
-                AuthSession.token_digest == digest(token)))
-            if owner_id is None:
-                return None
-            user = await session.scalar(select(User).where(User.id == owner_id)
-                .with_for_update().execution_options(populate_existing=True))
-            if user is None or not user.is_active:
-                return None
-            record = await session.scalar(select(AuthSession).where(
-                AuthSession.token_digest == digest(token), AuthSession.user_id == owner_id)
-                .with_for_update().execution_options(populate_existing=True))
-            if record is None:
-                return None
-            now = await session.scalar(select(func.clock_timestamp()))
-            if (record.revoked_at or record.idle_expires_at <= now or record.absolute_expires_at <= now
-                    or user is None or not user.is_active):
-                return None
-            if logout:
-                if not csrf or not hmac.compare_digest(record.csrf_token_digest, digest(csrf)):
-                    raise ValueError('Invalid CSRF proof')
-                record.revoked_at = now
-            else:
-                record.last_seen_at = now
-                record.idle_expires_at = min(now+timedelta(minutes=30), record.absolute_expires_at)
-            proof = random_token() if new_csrf else None
-            if proof:
-                record.csrf_token_digest = digest(proof)
-            result = {'id': str(user.id), 'csrf_token': proof}
+        # All account/session mutations lock User before AuthSession.
+        # The initial lookup is advisory only; revalidate the session under lock.
+        owner_id = await session.scalar(select(AuthSession.user_id).where(
+            AuthSession.token_digest == digest(token)))
+        if owner_id is None:
+            return None
+        user = await session.scalar(select(User).where(User.id == owner_id)
+            .with_for_update().execution_options(populate_existing=True))
+        if user is None or not user.is_active:
+            return None
+        record = await session.scalar(select(AuthSession).where(
+            AuthSession.token_digest == digest(token), AuthSession.user_id == owner_id)
+            .with_for_update().execution_options(populate_existing=True))
+        if record is None:
+            return None
+        now = await session.scalar(select(func.clock_timestamp()))
+        if (record.revoked_at or record.idle_expires_at <= now or record.absolute_expires_at <= now
+                or user is None or not user.is_active):
+            return None
+        if logout or require_csrf:
+            if not csrf or len(csrf) > 256 or not hmac.compare_digest(
+                record.csrf_token_digest, digest(csrf)
+            ):
+                raise ValueError('Invalid CSRF proof')
+        if logout:
+            record.revoked_at = now
+        else:
+            record.last_seen_at = now
+            record.idle_expires_at = min(now+timedelta(minutes=30), record.absolute_expires_at)
+        proof = random_token() if new_csrf else None
+        if proof:
+            record.csrf_token_digest = digest(proof)
+        result = {'id': str(user.id), 'csrf_token': proof}
         return result
+
     async def disable_user_and_revoke_sessions(self, user_id):
         async with self.factory() as session, session.begin():
             user = await session.scalar(

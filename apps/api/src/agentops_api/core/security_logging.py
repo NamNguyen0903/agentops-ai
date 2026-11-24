@@ -8,7 +8,9 @@ import logging
 
 
 SAFE_EVENTS = {'auth.login.failure', 'auth.callback.failure', 'auth.session.failure',
-               'auth.csrf.failure', 'auth.logout.failure'}
+               'auth.csrf.failure', 'auth.logout.failure',
+               'research.database.failure',
+               'research.request.failure'}
 SAFE_ERRORS = {'ValueError', 'TimeoutError', 'InvalidTag', 'OIDCStateUnavailable',
                'OperationalError', 'InvalidClaimError', 'ExpiredTokenError', 'OAuthError'}
 

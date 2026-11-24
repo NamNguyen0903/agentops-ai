@@ -12,6 +12,7 @@ from agentops_api.api.routes.health import (
 from agentops_api.api.routes.readiness import (
     router as readiness_router,
 )
+from agentops_api.api.routes.research import make_research_router
 from agentops_api.core.config import Settings
 from agentops_api.core.database import DatabaseProbe
 from agentops_api.core.orm import OrmDatabase
@@ -88,6 +89,8 @@ def create_app(settings: Settings | None = None, *, auth_settings=None, auth_pro
 
     if settings.auth_review_enabled:
         api_router.include_router(make_router(auth_settings, auth_provider))
+
+    api_router.include_router(make_research_router(settings, auth_settings))
 
     application.include_router(api_router)
 
