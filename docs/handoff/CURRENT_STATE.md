@@ -1,3 +1,119 @@
+# AgentOps AI — Authoritative Current State
+
+## Active checkpoint — 2026-11-24, S05-WP01 IN_PROGRESS
+
+**Scope:** Development MVP only.
+
+**Production authorization:** NOT APPROVED.
+
+**Runtime implementation authorization:** NOT AUTHORIZED.
+
+### Current sprint
+
+- S01: CLOSED.
+- S02: CLOSED, 11/11 accepted.
+- S03: CLOSED, 12/12 accepted.
+- S04: CLOSED, WP01-WP04 delivered;
+  AC01-AC10 accepted within Development MVP scope.
+- S05: IN_PROGRESS — Contract v1.0 OWNER APPROVED.
+- Authorized work: S05-WP01 documentation only.
+- WP02-WP05: NOT_STARTED.
+- S06-S09: PLANNED.
+
+### Final S04 delivery evidence
+
+- Final closeout PR #14: MERGED.
+- Final-state documentation synchronization PR #15: MERGED.
+- Final main checkpoint:
+  `104fc173abff205d82025ebcb08eadea8b01f353`.
+- Final main CI run 45419682711: 4/4 PASS.
+- Final documentation synchronization: COMPLETE.
+- No additional S04 closeout delivery is required.
+
+### S05 approved baseline
+
+- [S05 Contract v1.0](../sprints/S05.md).
+- [ADR-0004 with S05 amendment](../adr/0004-langgraph-state-and-agent-boundaries.md).
+- Owner approval date: 2026-11-24.
+- Architecture decisions AD01-AD08: APPROVED.
+- Five work packages and sixteen acceptance criteria.
+- Twelve mandatory security gates.
+- Preserve the S04 single-agent baseline.
+- No live providers, real evidence persistence,
+  durable workers, task mutations or report publication.
+
+### WP01 ticket status
+
+| Ticket | Status |
+|---|---|
+| S05-WP01-01 — Documentation branch initialization | VERIFIED |
+| S05-WP01-02 — Sprint Contract documentation | VERIFIED |
+| S05-WP01-03 — ADR-0004 amendment | VERIFIED |
+| S05-WP01-04 — Handoff and roadmap reconciliation | VERIFIED |
+| S05-WP01-05 — Engineering policy and S04 reconciliation | VERIFIED |
+| S05-WP01-06 — Final documentation review | IN_PROGRESS |
+| S05-WP01-07 — Commit, PR and CI delivery | PENDING |
+
+AC01 and AC02 have owner approval, document review
+and local verification evidence. Final WP01 delivery
+verification remains pending.
+
+Sprint acceptance accounting: 0/16 accepted.
+
+### Git checkpoint
+
+- Repository: NamNguyen0903/agentops-ai.
+- Canonical worktree: `/Users/namnguyen/agentops-ai`.
+- Active branch: `docs/s05-contract-adr`.
+- Last observed HEAD:
+  `104fc173abff205d82025ebcb08eadea8b01f353`.
+- Last observed origin/main: same approved base HEAD.
+- Backup stash:
+  `13ab03b82e68364c8f4f022821e12dca5ec7b731`.
+- Exactly one canonical worktree.
+- WP01-01 through WP01-05 are verified.
+- All six authorized WP01 documentation files are changed.
+- WP01-06 synchronization is pending final review.
+- No runtime code changes or staged files were observed
+  at the preceding verified checkpoint.
+- No S05 commit, push or merge has been verified.
+
+### Architecture and security boundaries
+
+- ADR-0001: ACCEPTED.
+- ADR-0002: ACCEPTED — Development MVP only.
+- ADR-0003: PARTIALLY ACCEPTED — admission only.
+- ADR-0004: ACCEPTED — Development MVP only,
+  including the owner-approved S05 amendment.
+- ADR-0005 through ADR-0007: not approved.
+- Authentication remains disabled by default.
+- Preserve the strict Authlib security XFAIL.
+- Preserve all seven backend dependency lockfiles.
+- Preserve existing S02/S03 security and release gates.
+- The 30-second graph deadline is soft.
+- The Project Owner performs local file changes,
+  Terminal commands, commits, pushes and merges.
+
+### Exactly one next action
+
+Complete S05-WP01-06 local verification and
+Tech Lead review.
+
+After acceptance, proceed to S05-WP01-07 only.
+
+Do not start WP02 or runtime implementation without
+WP01 delivery and separate owner authorization.
+
+---
+
+## Historical checkpoint archive
+
+Everything below is retained as historical evidence.
+Older active headings, pending actions and statuses
+are superseded by the authoritative checkpoint above.
+
+---
+
 ## Authoritative resume checkpoint — 2026-11-24, S04 CLOSED; S05 NEXT
 
 - Repository: NamNguyen0903/agentops-ai.

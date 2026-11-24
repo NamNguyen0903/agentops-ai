@@ -1,3 +1,87 @@
+# AgentOps AI — Authoritative Sprint Roadmap
+
+## Active roadmap — 2026-11-24, S05-WP01 IN_PROGRESS
+
+**Scope:** Development MVP only.
+
+**Production authorization:** NOT APPROVED.
+
+| Sprint | Current status | Evidence / contract |
+|---|---|---|
+| S00 | FOUNDATION | [S00](S00.md) |
+| S01 | CLOSED | [S01](S01.md) |
+| S02 | CLOSED — 11/11 accepted | [S02 closeout](S02_CLOSEOUT.md) |
+| S03 | CLOSED — 12/12 accepted | [S03 closeout](S03_CLOSEOUT.md) |
+| S04 | CLOSED — Development MVP only | [S04 contract](S04.md), [S04 closeout](S04_CLOSEOUT.md) |
+| S05 | IN_PROGRESS — WP01 AUTHORIZED | [S05 Contract v1.0](S05.md) |
+| S06-S09 | PLANNED | Original roadmap retained below |
+
+S04 final-state synchronization PR #15 is MERGED.
+
+Final S04 main checkpoint:
+`104fc173abff205d82025ebcb08eadea8b01f353`.
+
+Final S04 main CI run 45419682711: 4/4 PASS.
+
+S04 is CLOSED. No S04 reopening or additional closeout
+delivery is implied.
+
+### S05 — Specialized Planner, Research and Writer Nodes
+
+Owner approval date: 2026-11-24.
+
+Contract: v1.0, APPROVED.
+
+Architecture: [ADR-0004 amendment](../adr/0004-langgraph-state-and-agent-boundaries.md).
+
+Approved scope: Development MVP only.
+
+| Work package | Status |
+|---|---|
+| WP01 — Contract and Architecture | IN_PROGRESS |
+| WP02 — Typed Contracts and Fixture Adapters | NOT_STARTED |
+| WP03 — Specialized Workflow Nodes | NOT_STARTED |
+| WP04 — Security and Execution Guards | NOT_STARTED |
+| WP05 — Integration, CI and Closeout | NOT_STARTED |
+
+Work packages delivered: 0/5.
+
+Acceptance criteria accepted: 0/16.
+
+Only WP01 documentation is authorized.
+
+WP01-01 through WP01-05 are VERIFIED.
+WP01-06 final documentation review is IN_PROGRESS.
+WP01-07 commit, PR and CI delivery is PENDING.
+
+Runtime implementation remains NOT AUTHORIZED.
+
+No live model providers, real retrieval, worker
+activation, publication or production deployment
+are approved.
+
+### Current resume authority
+
+Start with [CURRENT_STATE.md](../handoff/CURRENT_STATE.md),
+then inspect actual Git evidence.
+
+The PRD, approved ADRs and engineering working
+agreement remain authoritative for their respective
+product, architecture and engineering decisions.
+
+The original sprint roadmap is retained below without
+changing the planned goals of S06-S09.
+
+---
+
+## Historical roadmap archive
+
+All content below is historical. Earlier roadmap
+tables, active-sprint headings and pending actions
+do not supersede the authoritative roadmap above.
+
+---
+
 # AgentOps AI — Sprint Index
 
 ## Authoritative active roadmap — 2026-11-24 (S04 CLOSED; S05 NEXT)

@@ -1,3 +1,169 @@
+# AgentOps AI — Active Engineering Policy Amendment
+
+**Amendment:** S05-WP01
+
+**Decision date:** 2026-11-24
+
+**Owner approval:** S05 Contract v1.0
+
+**Scope:** Development MVP only
+
+**Production authorization:** NOT APPROVED
+
+## 1. Active policy authority
+
+This owner-approved amendment updates the execution
+mode and architecture baseline for Sprint S05.
+
+It supersedes conflicting execution-mode permissions
+and obsolete ADR status descriptions in the retained
+engineering working agreement below.
+
+All other engineering, security, testing, Git,
+documentation and release requirements remain mandatory.
+
+The original agreement is retained for historical
+traceability and continues to apply wherever it does
+not conflict with this amendment.
+
+## 2. Current architecture baseline
+
+| Decision | Active status |
+|---|---|
+| ADR-0001 | ACCEPTED |
+| ADR-0002 | ACCEPTED — Development MVP only |
+| ADR-0003 | PARTIALLY ACCEPTED — admission only |
+| ADR-0004 | ACCEPTED — Development MVP only, including S05 amendment |
+| ADR-0005 | NOT APPROVED |
+| ADR-0006 | NOT APPROVED |
+| ADR-0007 | NOT APPROVED |
+
+Authoritative S05 contract:
+
+`docs/sprints/S05.md`
+
+The S05 architecture amendment is recorded in:
+
+`docs/adr/0004-langgraph-state-and-agent-boundaries.md`
+
+ADR-0003 does not authorize worker claiming,
+execution attempts, leases, fencing or recovery.
+
+ADR-0004 does not authorize live providers,
+real retrieval, report publication or production.
+
+## 3. S05 manual execution policy
+
+The Project Owner retains direct operational control
+of the canonical repository.
+
+ChatGPT performs the following responsibilities:
+
+- Senior Tech Lead and Software Architect.
+- Work package and ticket specification.
+- Implementation content generation.
+- Test and verification command generation.
+- Source, documentation and evidence review.
+- QA assessment and scoped failure analysis.
+- Checkpoint and documentation update instructions.
+
+The Project Owner performs:
+
+- Local repository file changes.
+- Terminal and Git command execution.
+- Local test execution.
+- Explicit staging and commits.
+- Pushes and pull request creation.
+- Pull request merges.
+- Scope and architecture approvals.
+- Sprint acceptance and release decisions.
+
+Codex may assist with producing reviewable code or
+technical suggestions when explicitly requested.
+
+Direct autonomous Codex edits, command execution
+and commits are not authorized under the active
+S05 manual execution policy.
+
+This amendment does not establish a permanent
+execution mode for future sprints. A future change
+requires an explicit owner decision.
+
+No AI assistant may independently claim that a
+local command, test, commit, push or merge succeeded
+without supporting evidence.
+
+## 4. Sequential execution and Git controls
+
+- Use exactly one canonical local worktree.
+- Canonical path: /Users/namnguyen/agentops-ai.
+- Preserve existing unrelated changes and stashes.
+- Work on one authorized work package at a time.
+- Issue one immediate ticket action at a time.
+- Review submitted evidence before proceeding.
+- Declare exact target file scope before changes.
+- Stage reviewed paths explicitly.
+- Do not use destructive cleanup or force pushes.
+- The owner controls all commits and remote delivery.
+- Record observed SHAs and actual CI evidence.
+- Never invent future commit IDs or test outcomes.
+
+The existing backup stash must be preserved.
+
+## 5. Current S05 authorization boundary
+
+Sprint S05 Contract v1.0 and AD01-AD08 are
+owner-approved.
+
+Only WP01 documentation is currently authorized.
+
+Runtime implementation requires successful WP01
+delivery and separate owner authorization.
+
+The S05 workflow remains deterministic and offline.
+
+No live model providers, real search providers,
+database migrations, worker activation, report
+publication or production deployment are authorized.
+
+Authentication remains disabled by default.
+
+Preserve the strict Authlib security XFAIL,
+all seven backend dependency lockfiles and all
+existing S02/S03 security and release gates.
+
+## 6. Documentation and evidence policy
+
+The active resume checkpoint is:
+
+`docs/handoff/CURRENT_STATE.md`
+
+The authoritative sprint roadmap is:
+
+`docs/sprints/INDEX.md`
+
+Historical sections do not supersede an explicitly
+identified current checkpoint.
+
+At ticket acceptance, record the actual evidence,
+remaining limitations and the single next action.
+
+Do not equate owner approval, generated source
+or documentation review with verified runtime behavior.
+
+---
+
+## Retained engineering working agreement
+
+The original agreement follows unchanged.
+
+Its conflicting execution-mode provisions and obsolete
+ADR status descriptions are superseded by the active
+S05 amendment above. Its remaining requirements
+continue to apply.
+
+---
+
 # AgentOps AI — Engineering Working Agreement
 
 ## Mandatory Single Local Worktree Policy
