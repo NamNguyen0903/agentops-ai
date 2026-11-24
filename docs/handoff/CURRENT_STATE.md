@@ -6,9 +6,9 @@
 - S03 application PR #8: MERGED at `f533857b97dc0d6bd4024063779daec52c752bf4`; main CI `45346656444` PASS.
 - S03 final docs PR #9: MERGED at `6544f35dc23e5389447a14df8846611a6c3682ef`; main CI `45347328155` PASS.
 - Final S03 docs synchronization: **COMPLETE**. Do not open an additional S03 closeout PR.
-- Owner-verified WP03 merge: `main` at `f4b162568ee67d9f15ded9b4ce14270b04961d3c`; main CI `45402438307` PASS; current documentation branch: `docs/s04-wp03-delivery`; exactly one canonical worktree `/Users/namnguyen/agentops-ai`.
+- Owner-verified WP03 delivery: application PR #12 merged at `f4b162568ee67d9f15ded9b4ce14270b04961d3c` (main CI `45402438307` PASS); documentation PR #13 merged at `feaf7501c72720739dca78d5301a5dd1b40d502a` (main CI `45404347277` PASS); current WP04 branch: `docs/s04-final-closeout`; exactly one canonical worktree `/Users/namnguyen/agentops-ai`.
 - Existing `stash@{0}` is a backup from S03 worktree consolidation; preserve untouched.
-- S04 — Single-agent LangGraph: **WP01/WP02/WP03 DELIVERED; WP04 NEXT**. [S04 approved contract](../sprints/S04.md), [ADR-0004 ACCEPTED — Development MVP only](../adr/0004-langgraph-state-and-agent-boundaries.md).
+- S04 — Single-agent LangGraph: **WP01/WP02/WP03 DELIVERED; WP04 IN_PROGRESS**. [S04 approved contract](../sprints/S04.md), [ADR-0004 ACCEPTED — Development MVP only](../adr/0004-langgraph-state-and-agent-boundaries.md).
 - `AGENTS.md` v1.2 governs engineering; owner performs commit, push and merge manually.
 
 ## Verified S03 capability and evidence (retained)
@@ -123,11 +123,11 @@ Retained from the S03 baseline for traceability. The later S03 final docs PR #9 
 
 ## Exactly one next action
 
-Begin S04-WP04 Final Acceptance and Sprint Closeout.
-Review AC01–AC10, ADR-0004, implementation evidence,
-open security limitations and the Sprint Contract.
-Keep S04 IN_PROGRESS until WP04 owner sign-off,
-documentation closeout, PR CI and main CI are verified.
+Review and deliver S04-WP04 final closeout documentation.
+AC09 is owner-approved and AC10 is conditionally approved.
+Verify the four-file diff, stage and commit documentation,
+then open PR and pass CI before owner-controlled merge.
+Keep S04 IN_PROGRESS until post-merge main CI succeeds.
 
 ## S04-WP03 delivered checkpoint
 
@@ -143,3 +143,19 @@ documentation closeout, PR CI and main CI are verified.
 - Owner-approved 30-second soft deadline is non-interrupting.
 - WP04: NEXT; S04 remains IN_PROGRESS.
 - No production approval or live-provider authorization.
+
+## S04-WP04 AC10 readiness checkpoint
+
+- Date: 2026-11-24.
+- WP01–WP03: DELIVERED.
+- WP04: IN_PROGRESS.
+- AC01–AC08: VERIFIED / ACCEPTED_DEV_MVP.
+- AC09: OWNER APPROVED — Development MVP only.
+- AC10: OWNER_APPROVED_DELIVERY_PENDING.
+- S04_CLOSEOUT.md: DRAFT.
+- S04: IN_PROGRESS, NOT CLOSED.
+- Soft deadline remains non-interrupting.
+- No production authorization, live providers,
+  durable workers or report publication.
+- Next: review AC10, obtain owner decision, then
+  documentation commit, PR CI, merge and main CI.

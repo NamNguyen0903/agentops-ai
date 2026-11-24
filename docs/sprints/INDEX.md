@@ -1,16 +1,16 @@
 # AgentOps AI — Sprint Index
 
-## Authoritative active roadmap — 2026-11-24 (S04-WP04 NEXT)
+## Authoritative active roadmap — 2026-11-24 (S04-WP04 IN_PROGRESS)
 
 | Sprint | Status | Evidence / contract |
 |---|---|---|
 | S01 | CLOSED | Historical sprint record |
 | S02 | CLOSED, 11/11 | [S02 closeout](S02_CLOSEOUT.md) |
 | S03 | CLOSED, 12/12 | PR #8 / #9 MERGED, main CI PASS; [S03 closeout](S03_CLOSEOUT.md) |
-| S04 — Single-agent LangGraph | **IN_PROGRESS; WP01–WP03 DELIVERED, WP04 NEXT** | [S04 approved contract](S04.md), [ADR-0004 ACCEPTED — Development MVP only](../adr/0004-langgraph-state-and-agent-boundaries.md) |
+| S04 — Single-agent LangGraph | **IN_PROGRESS; WP01–WP03 DELIVERED, WP04 IN_PROGRESS** | [S04 approved contract](S04.md), [ADR-0004 ACCEPTED — Development MVP only](../adr/0004-langgraph-state-and-agent-boundaries.md) |
 | S05–S09 | PLANNED | Historical roadmap below; no implementation implied |
 
-Owner approved S04 contract and ADR-0004 on 2026-11-24 for Development MVP; WP01/WP02 verified and merged via PR #10, merge `151af7e`, main CI `45377051431` PASS; WP03 delivered via PR #12, merge f4b1625, main CI 45402438307 PASS; WP04 is next. All S02/S03 security gates continue; production NOT APPROVED. Single canonical worktree and backup stash preserved. The sections after the following divider are **historical snapshots** (including earlier 'current' headings and pending actions) and do not supersede this active roadmap or [CURRENT_STATE](../handoff/CURRENT_STATE.md).
+Owner approved S04 contract and ADR-0004 on 2026-11-24 for Development MVP; WP01/WP02 verified and merged via PR #10, merge `151af7e`, main CI `45377051431` PASS; WP03 delivered via PR #12, merge f4b1625, main CI 45402438307 PASS; WP04 is in progress; AC09 owner-approved, AC10 conditionally approved; closeout delivery pending. All S02/S03 security gates continue; production NOT APPROVED. Single canonical worktree and backup stash preserved. The sections after the following divider are **historical snapshots** (including earlier 'current' headings and pending actions) and do not supersede this active roadmap or [CURRENT_STATE](../handoff/CURRENT_STATE.md).
 
 ---
 
