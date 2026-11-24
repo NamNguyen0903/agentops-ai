@@ -4,7 +4,7 @@
 |---|---|
 | ADR ID | ADR-0001 |
 | Date | 2026-11-21 |
-| Status | Proposed — Awaiting Engineering Approval |
+| Status | ACCEPTED |
 | Sprint | S00 |
 | Owner | AI Engineering |
 | Related PRD | [PRD v0.2](../product/PRD.md) |
@@ -391,8 +391,33 @@ The ADR itself does not establish that any of these tests have passed.
 
 ## 12. Decision Status
 
-**Status: Proposed — Awaiting Engineering Approval**
+**Status: ACCEPTED — 2026-11-24**
 
 This ADR recommends the modular monolith approach and supplies the rationale and constraints for implementation.
 
 It does not establish that dependent ADRs have been approved, that features have been implemented, or that the system is production-ready.
+
+## 2026-11-24 — Engineering and owner acceptance
+
+The Tech Lead recommends and the project owner explicitly
+approves ADR-0001 Modular Monolith.
+
+Approved architecture direction:
+
+- Shared modular backend codebase.
+- Separate API and durable worker processes.
+- PostgreSQL as persistence authority.
+- LangGraph as bounded workflow orchestration.
+- Coordinated application releases.
+- Incremental infrastructure evolution.
+
+This accepts the architecture direction, not the
+implementation status of future modules.
+
+All original verification requirements remain applicable.
+
+AWS deployment, staging activation and production
+deployment are not authorized by this decision.
+
+ADR-0003 and subsequent infrastructure and workflow
+decisions retain their independent approval gates.

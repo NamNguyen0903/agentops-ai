@@ -10,7 +10,7 @@ The platform is designed to combine **LangGraph-based AI orchestration**, contro
 
 Rather than relying on a single unconstrained LLM response, AgentOps AI is designed around specialized research steps, explicit evidence validation, persistent execution state, and measurable AI quality.
 
-> **Project status:** Sprint S00 — Product Planning & Architecture. This repository currently establishes the planned product and engineering foundation. The application, automated tests, cloud deployment, and AI quality targets have not yet been verified.
+> **Project status (2026-11-22):** S01 scope CLOSED (verification partial); S02 IN_PROGRESS. FastAPI, React/Vite, Docker Compose/PostgreSQL and SQLAlchemy/Alembic infrastructure exist. AG-003.3A commit `cfab615` observed, push reported. Backend regression **31/31 passed**. Isolated AG-003.1A FastAPI Users PoC **30 passed, 1 xfailed** with documented security gaps. Authentication, migrations, research agents, AWS deployment and production readiness remain unimplemented/unverified.
 
 ---
 
@@ -123,41 +123,70 @@ The design aims to preserve clear module boundaries without introducing unnecess
 ### High-Level Architecture
 
 ```mermaid
-flowchart TB
-    User["Research Analyst"]
-    UI["React + TypeScript"]
-    API["FastAPI"]
-    DB[("PostgreSQL")]
-    Worker["Background Research Worker"]
-    Graph["LangGraph Workflow"]
-    Bedrock["Amazon Bedrock"]
-    Search["Approved Web Search Provider"]
-    Sources["Public Web Sources"]
-    Report["Stored Research Report"]
 
-    User --> UI
-    UI -->|"REST API"| API
-    API -->|"Persist research task"| DB
-    Worker -->|"Claim queued task"| DB
-    Worker --> Graph
-    Graph -->|"LLM inference"| Bedrock
-    Graph -->|"Search queries"| Search
-    Graph -->|"Restricted retrieval"| Sources
-    Worker -->|"Persist evidence and validated report"| DB
-    API -->|"Read saved result"| DB
-    API --> Report
-    Report --> UI
+flowchart TB
+
+   User["Research Analyst"]
+
+   UI["React + TypeScript"]
+
+   API["FastAPI"]
+
+   DB[("PostgreSQL")]
+
+   Worker["Background Research Worker"]
+
+   Graph["LangGraph Workflow"]
+
+   Bedrock["Amazon Bedrock"]
+
+   Search["Approved Web Search Provider"]
+
+   Sources["Public Web Sources"]
+
+   Report["Stored Research Report"]
+
+   User --> UI
+
+   UI -->|"REST API"| API
+
+   API -->|"Persist research task"| DB
+
+   Worker -->|"Claim queued task"| DB
+
+   Worker --> Graph
+
+   Graph -->|"LLM inference"| Bedrock
+
+   Graph -->|"Search queries"| Search
+
+   Graph -->|"Restricted retrieval"| Sources
+
+   Worker -->|"Persist evidence and validated report"| DB
+
+   API -->|"Read saved result"| DB
+
+   API --> Report
+
+   Report --> UI
+
 ```
 
 ### Architectural Principles
 
-1. **Modular Monolith:** Related business capabilities reside in clearly separated modules within a shared backend codebase.
-2. **Asynchronous Execution:** Research tasks are processed outside HTTP request handling.
-3. **Durable State:** PostgreSQL is authoritative for application task lifecycle and persisted outputs.
-4. **Bounded AI:** Research operations have configurable cost, token, retry, and execution limits.
-5. **Evidence Validation:** Invalid or cross-task citation references cannot be published.
-6. **Security Boundaries:** Model outputs cannot independently authorize tools or access protected resources.
-7. **Testability:** Model and search providers can be replaced by deterministic fixtures during automated testing.
+1\. **Modular Monolith:** Related business capabilities reside in clearly separated modules within a shared backend codebase.
+
+2\. **Asynchronous Execution:** Research tasks are processed outside HTTP request handling.
+
+3\. **Durable State:** PostgreSQL is authoritative for application task lifecycle and persisted outputs.
+
+4\. **Bounded AI:** Research operations have configurable cost, token, retry, and execution limits.
+
+5\. **Evidence Validation:** Invalid or cross-task citation references cannot be published.
+
+6\. **Security Boundaries:** Model outputs cannot independently authorize tools or access protected resources.
+
+7\. **Testability:** Model and search providers can be replaced by deterministic fixtures during automated testing.
 
 For detailed architecture decisions, see [System Architecture](docs/architecture/overview.md) and [ADR-0001](docs/adr/0001-architecture.md).
 
@@ -168,19 +197,33 @@ For detailed architecture decisions, see [System Architecture](docs/architecture
 The initial workflow is designed as a bounded sequence of specialized components.
 
 ```mermaid
+
 flowchart TD
-    Start["Research Question"] --> Planner["Planner"]
-    Planner --> Research["Research"]
-    Research --> Evidence["Evidence Validator"]
-    Evidence --> Decision{"Sufficient evidence?"}
-    Decision -->|"No"| Insufficient["Insufficient Evidence"]
-    Decision -->|"Yes"| Writer["Writer"]
-    Writer --> Validator["Report Validator"]
-    Validator -->|"Valid"| Publish["Publish Report"]
-    Validator -->|"Invalid and repair available"| Repair["Repair Writer"]
-    Repair --> Validator
-    Validator -->|"Invalid after repair"| Failed["Failed"]
-    Publish --> Complete["Completed"]
+
+   Start["Research Question"] --> Planner["Planner"]
+
+   Planner --> Research["Research"]
+
+   Research --> Evidence["Evidence Validator"]
+
+   Evidence --> Decision{"Sufficient evidence?"}
+
+   Decision -->|"No"| Insufficient["Insufficient Evidence"]
+
+   Decision -->|"Yes"| Writer["Writer"]
+
+   Writer --> Validator["Report Validator"]
+
+   Validator -->|"Valid"| Publish["Publish Report"]
+
+   Validator -->|"Invalid and repair available"| Repair["Repair Writer"]
+
+   Repair --> Validator
+
+   Validator -->|"Invalid after repair"| Failed["Failed"]
+
+   Publish --> Complete["Completed"]
+
 ```
 
 ### Planner
@@ -231,52 +274,99 @@ The planned report includes:
 The repository is organized as a monorepo.
 
 ```text
+
 agentops-ai/
+
 ├── apps/
+
 │   ├── api/                    # FastAPI backend
+
 │   └── web/                    # React frontend
+
 │
+
 ├── packages/
+
 │   └── agents/
+
 │       ├── graphs/             # LangGraph definitions
+
 │       ├── nodes/              # Workflow components
+
 │       ├── tools/              # Approved tool adapters
+
 │       ├── prompts/            # Versioned prompts
+
 │       └── schemas/            # Typed agent data structures
+
 │
+
 ├── tests/
+
 │   ├── unit/
+
 │   ├── integration/
+
 │   └── e2e/
+
 │
+
 ├── evaluations/
+
 │   ├── datasets/
+
 │   └── reports/
+
 │
+
 ├── infra/
+
 │   ├── docker/
+
 │   └── terraform/
+
 │
+
 ├── docs/
+
 │   ├── product/
+
 │   │   └── PRD.md
+
 │   ├── architecture/
+
 │   │   └── overview.md
+
 │   ├── adr/
+
 │   │   └── 0001-architecture.md
+
 │   ├── handoff/
+
 │   │   └── CURRENT_STATE.md
+
 │   └── sprints/
+
 │       ├── INDEX.md
+
 │       └── S00.md
+
 │
+
 ├── .github/
+
 │   └── workflows/
+
 │
+
 ├── .env.example
+
 ├── .gitignore
+
 ├── AGENTS.md
+
 └── README.md
+
 ```
 
 Some directories may currently contain no tracked files. Application modules and infrastructure definitions will be introduced incrementally during implementation.
@@ -336,9 +426,11 @@ AgentOps AI is intended to measure research quality rather than rely solely on s
 
 The project will compare:
 
-1. **Manual baseline:** Analyst research without AgentOps AI.
-2. **Simple AI baseline:** A single model operating on comparable evidence.
-3. **AgentOps AI:** The bounded LangGraph research workflow.
+1\. **Manual baseline:** Analyst research without AgentOps AI.
+
+2\. **Simple AI baseline:** A single model operating on comparable evidence.
+
+3\. **AgentOps AI:** The bounded LangGraph research workflow.
 
 ### Planned Evaluation Metrics
 
@@ -404,34 +496,105 @@ External model and search operations cannot be guaranteed to execute exactly onc
 
 ## 11. Local Development
 
-### Current Availability
+### Current Availability (2026-11-22)
 
-The repository is currently in its documentation and architecture phase.
+The local FastAPI/React/Vite/Docker Compose application has been demonstrated. The PostgreSQL 17 service and API database readiness have been exercised. Backend test suite: **31 passed, 1 warning in 6.47 seconds** during AG-003.3A; repeat regression **31 passed, 1 warning in 6.62 seconds** on 2026-11-22. The warning is a Starlette `httpx` TestClient deprecation warning, not a failure.
 
-**A runnable FastAPI/React/Docker application has not yet been established.**
+Current verified HTTP contracts:
 
-Local development instructions will be added during Sprint S01 when the application foundation is implemented and verified.
+- `GET http://127.0.0.1:8000/api/v1/health` → HTTP 200, `{"status":"ok","service":"agentops-api"}`.
+- `GET http://127.0.0.1:8000/api/v1/ready` → HTTP 200, `{"status":"ready","checks":{"database":"ok"}}`, when PostgreSQL was healthy.
+- `GET http://127.0.0.1:5173/api/v1/ready` → HTTP 200 through Vite proxy.
+
+Authentication and research-task endpoints are **not implemented**. Readiness checks database connectivity, not an approved schema version.
 
 ### Environment Configuration
 
-The `.env.example` file is intended to document supported configuration variables as they are introduced.
+A private local `.env.postgres` is used with `docker compose --env-file .env.postgres`. Use `postgres.env.example` (where present) as a variable guide, and generate strong, distinct bootstrap and application credentials. **Do not commit `.env.postgres`** or paste its values into documentation, screenshots or logs. The database is not exposed through a host port by default.
 
-Do not place actual credentials in `.env.example`.
+### Start and Inspect Services
 
-Configuration examples are not proof that their corresponding features or providers have been implemented.
+From repository root:
 
-### Planned Local Workflow
+```bash
 
-Once Sprint S01 has implemented the required services, the development workflow is expected to include:
+docker compose --env-file .env.postgres config --quiet
 
-1. Configure local environment variables.
-2. Start the application and database containers.
-3. Apply database migrations when available.
-4. Start or verify the API and frontend.
-5. Run deterministic tests.
-6. Inspect health and readiness results.
+docker compose --env-file .env.postgres up -d --build
 
-Actual startup commands will be documented only after they are implemented and validated.
+docker compose --env-file .env.postgres ps
+
+curl -i http://127.0.0.1:8000/api/v1/health
+
+curl -i http://127.0.0.1:8000/api/v1/ready
+
+curl -i http://127.0.0.1:5173/api/v1/ready
+
+```
+
+To verify existing PostgreSQL runtime-role checks:
+
+```bash
+
+docker compose --env-file .env.postgres exec -T db bash /opt/agentops/verify-app.sh
+
+```
+
+To stop services **without deleting persistent data**:
+
+```bash
+
+docker compose --env-file .env.postgres stop
+
+```
+
+Do not run `docker compose down -v` unless you intentionally want to destroy local database data.
+
+### Backend Tests and Alembic Discovery
+
+```bash
+
+cd apps/api
+
+python -m pip install -e '.[dev]'
+
+python -m pytest -v
+
+python -m alembic -c alembic.ini heads
+
+python -m alembic -c alembic.ini history
+
+```
+
+At the AG-003.3A checkpoint, Alembic has no revision files; `heads`/`history` correctly return no migration history. `alembic/env.py` temporarily refuses migration execution until schema, role and authorization are approved. **Do not run** `alembic revision --autogenerate`, `alembic upgrade head` or `alembic stamp head` as setup steps now.
+
+### Integration Smoke
+
+With services running, from repository root:
+
+```bash
+
+python3 scripts/test_integration.py
+
+```
+
+The user reported this smoke check and a SQLAlchemy read-only PostgreSQL transaction passed on 2026-11-22; the exact recent output was not archived in the documentation.
+
+See [S02 report](docs/sprints/S02.md) and [CURRENT_STATE](docs/handoff/CURRENT_STATE.md) for detailed evidence and blockers.
+
+### Isolated authentication compatibility experiment (AG-003.1A)
+
+The experiment is under `experiments/auth-fastapi-users/` and is intentionally separate from application dependencies and database state. With its dedicated Python 3.12 virtual environment installed:
+
+```bash
+cd experiments/auth-fastapi-users
+.venv/bin/python -m pip check
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest -v
+```
+
+**Observed 2026-11-22:** Python 3.12.9, pytest 9.2.0, **30 passed, 1 xfailed, 1 warning in 0.40 s**; `pip check` reported no broken requirements. The XFAIL is **AUTH-P03 security FAIL** (stock raw token storage), *not* successful security compliance. The stock integration also does not provide rolling idle expiry or Origin/CSRF enforcement and conflicts with planned schema/transaction ownership. **Recommendation: reject unmodified stock FastAPI Users integration; ADR-0002 remains PROPOSED.** See [ADR-0002](docs/adr/0002-authentication.md) and the [S02 report](docs/sprints/S02.md).
+
+Never commit `.venv/`, `.venv-broken/`, `.pytest_cache/`, `__pycache__/` or `*.egg-info/` generated under the experiment. No auth migration or runtime endpoint is available yet.
 
 ---
 
@@ -475,12 +638,17 @@ Codex does not directly modify repository files, run Terminal commands, commit, 
 
 At the beginning of a new development session:
 
-1. Read [AGENTS.md](AGENTS.md).
-2. Read [CURRENT_STATE.md](docs/handoff/CURRENT_STATE.md).
-3. Read [Sprint Index](docs/sprints/INDEX.md).
-4. Review the active sprint report.
-5. Consult the PRD and relevant ADRs.
-6. Verify the current Git state before continuing.
+1\. Read [AGENTS.md](AGENTS.md).
+
+2\. Read [CURRENT_STATE.md](docs/handoff/CURRENT_STATE.md).
+
+3\. Read [Sprint Index](docs/sprints/INDEX.md).
+
+4\. Review the active sprint report.
+
+5\. Consult the PRD and relevant ADRs.
+
+6\. Verify the current Git state before continuing.
 
 ### Development Principles
 
@@ -500,9 +668,9 @@ Each sprint represents one planned working day. Unfinished work is carried forwa
 
 | Sprint | Planned Goal | Status |
 |---|---|---|
-| S00 | PRD, architecture, repository and engineering rules | In progress |
-| S01 | FastAPI, React and Docker foundation | Planned |
-| S02 | PostgreSQL, authentication and migrations | Planned |
+| S00 | PRD, architecture, repository and engineering rules | PENDING_CLOSEOUT |
+| S01 | FastAPI, React and Docker foundation | CLOSED — PARTIALLY_VERIFIED |
+| S02 | PostgreSQL, authentication and migrations | IN_PROGRESS — PARTIALLY_VERIFIED |
 | S03 | Research task APIs and dashboard | Planned |
 | S04 | Single-agent LangGraph baseline | Planned |
 | S05 | Specialized planner, research and writer nodes | Planned |
@@ -542,12 +710,15 @@ These capabilities are outside the initial MVP unless explicitly approved throug
 | [Current Project State](docs/handoff/CURRENT_STATE.md) | Active ticket and resume checkpoint |
 | [Sprint Index](docs/sprints/INDEX.md) | Roadmap and sprint history |
 | [Sprint S00 Report](docs/sprints/S00.md) | Product planning and foundation work |
+| [Sprint S01 Report](docs/sprints/S01.md) | Closed S01 scope, verification carryover |
+| [Sprint S02 Report](docs/sprints/S02.md) | Active database/ORM/authentication sprint evidence |
+| [ADR-0002 — Authentication](docs/adr/0002-authentication.md) | Proposed identity and session decisions; approval pending |
 
 ### Decision Records
 
 The following architectural decisions remain pending:
 
-- ADR-0002 — Authentication Strategy
+- [ADR-0002 — Authentication Strategy](docs/adr/0002-authentication.md) — PROPOSED (reviewed; approval pending)
 - ADR-0003 — Async Execution and Recovery
 - ADR-0004 — LangGraph State and Agent Boundaries
 - ADR-0005 — AWS Deployment
@@ -579,14 +750,15 @@ Contribution guidelines may be expanded if additional collaborators join the pro
 
 ## 17. Project Limitations
 
-At the current documentation stage:
+**Status update (2026-11-22):** Backend app, PostgreSQL readiness and ORM infrastructure are implemented with partial verification; the restrictions below about AI agents, authentication, production deployment, cloud and CI/CD remain in force unless later evidence says otherwise.
 
-- The backend is not verified as runnable.
-- The frontend is not verified as runnable.
+At the current S02 checkpoint:
+
+- The backend and frontend have been observed serving local HTTP responses, but complete browser/production verification is pending.
 - Authentication is not implemented.
 - Live search and Bedrock integrations are not verified.
 - AI quality results have not been measured.
-- Docker-based application startup has not been verified.
+- Docker-based API/Web/PostgreSQL startup has been observed locally; production deployment and recovery hardening are not verified.
 - CI/CD has not been verified.
 - AWS deployment has not been verified.
 - Production availability and security claims have not been established.

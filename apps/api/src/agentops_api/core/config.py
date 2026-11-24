@@ -22,6 +22,8 @@ class Settings(BaseSettings):
         min_length=1,
     )
 
+    auth_review_enabled: bool = False
+
     database_enabled: bool = False
     database_host: str = Field(default="db", min_length=1)
     database_port: int = Field(default=5432, ge=1, le=65535)
