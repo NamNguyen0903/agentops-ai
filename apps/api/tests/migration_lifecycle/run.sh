@@ -11,10 +11,17 @@ mkdir -p /tmp/agentops-build
 cp /workspace/pyproject.toml /tmp/agentops-build/
 cp -R /workspace/src /tmp/agentops-build/
 
+target="$(python -c 'import platform,sys; print(f"py{sys.version_info.major}{sys.version_info.minor}-{platform.system().lower()}-{platform.machine().lower()}")')"
+
 python -m pip install --no-cache-dir \
-    "/tmp/agentops-build[dev]" \
-    "alembic>=1.13,<2" \
-    "psycopg[binary]>=3.2,<4"
+    --only-binary=:all: --require-hashes \
+    -r "/workspace/requirements/${target}-dev.txt"
+
+python -m pip install --no-cache-dir \
+    --no-deps --no-build-isolation \
+    "/tmp/agentops-build[dev]"
+
+python -m pip check
 
 export PYTHONPATH="/workspace/src${PYTHONPATH:+:$PYTHONPATH}"
 
@@ -180,6 +187,7 @@ export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
 python -m pytest -p no:cacheprovider -q --tb=short \
     tests/test_auth_postgres.py \
     tests/test_identity_db_integration.py \
+    tests/test_identity_unique_postgres.py \
     tests/test_oidc_state_postgres.py \
     tests/test_auth_disable_concurrency.py
 

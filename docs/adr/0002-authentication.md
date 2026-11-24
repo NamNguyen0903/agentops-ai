@@ -1,10 +1,180 @@
 # ADR-0002 — Identity, Database and Authentication Architecture
 
+## 2026-11-24 — Accepted Development MVP architecture
+
+### Owner decision record
+
+Date: 2026-11-24.
+
+The project owner explicitly approved the Stage 2
+Development MVP architecture package, conditional
+Authlib adoption and the proposed release gates.
+
+The owner separately approved ADR-0001 Modular Monolith.
+
+Both decisions are recorded without production authorization.
+
+### Accepted authentication architecture
+
+- Google OIDC using Authlib 1.9.10.
+- FastAPI backend-for-frontend.
+- PostgreSQL identity and server-side session storage.
+- Async SQLAlchemy, Psycopg and Alembic.
+- Identity matching by verified issuer and subject.
+- Operator-managed account provisioning.
+- No public registration.
+- No automatic email-based identity linking.
+- No local password authentication in S02.
+- Opaque random session tokens stored as SHA256 digests.
+- Rolling idle timeout: 30 minutes.
+- Absolute session lifetime: 12 hours.
+- Secure HttpOnly SameSite Lax HTTPS session cookies.
+- Explicit loopback development cookie boundary.
+- Session-bound CSRF proof and exact Origin validation.
+- Atomic browser-bound OIDC transaction consumption.
+- Encrypted OIDC transaction context.
+- Account-disable and session-revocation transaction.
+- User-before-AuthSession locking order.
+
+### Accepted API contract
+
+- GET /api/v1/auth/login/google
+- GET /api/v1/auth/callback/google
+- GET /api/v1/auth/me
+- GET /api/v1/auth/csrf
+- POST /api/v1/auth/logout
+
+### Conditional Authlib adoption
+
+Authlib is accepted as an OIDC protocol client, not as
+a turnkey application authentication system.
+
+The application remains responsible for identity policy,
+state persistence, sessions, CSRF and authorization.
+
+The stock Authlib PKCE DEBUG logging exposure remains
+a known security FAIL.
+
+The narrow application-specific mitigation is accepted
+within the verified offline Development MVP scope.
+
+The strict security XFAIL must remain visible.
+
+This is not approval of unrestricted DEBUG logging,
+all log handlers, external exporters or production logs.
+
+### Dependency baseline
+
+The final application baseline includes nine hash-checked
+platform-specific lockfiles.
+
+Setuptools 84.1.0 resolved the reported setuptools
+findings in the application lockfile audit.
+
+See docs/development/PYTHON_DEPENDENCIES.md.
+
+### Operator provisioning
+
+The owner approves the operator-managed policy and the
+minimal documented Development MVP workflow.
+
+The existing PostgreSQL integration suite verifies its
+underlying ORM and service operations.
+
+See docs/development/OPERATOR_PROVISIONING.md.
+
+The illustrative runbook is not a separately verified
+production CLI.
+
+### Mandatory gates before real-user exposure
+
+The following items are deferred, not passed or waived:
+
+- Live Google OIDC provider and browser acceptance.
+- Trusted real-user identity enrollment.
+- Production operator authorization and audit trails.
+- Deployed provisioning and account-disable verification.
+- Distributed abuse protection and rate limiting.
+- Session and OIDC transaction retention/cleanup.
+- Encryption key lifecycle and rotation.
+- Production logging, proxy and TLS verification.
+- Secret storage and deployment configuration.
+- Process-kill and uncertain-commit recovery validation.
+- Backup restoration and disaster recovery.
+- Broader platform and bundled dependency security review.
+- Additional database privilege review where required.
+
+Authentication remains disabled by default.
+
+No real-user activation, staging deployment or production
+deployment is authorized.
+
+### Historical reconciliation
+
+Earlier proposal sections, rejected alternatives,
+local-password proposals, NOT_IMPLEMENTED labels,
+and previous next-action instructions are retained
+for historical evidence.
+
+This acceptance checkpoint defines the current
+Development MVP architecture.
+
+It does not claim that future sprint features or
+release gates have been implemented.
+
+---
+
+## 2026-11-24 — WP01.1 dependency remediation checkpoint
+
+- WP01.1 dependency remediation: VERIFIED_LOCALLY.
+- Required dependency lockfiles: 9/9.
+- Final setuptools baseline: 84.1.0.
+- Application lockfile advisory audit: 9/9 passed.
+- Backend regression: 100 passed, 8 skipped on each of four targets.
+- Offline Authlib PoC: 56 passed, 1 strict xfailed on each
+  of two required targets.
+- Generator replay and smoke compilation: 4/4 targets passed.
+- Docker runtime verification: AMD64 and ARM64 passed.
+- Isolated PostgreSQL migration lifecycle: passed.
+- PostgreSQL integration: 7 passed.
+- Stock Authlib PKCE DEBUG exposure remains a known security FAIL.
+- Authentication remains IMPLEMENTED_FOR_REVIEW and disabled by default.
+- Remote CI and Git integration remain pending.
+- ADR-0002 remains PROPOSED.
+- Production approval: NOT APPROVED.
+- Sprint S02: IN_PROGRESS / PARTIAL, 8/11 (72.7%).
+
+See `docs/development/PYTHON_DEPENDENCIES.md` for the
+dependency policy, lockfile checksums, verification evidence
+and residual limitations.
+
+### Dependency approval evidence — non-decision
+
+The reviewed application baseline now includes nine
+hash-checked platform-specific lockfiles.
+
+Authlib remains pinned at 1.9.10 with application-specific
+security controls and a retained stock PKCE logging failure.
+
+This checkpoint supplies technical evidence for conditional
+adoption. It does not approve the architecture, dependency
+exception, release gates or production deployment.
+
+The next action is Stage 2: obtain explicit owner decisions
+on ADR-0002, conditional Authlib adoption, operator provisioning,
+development acceptance boundaries and remaining release gates.
+
+Do not regenerate dependency lockfiles or repeat completed
+regression suites without changed inputs or a new blocker.
+Do not start S03 or mark S02 complete.
+
+---
+
 | Field | Value |
 
 |---|---|
 
-| Status | PROPOSED — READY FOR DECISION |
+| Status | ACCEPTED — DEVELOPMENT MVP ONLY |
 
 | Sprint | S02 — Database & Authentication |
 
@@ -16,13 +186,13 @@
 
 | Architecture baseline | Overview v1.1 |
 
-| Related decision | ADR-0001 — Proposed |
+| Related decision | ADR-0001 — ACCEPTED |
 
-| Implementation status | Authentication NOT_IMPLEMENTED; PostgreSQL/ORM infrastructure partially implemented (see status note) |
+| Implementation status | Authentication IMPLEMENTED_FOR_REVIEW; disabled by default |
 
-| Verification status | DESIGN_REVIEWED; AG-003.1A PoC runtime VERIFIED; AG-003.1B.3 offline integration VERIFIED (56 passed, 1 stock-security xfailed); production UNVERIFIED |
+| Verification status | VERIFIED within offline and disposable PostgreSQL Development MVP boundaries; production UNVERIFIED |
 
-> This document specifies a proposed authentication architecture. Its approval gate remains open. Independent PostgreSQL/ORM infrastructure has been implemented and partially verified; this does not authorize identity models, auth sessions, or migrations.
+> This architecture is accepted for the Development MVP only. Conditional Authlib adoption and all recorded security restrictions remain applicable. Authentication activation, live-user exposure and production deployment are not approved.
 
 ## 1. Context
 
@@ -902,7 +1072,28 @@ Require separate review of:
 
 These requirements are not silently included in the S02 development MVP.
 
-## 14. Unresolved Decisions and Approval Gates
+## 14. Decisions and Approval Gates
+
+The following decision IDs preserve their original meanings.
+
+| ID | Decision | Status | Boundary |
+|---|---|---|---|
+| DEC-001 | ADR-0001 modular monolith baseline | APPROVED | Architecture direction only |
+| DEC-002 | Database-backed session direction | APPROVED | Development MVP |
+| DEC-003 | Authentication solution and supported versions | CONDITIONALLY APPROVED | Google OIDC and Authlib 1.9.10 |
+| DEC-004 | users and auth_identities design | APPROVED | Issuer/subject identity |
+| DEC-005 | Operator-provisioned account policy | APPROVED | Synthetic development scope |
+| DEC-006 | CSRF bootstrap implementation | APPROVED | Existing verified contract |
+| DEC-007 | Cookie and expiry policies | APPROVED | Idle 30 minutes; absolute 12 hours |
+| DEC-008 | Authentication API contracts | APPROVED | Development MVP |
+| DEC-009 | PostgreSQL and SQLAlchemy integration mode | APPROVED | Existing explicit transaction model |
+| DEC-010 | Rate-limit and session cleanup ownership | DEFERRED RELEASE GATE | Must be resolved before real-user exposure |
+
+DEC-010 is not an implementation acceptance or a waiver.
+
+Historical decision table retained below for audit provenance.
+
+<details>\n<summary>Historical proposed decision table</summary>\n\n## 14. Unresolved Decisions and Approval Gates
 
 | ID | Decision | Status | Required before |
 
@@ -930,7 +1121,7 @@ These requirements are not silently included in the S02 development MVP.
 
 A direction can be accepted while some implementation details remain blocked, but the dependent tickets must not proceed past their relevant gates.
 
-## 15. AG-003.1 Acceptance Criteria
+\n</details>\n\n## 15. AG-003.1 Acceptance Criteria
 
 This is an architecture and documentation ticket. No runtime implementation is included.
 
@@ -1378,3 +1569,16 @@ checks passed. No production activation, migration or real Google sign-in occurr
 See [source-grounded review and decision package](../sprints/S02_SECURITY_REVIEW.md)
 for findings, advisory sources, tests and remaining gates. These observations are
 not ADR acceptance or permission to enable authentication.
+
+
+## Isolated S02 closeout follow-up — 2026-11-23
+
+ADR-0002 remains PROPOSED; auth disabled by default. Conditional adoption has not
+become approval. Fresh installed-package verification found and repaired a missing
+`api/dependencies/__init__.py`; source-path tests alone had masked package omission.
+Current backend result is 100 passed / 8 skipped; seven opt-in PostgreSQL cases
+passed separately. Stock Authlib DEBUG disclosure remains security FAIL despite
+the expected xfail. No auth/schema policy change, production rollout or remote
+integration is implied. Owner approval and deployment security gates remain open.
+See [S02 closeout evidence](../sprints/S02_CLOSEOUT.md) for execution, failures and
+acceptance accounting; older test totals above remain historical checkpoints.
