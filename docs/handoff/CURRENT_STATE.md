@@ -1,27 +1,34 @@
 # AgentOps AI — Current State
 
-## Authoritative resume checkpoint — 2026-11-24
+## Authoritative resume checkpoint — 2026-11-24, after S03 documentation merge
 
-- S02: CLOSED, 11/11 VERIFIED.
-- S03: CLOSED, 12/12 VERIFIED (100%).
-- S03 WP01–WP04: COMPLETED.
-- S03 owner sign-off: APPROVED.
-- Next sprint: S04 — Single-agent LangGraph.
-- S04 status: NOT_STARTED.
-- Final S03 documentation synchronization: PENDING.
-- Production approval: NOT APPROVED.
+- S01: CLOSED; S02: CLOSED, 11/11; S03: CLOSED, 12/12 (Development MVP only).
+- S03 application PR #8: MERGED at `f533857b97dc0d6bd4024063779daec52c752bf4`; main CI `45346656444` PASS.
+- S03 final docs PR #9: MERGED at `6544f35dc23e5389447a14df8846611a6c3682ef`; main CI `45347328155` PASS.
+- Final S03 docs synchronization: **COMPLETE**. Do not open an additional S03 closeout PR.
+- Owner-provided Git observation: `main`, HEAD `6544f35dc23e5389447a14df8846611a6c3682ef`, working tree clean, exactly one worktree `/Users/namnguyen/agentops-ai`.
+- Existing `stash@{0}` is a backup from S03 worktree consolidation; preserve untouched.
+- S04 — Single-agent LangGraph: **WP01 OWNER_APPROVED; WP02 authorized after Git review**, no application implementation/tests yet. [S04 approved contract](../sprints/S04.md), [ADR-0004 ACCEPTED — Development MVP only](../adr/0004-langgraph-state-and-agent-boundaries.md).
+- `AGENTS.md` v1.2 governs engineering; owner performs commit, push and merge manually.
 
-## Workspace policy
+## Verified S03 capability and evidence (retained)
 
-- Canonical directory: /Users/namnguyen/agentops-ai.
-- Local execution mode.
-- Exactly one Git worktree.
-- Preserve existing backup stash.
-- No additional worktrees without owner approval.
-- Owner performs Git commit, push and merge manually.
+- FastAPI/PostgreSQL identity and ResearchTask persistence; authenticated task submission/history/detail; commit-before-202 and idempotency; PostgreSQL admission locking; React dashboard polling/cancellation.
+- Owner-reported native backend WP02: **124 passed, 46 skipped**; disposable PostgreSQL WP04: **48 passed**; frontend WP03: **39 passed**; typecheck/ESLint/build PASS; migration parity, runtime-role HTTP, Chrome E2E and independent persistence PASS.
+- S03 application delivery main CI PASS; documentation merge main CI PASS. CI outcome does not certify production or recovery.
+
+## Security and architecture boundaries
+
+- ADR-0001 ACCEPTED; ADR-0002 ACCEPTED **Development MVP only**; ADR-0003 PARTIALLY ACCEPTED **admission only**; ADR-0004 ACCEPTED — Development MVP only.
+- Authentication disabled by default. Stock Authlib PKCE DEBUG exposure remains **KNOWN FAIL** with strict XFAIL and bounded mitigation. No live Google login, real users, live AI providers, staging or production.
+- Worker claiming, attempts, leases, crash recovery, backup/restore, report/evidence publication, retry/delete and retention remain outside currently accepted S03 capability. One legacy shared Compose test unexecuted; backend lint/types NOT_CONFIGURED.
+- All S02/S03 security and release gates preserved. **Production approval: NOT APPROVED.**
+
+## Historical S03 delivery references
+
+Retained from the S03 baseline for traceability. The later S03 final docs PR #9 and its main CI are authoritative for final closeout.
 
 ## S03 delivery evidence
-
 - Pull Request #8: MERGED.
 - Merge commit:
   f533857b97dc0d6bd4024063779daec52c752bf4.
@@ -90,14 +97,31 @@
 - [S02 closeout](../sprints/S02_CLOSEOUT.md)
 - [S02 security review](../sprints/S02_SECURITY_REVIEW.md)
 
+## S04 implementation checkpoint
+
+- WP01: OWNER APPROVED; ADR-0004 ACCEPTED for Development MVP.
+- WP02: IN_PROGRESS / PARTIALLY VERIFIED.
+- Offline LangGraph baseline: 7/7 focused tests PASS.
+- Dependency resolution and hash dry-run: 7/7 PASS.
+- Seven application lockfiles: UPDATED on S04 feature branch.
+- WP03 safety and budget verification: NOT_STARTED.
+- No production, live provider or real-user authorization.
+
+## S04-WP02 current verification
+
+- LangGraph integration on feature branch: IN_PROGRESS.
+- Graph tests: 7 PASS.
+- Backend regression: 124 PASS, 49 SKIP.
+- Clean macOS ARM64 installation and pip check: PASS.
+- Seven candidate security audits and hash-checked
+  resolution checks: PASS.
+- Docker ARM64/AMD64 smoke and pip check: PASS.
+- Remote CI and final WP02 acceptance: PENDING.
+- S04-WP03: NOT_STARTED.
+- Production authorization: NOT APPROVED.
+
 ## Exactly one next action
 
-Complete the documentation-only S03 final closeout branch,
-verify its PR CI, merge with owner authorization and verify
-main CI.
-
-After that checkpoint, begin S04 sprint planning from the
-approved PRD, architecture, ADRs and sprint roadmap.
-
-Do not repeat completed S03 implementation.
-Do not expand scope without owner approval.
+Review final S04-WP02 Git diff and documentation,
+then prepare an owner-controlled commit and PR CI checkpoint.
+Do not start WP03 until WP02 handoff is accepted.

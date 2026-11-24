@@ -21,6 +21,7 @@ dependencies = [
     "httpx2==2.16.2",
     "cryptography>=50.0.2,<52",
     "joserfc>=1.8.0,<2",
+    "langgraph==1.2.24",
 ]
 
 [project.optional-dependencies]

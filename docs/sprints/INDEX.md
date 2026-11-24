@@ -1,5 +1,21 @@
 # AgentOps AI — Sprint Index
 
+## Authoritative active roadmap — 2026-11-24 (S04-WP01)
+
+| Sprint | Status | Evidence / contract |
+|---|---|---|
+| S01 | CLOSED | Historical sprint record |
+| S02 | CLOSED, 11/11 | [S02 closeout](S02_CLOSEOUT.md) |
+| S03 | CLOSED, 12/12 | PR #8 / #9 MERGED, main CI PASS; [S03 closeout](S03_CLOSEOUT.md) |
+| S04 — Single-agent LangGraph | **CONTRACT_APPROVED; implementation NOT_STARTED** | [S04 approved contract](S04.md), [ADR-0004 ACCEPTED — Development MVP only](../adr/0004-langgraph-state-and-agent-boundaries.md) |
+| S05–S09 | PLANNED | Historical roadmap below; no implementation implied |
+
+Owner approved S04 contract and ADR-0004 on 2026-11-24 for Development MVP; WP02 authorized after Git diff review. All S02/S03 security gates continue; production NOT APPROVED. Single canonical worktree and backup stash preserved. The sections after the following divider are **historical snapshots** (including earlier 'current' headings and pending actions) and do not supersede this active roadmap or [CURRENT_STATE](../handoff/CURRENT_STATE.md).
+
+---
+
+# AgentOps AI — Sprint Index
+
 ## Current roadmap — 2026-11-24, S03-WP03
 
 Start with [CURRENT_STATE.md](../handoff/CURRENT_STATE.md), then inspect actual Git.

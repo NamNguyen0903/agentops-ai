@@ -124,3 +124,19 @@ Hash-checked installation is integrated into:
 | `apps/api/requirements/py312-linux-x86_64-runtime.txt` | PASS | `59cf481155cf35e916f4234460bcb59ac3a7754f46a7a57ce66ac102e908608f` |
 | `experiments/auth-authlib-oidc/requirements/py312-darwin-arm64-poc-dev.txt` | PASS | `0a4ed6b82afd24d1c62663908be46e913f6dfb3f2632a6bbca1bae043903ff80` |
 | `experiments/auth-authlib-oidc/requirements/py312-linux-x86_64-poc-dev.txt` | PASS | `4646caa93d9fde9032ee046091fb2365b7dfdb0b79fb5dfdddf03e3a4bd84dde` |
+
+## S04 LangGraph dependency extension
+
+- Date: 2026-11-24.
+- Candidate direct dependency: `langgraph==1.2.24`.
+- Seven platform-specific hash-checked application locks extended.
+- Prior baseline pins preserved.
+- Seven resolver and seven hash-checked dry-run profiles: PASS.
+- Seven candidate audits with pip-audit 2.10.1: PASS.
+- Fresh macOS ARM64 install and pip check: PASS.
+- Single-agent offline tests: 7 PASS.
+- Existing backend regression: 124 PASS, 49 SKIP.
+- Linux container runtime and GitHub CI: PENDING.
+- Prior S02 historical evidence remains unchanged.
+- Security audit scope is Python lockfile advisories only;
+  it does not establish complete container or runtime security.
