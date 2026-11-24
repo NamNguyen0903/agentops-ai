@@ -115,10 +115,18 @@ The existing backup stash must be preserved.
 Sprint S05 Contract v1.0 and AD01-AD08 are
 owner-approved.
 
-Only WP01 documentation is currently authorized.
+WP01 technical delivery has been verified through
+merged PR #16 and its successful post-merge main CI.
 
-Runtime implementation requires successful WP01
-delivery and separate owner authorization.
+Only WP01 final documentation reconciliation is
+currently authorized.
+
+Runtime implementation requires completed checkpoint
+synchronization delivery and separate explicit owner
+authorization for WP02.
+
+No CI result or documentation status automatically
+grants implementation authority.
 
 The S05 workflow remains deterministic and offline.
 

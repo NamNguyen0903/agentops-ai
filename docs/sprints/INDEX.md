@@ -1,6 +1,6 @@
 # AgentOps AI — Authoritative Sprint Roadmap
 
-## Active roadmap — 2026-11-24, S05-WP01 IN_PROGRESS
+## Active roadmap — 2026-11-24, S05-WP01 FINALIZING
 
 **Scope:** Development MVP only.
 
@@ -13,7 +13,7 @@
 | S02 | CLOSED — 11/11 accepted | [S02 closeout](S02_CLOSEOUT.md) |
 | S03 | CLOSED — 12/12 accepted | [S03 closeout](S03_CLOSEOUT.md) |
 | S04 | CLOSED — Development MVP only | [S04 contract](S04.md), [S04 closeout](S04_CLOSEOUT.md) |
-| S05 | IN_PROGRESS — WP01 AUTHORIZED | [S05 Contract v1.0](S05.md) |
+| S05 | IN_PROGRESS — WP01 FINALIZING | [S05 Contract v1.0](S05.md) |
 | S06-S09 | PLANNED | Original roadmap retained below |
 
 S04 final-state synchronization PR #15 is MERGED.
@@ -38,21 +38,36 @@ Approved scope: Development MVP only.
 
 | Work package | Status |
 |---|---|
-| WP01 — Contract and Architecture | IN_PROGRESS |
+| WP01 — Contract and Architecture | DELIVERY_VERIFIED |
 | WP02 — Typed Contracts and Fixture Adapters | NOT_STARTED |
 | WP03 — Specialized Workflow Nodes | NOT_STARTED |
 | WP04 — Security and Execution Guards | NOT_STARTED |
 | WP05 — Integration, CI and Closeout | NOT_STARTED |
 
-Work packages delivered: 0/5.
+Technical work packages delivered: 1/5.
 
-Acceptance criteria accepted: 0/16.
+Technical acceptance criteria verified: 2/16.
 
-Only WP01 documentation is authorized.
+Official final acceptance remains pending checkpoint
+synchronization delivery.
 
-WP01-01 through WP01-05 are VERIFIED.
-WP01-06 final documentation review is IN_PROGRESS.
-WP01-07 commit, PR and CI delivery is PENDING.
+WP01-01 through WP01-06 are VERIFIED.
+WP01-07A through WP01-07F are VERIFIED.
+WP01-07G1 synchronization branch is VERIFIED.
+
+Verified WP01 delivery evidence:
+
+- PR #16: MERGED.
+- Merge checkpoint: `cae5d35bdfb955866560c763fb41c5714e60c41d`.
+- PR CI 45425694993: 4/4 PASS.
+- Main CI 45426129070: 4/4 PASS.
+
+Only WP01 final documentation reconciliation is authorized.
+
+After synchronization delivery verification, WP01 is
+eligible for DELIVERED status and AC01-AC02 acceptance.
+
+WP02 requires separate explicit owner authorization.
 
 Runtime implementation remains NOT AUTHORIZED.
 
