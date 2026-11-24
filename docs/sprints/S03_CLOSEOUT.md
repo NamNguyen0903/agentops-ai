@@ -4,12 +4,12 @@
 
 - Date: 2026-11-24.
 - Sprint: S03.
-- Status: CLOSEOUT_PREPARED.
-- Acceptance: 11/12 verified (91.7%).
+- Status: CLOSED.
+- Acceptance: 12/12 VERIFIED (100%).
 - Owner sign-off: APPROVED — DEVELOPMENT MVP ONLY.
 - Pull Request: #8.
-- Merge: PENDING.
-- Main CI: PENDING.
+- Merge: MERGED, PR #8.
+- Main CI: PASS, run 45346656444.
 - Release classification: DEVELOPMENT MVP ONLY.
 - Production approval: NOT APPROVED.
 
@@ -20,7 +20,7 @@
 | WP01 | Research persistence and migrations | VERIFIED |
 | WP02 | Authenticated task API and admission control | VERIFIED |
 | WP03 | Research dashboard and polling | VERIFIED |
-| WP04 | Runtime, browser integration and CI | VERIFIED; closeout pending |
+| WP04 | Runtime, browser integration and CI | COMPLETED |
 
 ## Delivery commits
 
@@ -63,7 +63,7 @@
 | Independent database persistence | PASS |
 | Remote push CI | 4/4 PASS |
 | Remote pull request CI | 4/4 PASS |
-| Main CI | PENDING |
+| Main CI | PASS, run 45346656444 |
 
 211 cumulative passed test cases across local suites.
 This is not a code coverage measurement.
@@ -175,3 +175,63 @@ Subsequent push and pull request CI both passed all four jobs.
 - Pull request merge: PENDING.
 - Main CI verification: PENDING.
 - Sprint closure: PENDING final delivery verification.
+
+## Final delivery and sprint closure — 2026-11-24
+
+- Sprint: S03 — Research Task API and Dashboard.
+- Status: CLOSED.
+- Acceptance: 12/12 VERIFIED (100%).
+- Owner sign-off: APPROVED.
+- Release classification: DEVELOPMENT MVP ONLY.
+- Pull Request: #8, MERGED.
+- Merge timestamp: 2026-11-24T07:15:54Z.
+- Merge commit: f533857b97dc0d6bd4024063779daec52c752bf4.
+- Source verification commit: f414786aa1c9fe2c81eedc85fca45c1c3c7c3a2c.
+- Closeout commit: 06615a404853195bf755f24c1de739f0350f57eb.
+- Source push CI: 45345545692, PASS.
+- Source PR CI: 45345553676, PASS.
+- Closeout push CI: 45346229931, PASS.
+- Closeout PR CI: 45346238246, PASS.
+- Main CI: 45346656444, PASS.
+- All four main CI jobs verified successful.
+- Local main synchronized with origin/main at delivery checkpoint.
+- Working tree clean at delivery checkpoint.
+- Single canonical worktree preserved.
+- Existing backup stash preserved.
+- Production approval: NOT APPROVED.
+
+### Final acceptance
+
+- AC01–AC12: VERIFIED.
+- WP01–WP04: COMPLETED.
+- Owner approval and delivery evidence complete.
+- Final documentation-only synchronization remains the
+  administrative handoff operation.
+
+### Evidence links
+
+- https://github.com/NamNguyen0903/agentops-ai/pull/8
+- https://github.com/NamNguyen0903/agentops-ai/actions/runs/45346238246
+- https://github.com/NamNguyen0903/agentops-ai/actions/runs/45346656444
+
+### Preserved limitations
+
+- All S02 release gates remain mandatory.
+- Authentication remains disabled by default.
+- Stock Authlib PKCE DEBUG exposure remains KNOWN FAIL.
+- Strict XFAIL and bounded mitigation retained.
+- ADR-0003 remains partially accepted for admission only.
+- No live Google login, real users or external AI providers.
+- Worker execution, leases and recovery remain deferred.
+- Reports, evidence endpoints, retry/delete and retention remain deferred.
+- Crash recovery and backup/restore remain unverified.
+- One legacy shared Compose test remains unexecuted.
+- Backend lint/type-check remains NOT_CONFIGURED.
+- No staging or production deployment.
+
+### Next sprint
+
+S04 — Single-agent LangGraph.
+
+Start only after the final documentation synchronization
+is merged and its CI verified.

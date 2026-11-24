@@ -606,3 +606,24 @@ See [S03_CLOSEOUT.md](S03_CLOSEOUT.md).
 - Pull request merge: PENDING.
 - Main CI verification: PENDING.
 - Sprint closure: PENDING final delivery verification.
+
+
+## Latest authoritative roadmap checkpoint — 2026-11-24
+
+- S02: CLOSED, 11/11 VERIFIED.
+- S03: CLOSED, 12/12 VERIFIED.
+- S03 owner sign-off: APPROVED.
+- S03 delivery PR: #8, MERGED.
+- S03 main delivery commit: f533857b.
+- S03 main CI: 45346656444, PASS.
+- S04: NEXT — Single-agent LangGraph.
+- S04 implementation: NOT_STARTED.
+- Production approval: NOT APPROVED.
+- All previous release gates remain mandatory.
+
+Final S03 documentation synchronization is required
+before S04 implementation.
+
+References:
+- [S03 sprint](S03.md)
+- [S03 closeout](S03_CLOSEOUT.md)
