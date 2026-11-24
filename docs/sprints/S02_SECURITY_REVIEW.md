@@ -1,5 +1,137 @@
 # S02 — Final Development MVP Security Review
 
+## 2026-11-24 — Stage 2 architecture acceptance
+
+- Stage 1 dependency/security remediation: COMPLETE LOCALLY.
+- Stage 2 architecture and authentication approval: ACCEPTED.
+- ADR-0001: ACCEPTED.
+- ADR-0002: ACCEPTED — DEVELOPMENT MVP ONLY.
+- Authlib 1.9.10: CONDITIONALLY APPROVED.
+- Operator-managed provisioning policy: APPROVED.
+- Operator runbook: documented with existing integration evidence.
+- Authentication: IMPLEMENTED_FOR_REVIEW; disabled by default.
+- Live provider and real browser acceptance: deferred release gates.
+- Stock PKCE DEBUG disclosure: known security FAIL.
+- Production approval: NOT APPROVED.
+- Remote CI and reviewed Git incorporation: PENDING.
+- Sprint S02: IN_PROGRESS / PARTIAL.
+- Current acceptance accounting: 10/11 VERIFIED (90.9%).
+
+The owner explicitly approved the architecture package,
+conditional adoption and release-gate boundaries on
+2026-11-24, including a separate approval of ADR-0001.
+
+Acceptance criterion 4 is satisfied by the recorded
+architecture decisions.
+
+Acceptance criterion 5 is accepted within the owner-approved
+Development MVP boundary using the previously verified
+offline integration, dependency baseline and scoped security
+controls.
+
+This does not establish live Google, deployed browser,
+operator CLI or production security acceptance.
+
+Criterion 10 remains PARTIAL until the work is committed,
+reviewed and incorporated through the approved Git workflow.
+
+The final sprint sign-off remains a separate closure gate.
+
+Evidence:
+
+- docs/adr/0001-architecture.md
+- docs/adr/0002-authentication.md
+- docs/development/PYTHON_DEPENDENCIES.md
+- docs/development/OPERATOR_PROVISIONING.md
+
+No application tests were rerun for this documentation
+checkpoint. Prior verified results remain applicable to
+the unchanged application implementation.
+
+### Final Development MVP security disposition
+
+- WP01-01: dependency remediation verified locally.
+- WP01-02: stock PKCE logging failure retained;
+  bounded application mitigation accepted.
+- WP01-03: broader logging/deployment checks remain gates.
+- WP01-04: operator policy and minimal development workflow
+  accepted; real-user enrollment and operations remain gates.
+
+The clean application lockfile audit is not a universal
+security guarantee.
+
+All real-user and production release gates in ADR-0002
+remain mandatory.
+
+### Exactly one current next action
+
+Stage 3 — Git Delivery and CI.
+
+Review the complete local change manifest and prepare
+explicit staging and commit boundaries.
+
+Do not repeat Stage 1 or Stage 2 without changed inputs
+or a newly discovered blocker.
+
+Do not push, merge, change PR bases, rewrite history,
+activate authentication or start S03 without the
+appropriate owner authorization.
+
+Sprint S02 must remain IN_PROGRESS until criterion 10
+and final owner sign-off are satisfied.
+
+---
+
+## 2026-11-24 — WP01.1 dependency remediation checkpoint
+
+- WP01.1 dependency remediation: VERIFIED_LOCALLY.
+- Required dependency lockfiles: 9/9.
+- Final setuptools baseline: 84.1.0.
+- Application lockfile advisory audit: 9/9 passed.
+- Backend regression: 100 passed, 8 skipped on each of four targets.
+- Offline Authlib PoC: 56 passed, 1 strict xfailed on each
+  of two required targets.
+- Generator replay and smoke compilation: 4/4 targets passed.
+- Docker runtime verification: AMD64 and ARM64 passed.
+- Isolated PostgreSQL migration lifecycle: passed.
+- PostgreSQL integration: 7 passed.
+- Stock Authlib PKCE DEBUG exposure remains a known security FAIL.
+- Authentication remains IMPLEMENTED_FOR_REVIEW and disabled by default.
+- Remote CI and Git integration remain pending.
+- ADR-0002 remains PROPOSED.
+- Production approval: NOT APPROVED.
+- Sprint S02: IN_PROGRESS / PARTIAL, 8/11 (72.7%).
+
+See `docs/development/PYTHON_DEPENDENCIES.md` for the
+dependency policy, lockfile checksums, verification evidence
+and residual limitations.
+
+### WP01 security finding disposition
+
+- WP01-01: dependency baseline remediation verified locally.
+- WP01-02: stock Authlib PKCE logging failure retained;
+  application-specific mitigation remains bounded.
+- WP01-03: broader logging and deployment verification remain
+  release gates.
+- WP01-04: provisioning and live acceptance boundaries require
+  explicit owner decisions.
+
+The setuptools findings PYSEC-2026-3447 and
+GHSA-xmj3-9gf7-h52w were addressed by upgrading to 84.1.0.
+
+A clean application lockfile audit is not a complete production
+security assessment.
+
+The next action is Stage 2: obtain explicit owner decisions
+on ADR-0002, conditional Authlib adoption, operator provisioning,
+development acceptance boundaries and remaining release gates.
+
+Do not regenerate dependency lockfiles or repeat completed
+regression suites without changed inputs or a new blocker.
+Do not start S03 or mark S02 complete.
+
+---
+
 Date: 2026-11-23. Verdict: **READY_FOR_TECH_LEAD_REVIEW**, not deployment approval.
 ADR-0002: **PROPOSED**. Sprint S02: **IN_PROGRESS**. Authentication remains disabled by default.
 

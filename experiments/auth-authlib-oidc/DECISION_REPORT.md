@@ -1,5 +1,55 @@
 # AG-003.1B.3 — Authlib security decision report
 
+## 2026-11-24 — Stage 2 architecture acceptance
+
+### Conditional adoption decision
+
+The owner approves Authlib 1.9.10 as the OIDC protocol
+client within the Development MVP architecture.
+
+ADR-0002 is accepted within that boundary.
+
+The stock PKCE DEBUG exposure remains a security FAIL.
+The strict XFAIL must remain visible.
+
+The application owns state, session persistence,
+CSRF, identity policy and authorization.
+
+Historical PoC implementation statuses remain preserved
+as historical evidence.
+
+Current implementation status and next actions are
+defined by docs/handoff/CURRENT_STATE.md.
+
+Live-provider, browser, deployed logging and operational
+release gates remain mandatory before real-user exposure.
+
+---
+
+## 2026-11-24 — WP01.1 dependency remediation checkpoint
+
+The final dependency baseline has been verified locally.
+
+Both required PoC profiles passed fresh installation,
+dependency consistency and offline regression.
+
+Each profile recorded 56 passed and 1 strict xfailed.
+The forced stock PKCE logging failure was retained.
+
+Setuptools 84.1.0 resolved the reported setuptools
+advisories in the application lockfile audit.
+
+Conditional adoption remains subject to explicit owner
+approval in ADR-0002.
+
+Historical implementation statuses in this report describe
+the original PoC checkpoint. Current backend implementation
+status is recorded in `docs/handoff/CURRENT_STATE.md`.
+
+See `docs/development/PYTHON_DEPENDENCIES.md`.
+
+---
+
 **Date:** 2026-11-22
 **Status:** PROPOSED FOR REVIEW. ADR-0002 remains PROPOSED; S02 remains IN_PROGRESS.
 **Recommendation:** ADOPT_CONDITIONALLY Authlib 1.9.10 for OIDC protocol processing only.

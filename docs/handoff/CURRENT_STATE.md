@@ -1,11 +1,138 @@
 # AgentOps AI — Current State
 
-**Date:** 2026-11-23 (Asia/Ho_Chi_Minh)
+## 2026-11-24 — Stage 2 architecture acceptance
+
+- Stage 1 dependency/security remediation: COMPLETE LOCALLY.
+- Stage 2 architecture and authentication approval: ACCEPTED.
+- ADR-0001: ACCEPTED.
+- ADR-0002: ACCEPTED — DEVELOPMENT MVP ONLY.
+- Authlib 1.9.10: CONDITIONALLY APPROVED.
+- Operator-managed provisioning policy: APPROVED.
+- Operator runbook: documented with existing integration evidence.
+- Authentication: IMPLEMENTED_FOR_REVIEW; disabled by default.
+- Live provider and real browser acceptance: deferred release gates.
+- Stock PKCE DEBUG disclosure: known security FAIL.
+- Production approval: NOT APPROVED.
+- Remote CI and reviewed Git incorporation: PENDING.
+- Sprint S02: IN_PROGRESS / PARTIAL.
+- Current acceptance accounting: 10/11 VERIFIED (90.9%).
+
+The owner explicitly approved the architecture package,
+conditional adoption and release-gate boundaries on
+2026-11-24, including a separate approval of ADR-0001.
+
+Acceptance criterion 4 is satisfied by the recorded
+architecture decisions.
+
+Acceptance criterion 5 is accepted within the owner-approved
+Development MVP boundary using the previously verified
+offline integration, dependency baseline and scoped security
+controls.
+
+This does not establish live Google, deployed browser,
+operator CLI or production security acceptance.
+
+Criterion 10 remains PARTIAL until the work is committed,
+reviewed and incorporated through the approved Git workflow.
+
+The final sprint sign-off remains a separate closure gate.
+
+Evidence:
+
+- docs/adr/0001-architecture.md
+- docs/adr/0002-authentication.md
+- docs/development/PYTHON_DEPENDENCIES.md
+- docs/development/OPERATOR_PROVISIONING.md
+
+No application tests were rerun for this documentation
+checkpoint. Prior verified results remain applicable to
+the unchanged application implementation.
+
+### Current Git checkpoint
+
+- Worktree: isolated s02-closeout worktree.
+- Branch: feat/s02-sprint-closeout.
+- Last observed committed HEAD: 09e88f2.
+- Stage 1 and Stage 2 changes are local and uncommitted.
+- Existing owner changes must be preserved.
+- No push or merge has been authorized by this checkpoint.
+
+Older status notes and next actions below are historical
+where they conflict with this current checkpoint.
+
+### Exactly one current next action
+
+Stage 3 — Git Delivery and CI.
+
+Review the complete local change manifest and prepare
+explicit staging and commit boundaries.
+
+Do not repeat Stage 1 or Stage 2 without changed inputs
+or a newly discovered blocker.
+
+Do not push, merge, change PR bases, rewrite history,
+activate authentication or start S03 without the
+appropriate owner authorization.
+
+Sprint S02 must remain IN_PROGRESS until criterion 10
+and final owner sign-off are satisfied.
+
+---
+
+## 2026-11-24 — WP01.1 dependency remediation checkpoint
+
+- WP01.1 dependency remediation: VERIFIED_LOCALLY.
+- Required dependency lockfiles: 9/9.
+- Final setuptools baseline: 84.1.0.
+- Application lockfile advisory audit: 9/9 passed.
+- Backend regression: 100 passed, 8 skipped on each of four targets.
+- Offline Authlib PoC: 56 passed, 1 strict xfailed on each
+  of two required targets.
+- Generator replay and smoke compilation: 4/4 targets passed.
+- Docker runtime verification: AMD64 and ARM64 passed.
+- Isolated PostgreSQL migration lifecycle: passed.
+- PostgreSQL integration: 7 passed.
+- Stock Authlib PKCE DEBUG exposure remains a known security FAIL.
+- Authentication remains IMPLEMENTED_FOR_REVIEW and disabled by default.
+- Remote CI and Git integration remain pending.
+- ADR-0002 remains PROPOSED.
+- Production approval: NOT APPROVED.
+- Sprint S02: IN_PROGRESS / PARTIAL, 8/11 (72.7%).
+
+See `docs/development/PYTHON_DEPENDENCIES.md` for the
+dependency policy, lockfile checksums, verification evidence
+and residual limitations.
+
+### Current execution checkpoint
+
+This is the latest resume checkpoint and supersedes older
+next-action instructions in this file.
+
+- Branch: `feat/s02-sprint-closeout`.
+- Last observed committed HEAD: `09e88f2`.
+- Dependency remediation changes are local and uncommitted.
+- Stage 1 technical execution: complete within verified scope.
+- Stage 1 documentation synchronization: included in this checkpoint.
+- Stage 2 owner approval: pending.
+- Stage 3 Git delivery and CI: pending.
+- Stage 4 final sprint closeout: pending.
+
+The next action is Stage 2: obtain explicit owner decisions
+on ADR-0002, conditional Authlib adoption, operator provisioning,
+development acceptance boundaries and remaining release gates.
+
+Do not regenerate dependency lockfiles or repeat completed
+regression suites without changed inputs or a new blocker.
+Do not start S03 or mark S02 complete.
+
+---
+
+**Date:** 2026-11-24 (Asia/Ho_Chi_Minh)
 **Sprint:** S02 — Database & Authentication — IN_PROGRESS / PARTIAL
 **Closeout:** S02 is NOT DONE; production authentication is NOT APPROVED.
 **Current ticket:** AG-003.6 — Tech Lead / owner security and acceptance review
-**Review status:** READY_FOR_TECH_LEAD_REVIEW; acceptance pending.
-**Acceptance:** 8/11 existing S02 success criteria verified (72.7%, rounded 73%).
+**Review status:** Stage 2 accepted; Stage 3 Git delivery pending.
+**Acceptance:** 10/11 existing S02 success criteria verified (90.9%, rounded 91%).
 This is not production readiness or test coverage. See the
 [acceptance matrix and execution evidence](../sprints/S02_CLOSEOUT.md).
 
@@ -24,7 +151,7 @@ work or begin S03. Do not rerun tests solely because older checkpoints list them
 
 ## Baselines and authority
 
-PRD v0.2; architecture v1.1; ADR-0001 and ADR-0002 remain PROPOSED.
+PRD v0.2; architecture v1.1; ADR-0001 ACCEPTED; ADR-0002 ACCEPTED — DEVELOPMENT MVP ONLY.
 Authentication is implemented for review and disabled by default. The preceding closeout task
 authorized isolated edits/tests/local commits, but no push, merge, ADR approval or
 activation. This checkpoint authorizes documentation updates only; no features,
@@ -79,13 +206,13 @@ application tests or remote checks were executed for this documentation checkpoi
 
 | Ticket | Current outcome |
 |---|---|
-| AG-003.1 / AG-003.1B | Design reviewed; architecture/security approval BLOCKED on owner |
+| AG-003.1 / AG-003.1B | Architecture accepted; Authlib conditionally approved for Development MVP |
 | AG-003.1A | Historical FastAPI Users PoC; stock approach not adopted |
 | AG-003.2 | Local foundation VERIFIED including persistence |
 | AG-003.3A / AG-003.3B | ORM/migrations VERIFIED in guarded isolated scope |
 | AG-003.4 | IMPLEMENTED_FOR_REVIEW; disabled; activation not authorized |
 | AG-003.5 | VERIFIED within offline and isolated PostgreSQL boundaries |
-| AG-003.6 | Local closeout package prepared; owner review and Git integration pending |
+| AG-003.6 | Stage 1 and Stage 2 complete locally; Git delivery, CI and final sign-off pending |
 
 ## Observed Git checkpoint
 
@@ -115,11 +242,16 @@ application tests or remote checks were executed for this documentation checkpoi
 
 ## Pending acceptance and security gates
 
-The unchanged closeout matrix has 8/11 verified criteria. Criterion 4 (approved
-authentication architecture) remains BLOCKED; criteria 5 (conditional adoption and
-integration acceptance) and 10 (reviewed Git incorporation) remain PARTIAL.
-Owner signoff is still required. Documentation synchronization does not approve
-ADR-0002, waive security gates or close S02.
+Acceptance is now 10/11 within the owner-approved
+Development MVP boundary.
+
+Criterion 10 remains PARTIAL pending reviewed Git
+incorporation and remote CI.
+
+Final owner sign-off remains mandatory.
+
+All deferred release gates in ADR-0002 remain open.
+Production and real-user activation are not approved.
 
 ## Blockers and restrictions
 
@@ -138,7 +270,6 @@ its user-owned changes were intentionally preserved.
 
 ## Exactly one next action
 
-**AG-003.6:** Conduct the Tech Lead / owner review of
-[S02_CLOSEOUT.md](../sprints/S02_CLOSEOUT.md) and its linked security/ADR decision
-package, recording explicit decisions on the remaining acceptance and release gates.
-Do not mark S02 CLOSED before approval and the unchanged sprint criteria are met.
+Stage 3 — review the local changes and prepare explicit Git staging and commit boundaries.
+
+Do not start S03 before final S02 closeout.

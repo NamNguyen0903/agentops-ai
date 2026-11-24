@@ -1,5 +1,52 @@
 # AG-003.1B.3 — Authlib OIDC Compatibility PoC
 
+## 2026-11-24 — Stage 2 architecture acceptance
+
+Authlib 1.9.10 has received conditional owner approval
+as the Google OIDC protocol client for the Development MVP.
+
+The existing offline verification recorded 56 passed
+and 1 strict xfailed on each required PoC target.
+
+Stock PKCE DEBUG exposure remains a known security FAIL.
+
+The application-specific mitigation is bounded to its
+verified scope.
+
+Use the matching hash-checked requirements profile.
+
+See docs/adr/0002-authentication.md and
+docs/development/PYTHON_DEPENDENCIES.md.
+
+No live Google, staging or production activation is approved.
+
+---
+
+## 2026-11-24 — WP01.1 dependency remediation checkpoint
+
+The offline PoC has been reverified with the final dependency
+baseline on macOS ARM64 and Linux AMD64 using Python 3.12.
+
+- Authlib: 1.9.10.
+- cryptography: 50.0.2.
+- joserfc: 1.8.0.
+- setuptools: 84.1.0.
+- Each target: 56 passed, 1 strict xfailed.
+- Forced XFAIL: expected PKCELogExposure confirmed.
+- Advisory audit: both PoC lockfiles passed.
+
+Stock PKCE logging exposure remains a security failure.
+
+For reproducible installation, select the matching lockfile
+under this experiment's `requirements/` directory.
+
+Full baseline evidence:
+`docs/development/PYTHON_DEPENDENCIES.md`.
+
+No live Google OIDC or production approval is implied.
+
+---
+
 Status: **EXPERIMENTAL / NOT PRODUCTION AUTHENTICATION**.
 
 ADR-0002 remains **PROPOSED**; S02 remains **IN_PROGRESS**.
