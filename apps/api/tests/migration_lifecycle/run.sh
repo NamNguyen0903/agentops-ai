@@ -2,7 +2,7 @@
 #!/bin/sh
 set -eu
 
-echo "=== AG-003.3B: Migration Lifecycle ==="
+echo "=== S03-WP01: Additive Migration Lifecycle ==="
 
 # Copy source into a writable temporary directory.
 # Keep the repository mount read-only.
@@ -42,9 +42,13 @@ expected_tables = {
     "auth_identities",
     "auth_sessions",
     "oidc_login_transactions",
+    "research_tasks",
 }
 
-revision = "0291ce4556fe"
+revision = "83d3b0f10901"
+if phase == "identity":
+    expected_tables.remove("research_tasks")
+    revision = "0291ce4556fe"
 
 try:
     with engine.connect() as connection:
@@ -85,7 +89,7 @@ try:
             assert tables == set(), tables
             assert current_revision is None
 
-        elif phase == "upgraded":
+        elif phase in {"upgraded", "identity"}:
             assert tables == expected_tables, tables
             assert current_revision == revision
 
@@ -97,7 +101,7 @@ try:
 
             assert constraints >= 19, constraints
 
-            # Runtime role must have DML on identity tables.
+            # Runtime role must have DML, but no DDL or Alembic access.
             for table_name in expected_tables:
                 for privilege in (
                     "SELECT", "INSERT", "UPDATE", "DELETE"
@@ -167,6 +171,36 @@ echo "=== 1. Verify empty database ==="
 check_state empty
 
 echo "=== 2. Upgrade to head ==="
+python -m alembic -c alembic.ini upgrade 0291ce4556fe
+check_state identity
+python - <<'PY'
+import os
+from sqlalchemy import create_engine, text
+engine = create_engine(os.environ["AGENTOPS_MIGRATION_DATABASE_URL"], hide_parameters=True)
+try:
+    with engine.begin() as connection:
+        connection.execute(text("INSERT INTO app.users (id) VALUES ('00000000-0000-0000-0000-000000000303')"))
+finally:
+    engine.dispose()
+PY
+python -m alembic -c alembic.ini upgrade head
+check_state upgraded
+python -m alembic -c alembic.ini check
+
+echo "=== 2a. Research-only downgrade preserves S02 identity data ==="
+python -m alembic -c alembic.ini downgrade 0291ce4556fe
+check_state identity
+python - <<'PY'
+import os
+from sqlalchemy import create_engine, text
+engine = create_engine(os.environ["AGENTOPS_MIGRATION_DATABASE_URL"], hide_parameters=True)
+try:
+    with engine.connect() as connection:
+        assert connection.scalar(text("SELECT count(*) FROM app.users WHERE id = '00000000-0000-0000-0000-000000000303'")) == 1
+        print("PASS: S02 identity row survives additive upgrade/downgrade")
+finally:
+    engine.dispose()
+PY
 python -m alembic -c alembic.ini upgrade head
 check_state upgraded
 
@@ -189,6 +223,7 @@ python -m pytest -p no:cacheprovider -q --tb=short \
     tests/test_identity_db_integration.py \
     tests/test_identity_unique_postgres.py \
     tests/test_oidc_state_postgres.py \
-    tests/test_auth_disable_concurrency.py
+    tests/test_auth_disable_concurrency.py \
+    tests/test_research_postgres.py
 
 echo "PASS: PostgreSQL integration tests"

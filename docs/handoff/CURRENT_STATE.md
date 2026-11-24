@@ -1,139 +1,82 @@
 # AgentOps AI — Current State
 
-## Authoritative resume checkpoint
+## Authoritative resume checkpoint — 2026-11-24
 
-- Date: 2026-11-24 (Asia/Ho_Chi_Minh).
-- Last accepted sprint: S02 — Database & Authentication.
-- Final acceptance: 11/11 VERIFIED (100%).
-- Owner final sign-off: APPROVED.
-- Sprint closure: effective when this documentation
-  closeout is incorporated into main and its CI passes.
-- Next sprint: S03 — planning pending.
-- Production deployment: NOT APPROVED.
-- Real-user authentication activation: NOT APPROVED.
-- Authentication remains disabled by default.
+- Sprint: **S03 — Research Task API and Dashboard; IN_PROGRESS**.
+- Work package: **S03-WP01 — Sprint Contract & Research Persistence; VERIFIED_LOCALLY**.
+- S03 acceptance: AC01–AC03 verified locally; AC04–AC12 pending. S03 is NOT CLOSED.
+- Previous sprint: **S02 CLOSED, 11/11 accepted**, per owner checkpoint.
+- PR #7 merged and final main CI PASS: **owner-reported**, not rechecked on GitHub here.
+- ADR-0001 ACCEPTED; ADR-0002 ACCEPTED — DEVELOPMENT MVP ONLY.
+- Authentication disabled by default; production and real-user activation NOT APPROVED.
 
-## Start here in the next session
+## Git and worktree
 
-Read these files in order:
+- Branch: `feat/s03-research-persistence`.
+- Worktree: `/Users/namnguyen/.codex/worktrees/s03-research-persistence/agentops-ai`.
+- Base and last observed HEAD before local delivery:
+  `7e20e73c32db8287447445d5d48e9331d211ff7c`.
+- One successful fetch of origin/main confirmed this exact owner-supplied baseline.
+- WP01 changes are local; no push, merge or deployment is authorized.
+- The delivery commit cannot record its own final SHA. Inspect Git for the actual
+  delivery HEAD; the execution report records it after creation.
+- Original repository and S02 worktree were preserved. Do not assume other
+  worktrees share this branch or contain these changes.
 
-1. AGENTS.md
-2. docs/handoff/CURRENT_STATE.md
-3. docs/sprints/INDEX.md
-4. docs/product/PRD.md
-5. docs/architecture/overview.md
-6. docs/adr/0001-architecture.md
-7. docs/adr/0002-authentication.md
-8. The actual S03 sprint specification.
+## Implemented and verified
 
-Inspect current Git status, branch, HEAD and remote main.
+- Additive ResearchTask migration `83d3b0f10901` after identity `0291ce4556fe`.
+- UUID ownership, validated scope, six lifecycle states, timestamps, safe error-code
+  shape, owner-scoped idempotency, same-owner retry parent, deletion marker and indexes.
+- Caller-owned explicit transactions; owner-scoped reads/keyset history; unique-key
+  contention resolves concurrent duplicates without creating two tasks.
+- Backend Python 3.12.9 macOS ARM64: **117 passed, 32 skipped**, exit 0.
+- Isolated PostgreSQL 17.12/Linux ARM64: **31 passed**, exit 0
+  (24 new research cases plus seven existing database regressions).
+- Additive upgrade, research-only downgrade preserving S02 identity data,
+  upgrade/downgrade-to-base/upgrade, role checks and Alembic metadata check passed.
+- The 32 default skips are 31 separately executed PostgreSQL cases and one legacy
+  shared-stack case not executed. No skipped case is relabeled as a default-suite pass.
+- Both host and isolated runner pip checks passed. No dependency changes.
+- Backend lint/type-check tools are not configured; no such PASS is claimed.
+- Exact commands, changed paths, first-run observations and limits:
+  [S03 report](../sprints/S03.md).
 
-Confirm that the final S02 documentation closeout was
-merged and its main CI completed successfully.
+## Boundaries and pending gates
 
-Do not repeat completed S02 implementation, dependency
-generation or regression work without changed inputs
-or a newly discovered blocker.
+No research routes, worker, providers, reports, frontend changes or shared database
+migrations were implemented. S03 tasks may remain queued pending the future worker;
+no deadline, recovery, production performance or process-restart claim is made.
 
-## Accepted architecture
+ADR-0003 is absent; worker/lease/recovery choices remain open. WP01 uses the
+explicitly authorized persistence contract and does not accept those future choices.
+WP02 must enforce authenticated ownership, CSRF, admission and sanitized errors,
+and commit before HTTP 202. Repository owner filters do not replace authentication.
 
-- Modular monolith with separate API and worker processes.
-- FastAPI, React TypeScript and PostgreSQL.
-- Async SQLAlchemy, Psycopg and Alembic.
-- Google OIDC through conditionally approved Authlib.
-- PostgreSQL-backed opaque application sessions.
-- Operator-managed account provisioning.
-- No public signup or local password implementation in S02.
-- ADR-0001 ACCEPTED.
-- ADR-0002 ACCEPTED — DEVELOPMENT MVP ONLY.
+All [ADR-0002 release gates](../adr/0002-authentication.md) remain mandatory:
+live Google, browser acceptance, trusted enrollment, operator audit and deployed
+provision/disable, distributed abuse controls, retention/cleanup, encryption key
+lifecycle, deployed logging/proxy/TLS/secrets, process-kill/uncertain-commit recovery,
+backup/restore, broader dependency/platform and remaining privilege review.
+Stock PKCE DEBUG exposure remains **security FAIL**; the existing strict XFAIL
+and bounded application mitigation are unchanged. No real credentials or real users.
 
-## Git checkpoint
+## Historical evidence
 
-The fully integrated and CI-verified S02 implementation
-baseline is:
+S02 implementation baseline: `76ae5ccccf3d913fba813e8232d8d7e8cb8c9423`.
+Its merged PRs #3–#6 and observed CI history remain in
+[S02 closeout](../sprints/S02_CLOSEOUT.md) and
+[S02 security review](../sprints/S02_SECURITY_REVIEW.md).
+The accepted documentation baseline is the newer S03 base above.
 
-76ae5ccccf3d913fba813e8232d8d7e8cb8c9423
-
-Merged implementation PRs:
-
-- PR #4: backend CI foundation.
-- PR #6: security and S02 closeout implementation.
-- PR #5: identity and authentication.
-- PR #3: final integration into main.
-
-Final implementation main CI:
-
-https://github.com/NamNguyen0903/agentops-ai/actions/runs/45311767623
-
-The final documentation integration commit will be
-newer than this implementation baseline.
-
-Read GitHub and Git state for its actual identity.
-Do not treat the implementation baseline as the
-permanent latest HEAD.
-
-Existing local worktrees may remain on historical
-branches. Do not assume they are synchronized.
-
-## Evidence and documentation
-
-- docs/sprints/S02.md
-- docs/sprints/S02_CLOSEOUT.md
-- docs/sprints/S02_SECURITY_REVIEW.md
-- docs/development/PYTHON_DEPENDENCIES.md
-- docs/development/OPERATOR_PROVISIONING.md
-- docs/adr/0001-architecture.md
-- docs/adr/0002-authentication.md
-- docs/handoff/S02_HISTORY_2026-11-23.md
-- docs/handoff/S02_PRE_FINAL_CLOSEOUT_2026-11-24.md
-
-The archived handoffs contain historical Git state,
-approval gates and next actions.
-
-They are audit evidence, not current execution instructions.
-
-## Mandatory security boundaries
-
-The owner accepted Development MVP only.
-
-Stock Authlib PKCE DEBUG disclosure remains a known
-security FAIL with a bounded application mitigation.
-
-Live Google OIDC, real browser acceptance, trusted
-identity enrollment, operator access/auditing,
-distributed throttling, retention, key rotation,
-production logging, TLS, secret management, recovery,
-backup restoration and broader security review remain
-mandatory release gates.
-
-Consult the full ADR-0002 gate list.
-
-No real-user activation, staging deployment or
-production deployment has been authorized.
-
-## Engineering workflow
-
-Preserve unrelated user changes and existing worktrees.
-
-Use explicit staging boundaries.
-
-Do not use git add ., force push, destructive reset,
-history rewrite or uncontrolled resource cleanup.
-
-Keep the sprint tracker, ADRs, verification evidence
-and CURRENT_STATE synchronized at meaningful checkpoints.
+Preserved archives: [S02 history](S02_HISTORY_2026-11-23.md) and
+[pre-final closeout](S02_PRE_FINAL_CLOSEOUT_2026-11-24.md).
+Historical gates and next actions in those files are audit evidence.
 
 ## Exactly one next action
 
-After verifying the final S02 documentation PR and its
-main CI, begin S03 planning from the actual sprint
-specification.
-
-Identify the first S03 ticket and its acceptance criteria.
-
-Create an appropriate feature branch from current main
-using an isolated clean worktree if needed.
-
-Do not implement unapproved scope.
-
-Do not activate production authentication.
+**S03-WP02 — Research Task Backend API:** first inspect branch, HEAD, status and the
+WP01 commit/diff against this checkpoint; then implement the three core task routes
+using the [S03 contract](../sprints/S03.md). Read AGENTS, this handoff, INDEX, S03,
+PRD and relevant ADRs before editing. Do not repeat completed S02 audits or WP01
+checks without changed inputs, stale evidence or a newly discovered blocker.

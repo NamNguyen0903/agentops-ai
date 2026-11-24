@@ -1,9 +1,9 @@
 # AgentOps AI — Engineering Working Agreement
 
-**Version:** 1.1
-**Status:** Proposed for adoption
+**Version:** 1.2
+**Status:** Owner-authorized local execution workflow from S03
 **Project:** AgentOps AI
-**Last updated:** 2026-11-21
+**Last updated:** 2026-11-24
 
 ## 1. Project Overview
 
@@ -44,8 +44,9 @@ Current expected baselines:
 
 - PRD: v0.2
 - Architecture overview: v1.1
-- ADR-0001: Proposed, pending formal approval
-- ADR-0002 through ADR-0007: Open decisions
+- ADR-0001: Accepted
+- ADR-0002: Accepted — Development MVP only; mandatory release gates retained
+- ADR-0003 through ADR-0007: Open decisions
 
 An ADR marked Proposed is not an approved architecture decision.
 
@@ -55,13 +56,12 @@ Do not silently change product requirements to fit generated code.
 
 ### User — Developer and Repository Owner
 
-The user alone:
+Starting with S03, the owner authorizes Codex to inspect and edit the active work
+package, run development commands and tests, repair scoped failures, update
+documentation, create feature branches and make reviewed scoped local commits.
+This supersedes the previous manual-copy-only execution policy. The owner retains:
 
-- Creates, modifies and deletes local repository files.
-- Copies generated code and documentation into the project.
-- Runs Terminal, Git, Docker, database and test commands.
-- Creates GitHub branches and repositories.
-- Commits, pushes and merges changes.
+- Authority over pushes, remote repositories, merges and release actions.
 - Manages credentials and cloud resources.
 - Approves changes to scope and architecture.
 - Approves deployment and sprint closeout.
@@ -71,7 +71,7 @@ The user alone:
 ChatGPT:
 
 - Reads available project context.
-- Breaks work into small, reviewable tickets.
+- Defines reviewable work packages and their acceptance boundaries.
 - Defines acceptance criteria.
 - Provides precise Terminal and Git commands.
 - Creates technical instructions for Codex.
@@ -86,24 +86,29 @@ ChatGPT must not claim that a command succeeded without supporting evidence.
 
 Codex:
 
-- Generates complete, copyable code and documents.
+- Implements authorized local work packages directly, including code and documents.
 - Identifies the destination path for each artifact.
 - Provides related tests and verification instructions.
-- Proposes fixes from user-supplied error output.
+- Runs scoped checks and repairs failures based on observed evidence.
 - Explains design changes and dependencies.
 - Prepares documentation and handoff updates.
 
 Codex must not:
 
-- Modify or delete repository files.
-- Execute commands or tests.
-- Apply patches automatically.
-- Commit, push or merge.
+- Modify unrelated work or cross the active work package boundary.
+- Push or merge without explicit owner authorization.
+- Approve architecture, security release gates or sprint closure on behalf of the owner.
+- Use destructive cleanup, history rewriting, force push, `git add .`,
+  `git reset --hard` or `git clean`.
 - Provision AWS resources.
 - Deploy applications.
 - Invent test results or Git state.
 
-Read-only inspection of explicitly provided files is allowed when authorized by the user. It does not authorize modification or execution.
+Use isolated disposable resources for destructive migration tests. Never migrate,
+reset or delete shared development data as a test setup shortcut. Authentication
+remains disabled by default; no live Google, real-user activation or deployment
+is authorized by the local workflow. Stop affected work at material unapproved
+architecture decisions or security-boundary changes; continue independent work.
 
 ## 4. Mandatory Session Startup
 
@@ -114,9 +119,9 @@ At the start of every new ChatGPT or Codex session:
 3. Read `docs/sprints/INDEX.md`.
 4. Read the latest active sprint report.
 5. Read relevant PRD, architecture and ADR sections.
-6. Review user-supplied Git state.
+6. Inspect actual Git status, branch, HEAD, worktrees and relevant diffs.
 7. Reconcile any differences between Git and the handoff.
-8. Confirm the current ticket and one immediate action.
+8. Confirm the current work package and one immediate action.
 
 ### Git Checkpoint Reconciliation
 
@@ -149,7 +154,8 @@ If essential information is unavailable:
 
 ## 5. Ticket Execution Workflow
 
-Work on exactly one ticket at a time.
+Work on exactly one authorized work package at a time. Tickets may be grouped
+inside that package; do not stop for routine implementation choices.
 
 Each ticket must specify:
 
@@ -166,16 +172,17 @@ Each ticket must specify:
 
 ### Standard Workflow
 
-1. ChatGPT assigns a ticket.
+1. ChatGPT/owner assigns a work package.
 2. ChatGPT supplies a prompt or implementation specification.
-3. Codex generates content.
-4. The user manually copies content into the project.
-5. ChatGPT supplies verification commands.
-6. The user runs checks and shares relevant output.
-7. ChatGPT reviews findings.
-8. Failures are fixed and rechecked.
-9. The user performs Git actions when authorized by the workflow.
-10. Sprint and handoff records are updated.
+3. Codex inspects actual sources and preserves unrelated changes.
+4. Codex implements the authorized scope in a suitable feature worktree.
+5. Codex runs applicable verification using the accepted dependency baseline.
+6. Codex repairs scoped failures and reruns affected checks without weakening tests.
+7. Codex reviews the diff, security boundaries and actual execution evidence.
+8. Codex updates sprint and handoff records with results and unresolved limits.
+9. If authorized package gates pass, Codex stages explicit reviewed paths and
+   creates a local commit. A blocker must remain documented, not hidden by a commit.
+10. The owner retains architecture decisions, remote delivery and sprint sign-off.
 
 Do not expand a small ticket into unrelated features.
 
@@ -247,7 +254,10 @@ A sprint can close when:
 
 Unfinished work may be carried forward without inventing success.
 
-## 8. Manual-Copy Output Rules
+## 8. Manual-Copy Output Rules (When Explicitly Requested)
+
+Direct local execution is the S03 default. These rules apply only to requests
+that explicitly require proposals or manual application instead.
 
 For every generated file:
 
@@ -369,7 +379,8 @@ Pending architecture decisions must be resolved before their dependent implement
 
 Generate relevant tests alongside implementation.
 
-The user executes them.
+Codex executes applicable tests for the authorized work package. User-reported
+results retain attribution when their outputs have not been independently inspected.
 
 Applicable checks may include:
 
@@ -406,7 +417,9 @@ A suggested command is not an executed command.
 
 ## 13. Git Workflow
 
-The user alone performs Git actions.
+Codex may inspect Git, create feature branches, and create scoped local commits
+under the owner-authorized work package. Push, merge and remote changes require
+explicit authorization; they are not implied by local commit permission.
 
 ### Initial Baseline
 
@@ -510,9 +523,9 @@ Do not rewrite historical reports unnecessarily.
 
 ### Artifacts
 
-| Path | Change | Saved by user | Review / verification |
+| Path | Change | Saved by | Review / verification |
 |---|---|---|---|
-| Exact path | Description | Confirmed / Unknown | Result |
+| Exact path | Description | Codex / User / Unknown | Result |
 
 ### Evidence
 
@@ -550,7 +563,7 @@ When resuming:
 2. Identify the last recorded checkpoint.
 3. Compare it with current Git evidence.
 4. Review differences before modifying code.
-5. Confirm which generated files were actually saved.
+5. Confirm which changes were actually saved and inspect their diff.
 6. Preserve unrelated work.
 7. Resume the unfinished ticket.
 8. Recheck only stale or missing acceptance evidence.
@@ -561,6 +574,8 @@ Never assume a command succeeded because it was previously suggested.
 
 ## 17. Final Engineering Rule
 
-**Evidence determines completion. The user controls execution. ChatGPT directs and reviews. Codex generates implementation content. Git preserves the project history.**
+**Evidence determines completion. The owner controls scope, architecture, remote
+delivery, sprint sign-off and release authorization. ChatGPT directs and reviews.
+Codex executes authorized local work packages. Git preserves project history.**
 
 Every session must end with one unambiguous next action.
