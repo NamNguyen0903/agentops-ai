@@ -33,7 +33,9 @@ export default function AppLayout() {
 
   const pageTitle =
     pageTitles[location.pathname] ??
-    "Page not found";
+    (location.pathname.startsWith("/research/tasks/")
+      ? "Research task"
+      : "Page not found");
 
   useEffect(() => {
     document.title = `${pageTitle} | AgentOps AI`;
@@ -167,7 +169,7 @@ export default function AppLayout() {
           </p>
 
           <span className="badge">
-            Frontend preview
+            Development MVP
           </span>
         </header>
 

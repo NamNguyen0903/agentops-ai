@@ -1,6 +1,6 @@
 # AgentOps AI — Sprint Index
 
-## Current roadmap — 2026-11-24, S03-WP02
+## Current roadmap — 2026-11-24, S03-WP03
 
 Start with [CURRENT_STATE.md](../handoff/CURRENT_STATE.md), then inspect actual Git.
 S02 is CLOSED, 11/11 accepted by the owner; PR #7 merge/final main CI are
@@ -10,10 +10,10 @@ owner-reported. Remote main was fetched once and matches
 | Sprint | Current status | Report |
 |---|---|---|
 | S02 — Database & Authentication | CLOSED — Development MVP only | [S02](S02.md) |
-| S03 — Research Task API and Dashboard | IN_PROGRESS; WP01 and WP02 VERIFIED_LOCALLY; AC01–AC08 verified, AC09–AC12 pending | [S03](S03.md) |
+| S03 — Research Task API and Dashboard | IN_PROGRESS; WP01–WP03 VERIFIED_LOCALLY; AC01–AC10 verified, AC11–AC12 pending | [S03](S03.md) |
 | S04–S09 | PLANNED; existing roadmap goals retained | Reports not yet created |
 
-Exactly one next work package: **S03-WP03 — Research Dashboard**.
+Exactly one next work package: **S03-WP04 — Integration, CI & Closeout**.
 Branch: `feat/s03-research-persistence`; see the handoff for its worktree and
 observed Git checkpoint. No push, merge, deployment or S03 closeout is implied.
 ADR-0002 remains ACCEPTED — DEVELOPMENT MVP ONLY; authentication stays disabled
