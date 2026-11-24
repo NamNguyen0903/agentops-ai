@@ -32,7 +32,7 @@ def db_settings() -> Settings:
 
 
 def test_metadata_registers_approved_identity_models() -> None:
-    from agentops_api.models import research  # noqa: F401
+    from agentops_api.models import research, queue  # noqa: F401
     from agentops_api.models.identity import (
         AuthIdentity,
         AuthSession,
@@ -48,6 +48,7 @@ def test_metadata_registers_approved_identity_models() -> None:
         "app.auth_sessions",
         "app.oidc_login_transactions",
         "app.research_tasks",
+        "app.queue_control",
     }
 
     assert set(Base.metadata.tables) == expected_tables

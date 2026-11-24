@@ -80,9 +80,10 @@ def test_security_check_constraints_exist():
 
 
 def test_model_import_registers_only_expected_tables():
-    from agentops_api.models import research  # noqa: F401
+    from agentops_api.models import research, queue  # noqa: F401
 
     assert set(Base.metadata.tables) == {
         "app.users", "app.auth_identities", "app.auth_sessions",
         "app.oidc_login_transactions", "app.research_tasks",
+        "app.queue_control",
     }

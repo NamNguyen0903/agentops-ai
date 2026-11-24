@@ -198,7 +198,7 @@ Each ticket must specify:
 1. ChatGPT/owner assigns a work package.
 2. ChatGPT supplies a prompt or implementation specification.
 3. Codex inspects actual sources and preserves unrelated changes.
-4. Codex implements the authorized scope in a suitable feature worktree.
+4. Codex implements the authorized scope in the canonical local directory on a feature branch.
 5. Codex runs applicable verification using the accepted dependency baseline.
 6. Codex repairs scoped failures and reruns affected checks without weakening tests.
 7. Codex reviews the diff, security boundaries and actual execution evidence.

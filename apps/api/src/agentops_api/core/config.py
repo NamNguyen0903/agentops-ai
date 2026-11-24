@@ -24,6 +24,10 @@ class Settings(BaseSettings):
 
     auth_review_enabled: bool = False
 
+    research_question_limit: int = Field(default=4000, ge=1, le=4000)
+    research_scope_limit: int = Field(default=2000, ge=1, le=2000)
+    research_queue_capacity: int = Field(default=50, ge=1, le=1000)
+
     database_enabled: bool = False
     database_host: str = Field(default="db", min_length=1)
     database_port: int = Field(default=5432, ge=1, le=65535)
