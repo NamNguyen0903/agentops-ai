@@ -1,14 +1,14 @@
 # AgentOps AI — Current State
 
-## Authoritative resume checkpoint — 2026-11-24, after S03 documentation merge
+## Authoritative resume checkpoint — 2026-11-24, S04-WP02 merged
 
 - S01: CLOSED; S02: CLOSED, 11/11; S03: CLOSED, 12/12 (Development MVP only).
 - S03 application PR #8: MERGED at `f533857b97dc0d6bd4024063779daec52c752bf4`; main CI `45346656444` PASS.
 - S03 final docs PR #9: MERGED at `6544f35dc23e5389447a14df8846611a6c3682ef`; main CI `45347328155` PASS.
 - Final S03 docs synchronization: **COMPLETE**. Do not open an additional S03 closeout PR.
-- Owner-provided Git observation: `main`, HEAD `6544f35dc23e5389447a14df8846611a6c3682ef`, working tree clean, exactly one worktree `/Users/namnguyen/agentops-ai`.
+- Owner-verified merge: `main` at `151af7ee18b4d3448810fce948dbbae223a64a14`, clean after fast-forward; current documentation branch: `docs/s04-wp02-closeout`; exactly one canonical worktree `/Users/namnguyen/agentops-ai`.
 - Existing `stash@{0}` is a backup from S03 worktree consolidation; preserve untouched.
-- S04 — Single-agent LangGraph: **WP01 OWNER_APPROVED; WP02 authorized after Git review**, no application implementation/tests yet. [S04 approved contract](../sprints/S04.md), [ADR-0004 ACCEPTED — Development MVP only](../adr/0004-langgraph-state-and-agent-boundaries.md).
+- S04 — Single-agent LangGraph: **WP01/WP02 VERIFIED and MERGED; WP03 NEXT / NOT_STARTED**. [S04 approved contract](../sprints/S04.md), [ADR-0004 ACCEPTED — Development MVP only](../adr/0004-langgraph-state-and-agent-boundaries.md).
 - `AGENTS.md` v1.2 governs engineering; owner performs commit, push and merge manually.
 
 ## Verified S03 capability and evidence (retained)
@@ -99,29 +99,31 @@ Retained from the S03 baseline for traceability. The later S03 final docs PR #9 
 
 ## S04 implementation checkpoint
 
-- WP01: OWNER APPROVED; ADR-0004 ACCEPTED for Development MVP.
-- WP02: IN_PROGRESS / PARTIALLY VERIFIED.
-- Offline LangGraph baseline: 7/7 focused tests PASS.
-- Dependency resolution and hash dry-run: 7/7 PASS.
-- Seven application lockfiles: UPDATED on S04 feature branch.
-- WP03 safety and budget verification: NOT_STARTED.
-- No production, live provider or real-user authorization.
+- WP01: COMPLETED; ADR-0004 owner ACCEPTED.
+- WP02: VERIFIED, PR #10 MERGED.
+- Source commit: `0dd3c58b94d0c5ecb4779ed6730151d841bb4761`.
+- Main merge commit: `151af7ee18b4d3448810fce948dbbae223a64a14`.
+- WP03: NEXT / NOT_STARTED.
+- WP04: NOT_STARTED.
+- Production authorization: NOT APPROVED.
 
 ## S04-WP02 current verification
 
-- LangGraph integration on feature branch: IN_PROGRESS.
-- Graph tests: 7 PASS.
+- Offline LangGraph tests: 7 PASS.
 - Backend regression: 124 PASS, 49 SKIP.
-- Clean macOS ARM64 installation and pip check: PASS.
-- Seven candidate security audits and hash-checked
-  resolution checks: PASS.
-- Docker ARM64/AMD64 smoke and pip check: PASS.
-- Remote CI and final WP02 acceptance: PENDING.
-- S04-WP03: NOT_STARTED.
-- Production authorization: NOT APPROVED.
+- Dependency resolution and hash dry-runs: 7/7 PASS.
+- Candidate security audits: 7/7 PASS.
+- Clean macOS ARM64 install and pip check: PASS.
+- Linux Docker ARM64/AMD64 build/runtime/pip check: PASS.
+- PR #10 CI `45376616751`: 4/4 PASS.
+- Main CI `45377051431`: 4/4 PASS.
+- AC01–AC04: VERIFIED within Development MVP scope.
+- AC05–AC10: PENDING.
+- Existing Authlib strict XFAIL and release gates remain.
 
 ## Exactly one next action
 
-Review final S04-WP02 Git diff and documentation,
-then prepare an owner-controlled commit and PR CI checkpoint.
-Do not start WP03 until WP02 handoff is accepted.
+Commit and deliver this S04-WP02 documentation checkpoint
+through owner-controlled PR and successful main CI.
+Then begin S04-WP03 validation, budget and negative security tests.
+Preserve all Development MVP security and release gates.
