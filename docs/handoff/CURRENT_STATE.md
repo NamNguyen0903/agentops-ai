@@ -123,7 +123,8 @@ Retained from the S03 baseline for traceability. The later S03 final docs PR #9 
 
 ## Exactly one next action
 
-Commit and deliver this S04-WP02 documentation checkpoint
-through owner-controlled PR and successful main CI.
-Then begin S04-WP03 validation, budget and negative security tests.
-Preserve all Development MVP security and release gates.
+Review the S04-WP03 staged file inventory and diff.
+Commit the owner-approved WP03 changes only after
+staging verification. Then push the feature branch,
+open an owner-controlled PR and verify all CI gates.
+Do not merge before successful PR CI and owner review.

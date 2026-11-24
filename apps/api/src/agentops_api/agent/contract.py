@@ -1,9 +1,18 @@
 """Validated single-agent input and candidate contracts."""
 
+import json
+import math
+
 from typing import Any, Literal, TypedDict
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    PrivateAttr,
+    field_validator,
+)
 
 
 GRAPH_VERSION = "s04-single-agent-v1"
@@ -32,6 +41,42 @@ class BudgetSnapshot(BaseModel):
     cost_usd: Literal[0] = 0
 
 
+
+MAX_SCOPE_BYTES = 8192
+MAX_SCOPE_DEPTH = 5
+
+
+def _validate_json_tree(value: Any, depth: int = 0) -> None:
+    """Reject non-JSON values and excessively nested structures."""
+    if depth > MAX_SCOPE_DEPTH:
+        raise ValueError("scope exceeds maximum nesting depth")
+
+    if value is None or isinstance(value, (str, bool)):
+        return
+
+    if isinstance(value, int) and not isinstance(value, bool):
+        return
+
+    if isinstance(value, float):
+        if not math.isfinite(value):
+            raise ValueError("scope contains non-finite number")
+        return
+
+    if isinstance(value, list):
+        for item in value:
+            _validate_json_tree(item, depth + 1)
+        return
+
+    if isinstance(value, dict):
+        if not all(isinstance(key, str) for key in value):
+            raise ValueError("scope keys must be strings")
+        for item in value.values():
+            _validate_json_tree(item, depth + 1)
+        return
+
+    raise ValueError("scope contains unsupported value type")
+
+
 class GraphInput(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
@@ -45,6 +90,54 @@ class GraphInput(BaseModel):
     scope: dict[str, Any] = Field(default_factory=dict)
     versions: Versions = Field(default_factory=Versions)
     budget: BudgetSnapshot = Field(default_factory=BudgetSnapshot)
+
+    _scope_snapshot: str = PrivateAttr()
+
+    @staticmethod
+    def _canonical_scope(value: dict[str, Any]) -> str:
+        return json.dumps(
+            value,
+            sort_keys=True,
+            ensure_ascii=False,
+            allow_nan=False,
+            separators=(",", ":"),
+        )
+
+    def model_post_init(self, __context: Any) -> None:
+        """Capture scope after successful model validation."""
+        self._scope_snapshot = self._canonical_scope(self.scope)
+
+    def scope_matches_snapshot(self) -> bool:
+        """Detect changes to the initially validated scope."""
+        return (
+            self._canonical_scope(self.scope)
+            == self._scope_snapshot
+        )
+
+    @field_validator("question")
+    @classmethod
+    def validate_question(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("question must contain non-whitespace text")
+        return value
+
+    @field_validator("scope")
+    @classmethod
+    def validate_scope(cls, value: dict[str, Any]) -> dict[str, Any]:
+        _validate_json_tree(value)
+
+        encoded = json.dumps(
+            value,
+            ensure_ascii=False,
+            allow_nan=False,
+            separators=(",", ":"),
+        ).encode("utf-8")
+
+        if len(encoded) > MAX_SCOPE_BYTES:
+            raise ValueError("scope exceeds maximum size")
+
+        return value
+
 
 
 class GraphState(TypedDict):
