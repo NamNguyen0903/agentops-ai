@@ -6,10 +6,19 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
+COPY requirements/ ./requirements/
+
+RUN target="$(python -c 'import platform,sys; print(f"py{sys.version_info.major}{sys.version_info.minor}-{platform.system().lower()}-{platform.machine().lower()}")')" \
+    && python -m pip install --no-cache-dir \
+        --only-binary=:all: --require-hashes \
+        -r "requirements/${target}-runtime.txt"
+
 COPY pyproject.toml ./
 COPY src/ ./src/
 
-RUN python -m pip install --no-cache-dir .
+RUN python -m pip install --no-cache-dir \
+        --no-deps --no-build-isolation . \
+    && python -m pip check
 
 USER 10001:10001
 

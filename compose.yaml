@@ -4,24 +4,27 @@ services:
     build:
       context: ./apps/api
       dockerfile: Dockerfile
-
+    environment:
+      AGENTOPS_DATABASE_ENABLED: "true"
+      AGENTOPS_DATABASE_HOST: db
+      AGENTOPS_DATABASE_PORT: "5432"
+      AGENTOPS_DATABASE_NAME: agentops
+      AGENTOPS_DATABASE_USER: agentops_app
+      AGENTOPS_DATABASE_PASSWORD: "${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD}"
     ports:
       - "127.0.0.1:8000:8000"
-
     init: true
-
     healthcheck:
       test:
         - CMD
         - python
         - -c
         - >-
-          import json, sys, urllib.request;
-          response = urllib.request.urlopen(
-          "http://127.0.0.1:8000/api/v1/health", timeout=2);
-          payload = json.load(response);
-          sys.exit(0 if response.status == 200 and payload ==
-          {"status": "ok", "service": "agentops-api"} else 1)
+          import json,sys,urllib.request;
+          r=urllib.request.urlopen(
+          "http://127.0.0.1:8000/api/v1/health",timeout=2);
+          sys.exit(0 if r.status==200 and json.load(r)==
+          {"status":"ok","service":"agentops-api"} else 1)
       interval: 10s
       timeout: 5s
       retries: 3
@@ -31,16 +34,12 @@ services:
     build:
       context: ./apps/web
       dockerfile: Dockerfile
-
     environment:
-      API_PROXY_TARGET: "http://api:8000"
-      VITE_API_BASE_URL: "/api/v1"
-
+      API_PROXY_TARGET: http://api:8000
+      VITE_API_BASE_URL: /api/v1
     ports:
       - "127.0.0.1:5173:5173"
-
     init: true
-
     healthcheck:
       test:
         - CMD
@@ -48,11 +47,36 @@ services:
         - -e
         - >-
           fetch("http://127.0.0.1:5173/")
-          .then(response => {
-            process.exit(response.ok ? 0 : 1);
-          })
-          .catch(() => process.exit(1));
+          .then(r=>process.exit(r.ok?0:1))
+          .catch(()=>process.exit(1))
       interval: 10s
       timeout: 5s
       retries: 3
       start_period: 15s
+
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_USER: agentops_bootstrap
+      POSTGRES_DB: agentops
+      POSTGRES_PASSWORD: "${POSTGRES_BOOTSTRAP_PASSWORD:?Set POSTGRES_BOOTSTRAP_PASSWORD}"
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+      APP_DB_PASSWORD: "${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/10-bootstrap-app.sh:/docker-entrypoint-initdb.d/10-bootstrap-app.sh:ro
+      - ./docker/postgres/verify-app.sh:/opt/agentops/verify-app.sh:ro
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          pg_isready -h 127.0.0.1 -p 5432
+          -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 20s
+    stop_grace_period: 30s
+
+volumes:
+  postgres_data:

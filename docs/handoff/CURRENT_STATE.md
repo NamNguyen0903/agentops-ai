@@ -1,230 +1,309 @@
 # AgentOps AI — Current State
 
-**Checkpoint date:** 2026-11-21
-**Last sprint:** S01 — CLOSED (scope and user signoff)
-**Verification status:** PARTIALLY_VERIFIED
-**Current phase:** S01 Git and evidence reconciliation → S02 planning
-**Current implementation ticket:** None
-**Workflow:** User-controlled implementation, testing, Git and deployment
+## 2026-11-24 — Stage 3 local Git delivery
 
-> This handoff records the latest evidence supplied in the project conversation. It is not a live inspection of the filesystem, Git repository or running infrastructure. Always reconcile the checkpoint with actual local state before making changes.
+- Stage 1: COMPLETE.
+- Stage 2: COMPLETE.
+- Stage 3: local delivery complete; remote integration pending.
+- Dependency commit: 8ba6d09.
+- Architecture acceptance commit: 478e0c4.
+- Local delivery manifest: 28 files.
+- Working tree verified clean after both commits.
+- Sprint acceptance: 10/11 (90.9%).
+- ADR-0001: ACCEPTED.
+- ADR-0002: ACCEPTED — DEVELOPMENT MVP ONLY.
+- Authlib adoption: CONDITIONAL.
+- Production approval: NOT APPROVED.
+- Authentication remains disabled by default.
 
----
+Remote state observed before push:
 
-## 1. Project Baseline
+- PR #3: OPEN into main.
+- PR #4: MERGED into PostgreSQL foundation.
+- Identity branch exists on origin at d2bed54.
+- Closeout branch has not yet been published.
 
-| Artifact | Baseline | Recorded status |
-|---|---|---|
-| `docs/product/PRD.md` | v0.2 | Included in initial baseline |
-| `docs/architecture/overview.md` | v1.1 | Included in initial baseline |
-| `docs/adr/0001-architecture.md` | ADR-0001 | Proposed; not formally approved |
-| `AGENTS.md` | v1.1 | Included in initial baseline |
-| `README.md` | Project overview | Included in initial baseline |
-| `docs/sprints/S00.md` | Sprint S00 | Baseline committed; signoff pending |
-| `docs/sprints/INDEX.md` | Sprint roadmap | S01 closeout synchronization pending |
-| `docs/sprints/S01.md` | Sprint S01 | Closeout documentation under reconciliation |
+Next action: publish the closeout branch, establish stacked
+pull requests, verify remote CI and review integration order.
 
-### Architecture Baseline
+Older Git checkpoints below are historical where superseded
+by this delivery record.
 
-- Modular monolith.
-- FastAPI backend and React/TypeScript frontend.
-- Docker Compose for local application development.
-- PostgreSQL planned as the authoritative persistence layer.
-- LangGraph planned for bounded research execution.
-- Amazon Bedrock integration planned through a provider adapter.
-- API and worker processes planned to run separately.
-
-The PRD remains the product source of truth.
-
-ADR-0001 remains **Proposed** until explicitly approved. Planned ADRs must not be treated as accepted architecture decisions.
+Do not mark criterion 10 VERIFIED before reviewed incorporation.
+Do not activate authentication or start S03.
 
 ---
 
-## 2. Sprint Status
+## 2026-11-24 — Stage 2 architecture acceptance
 
-| Sprint | Workflow status | Verification | Notes |
-|---|---|---|---|
-| S00 — Product Planning & Architecture | PENDING_CLOSEOUT | PARTIAL | Initial baseline committed; final documentation signoff pending |
-| S01 — Project Foundation | CLOSED | PARTIALLY_VERIFIED | User signoff received; Git and test evidence reconciliation remains |
-| S02 — Database & Authentication | PLANNED | NOT_STARTED | Do not begin implementation before preflight |
-| S03–S09 | PLANNED | NOT_STARTED | Refer to roadmap for exact scope |
+- Stage 1 dependency/security remediation: COMPLETE LOCALLY.
+- Stage 2 architecture and authentication approval: ACCEPTED.
+- ADR-0001: ACCEPTED.
+- ADR-0002: ACCEPTED — DEVELOPMENT MVP ONLY.
+- Authlib 1.9.10: CONDITIONALLY APPROVED.
+- Operator-managed provisioning policy: APPROVED.
+- Operator runbook: documented with existing integration evidence.
+- Authentication: IMPLEMENTED_FOR_REVIEW; disabled by default.
+- Live provider and real browser acceptance: deferred release gates.
+- Stock PKCE DEBUG disclosure: known security FAIL.
+- Production approval: NOT APPROVED.
+- Remote CI and reviewed Git incorporation: PENDING.
+- Sprint S02: IN_PROGRESS / PARTIAL.
+- Current acceptance accounting: 10/11 VERIFIED (90.9%).
 
-**S01 closure meaning:** The user has accepted the implemented Sprint scope. Outstanding verification and repository-integration work remains recorded as carryover.
+The owner explicitly approved the architecture package,
+conditional adoption and release-gate boundaries on
+2026-11-24, including a separate approval of ADR-0001.
+
+Acceptance criterion 4 is satisfied by the recorded
+architecture decisions.
+
+Acceptance criterion 5 is accepted within the owner-approved
+Development MVP boundary using the previously verified
+offline integration, dependency baseline and scoped security
+controls.
+
+This does not establish live Google, deployed browser,
+operator CLI or production security acceptance.
+
+Criterion 10 remains PARTIAL until the work is committed,
+reviewed and incorporated through the approved Git workflow.
+
+The final sprint sign-off remains a separate closure gate.
+
+Evidence:
+
+- docs/adr/0001-architecture.md
+- docs/adr/0002-authentication.md
+- docs/development/PYTHON_DEPENDENCIES.md
+- docs/development/OPERATOR_PROVISIONING.md
+
+No application tests were rerun for this documentation
+checkpoint. Prior verified results remain applicable to
+the unchanged application implementation.
+
+### Current Git checkpoint
+
+- Worktree: isolated s02-closeout worktree.
+- Branch: feat/s02-sprint-closeout.
+- Last observed committed HEAD: 09e88f2.
+- Stage 1 and Stage 2 changes are local and uncommitted.
+- Existing owner changes must be preserved.
+- No push or merge has been authorized by this checkpoint.
+
+Older status notes and next actions below are historical
+where they conflict with this current checkpoint.
+
+### Exactly one current next action
+
+Stage 3 — Git Delivery and CI.
+
+Review the complete local change manifest and prepare
+explicit staging and commit boundaries.
+
+Do not repeat Stage 1 or Stage 2 without changed inputs
+or a newly discovered blocker.
+
+Do not push, merge, change PR bases, rewrite history,
+activate authentication or start S03 without the
+appropriate owner authorization.
+
+Sprint S02 must remain IN_PROGRESS until criterion 10
+and final owner sign-off are satisfied.
 
 ---
 
-## 3. S01 Ticket Register
+## 2026-11-24 — WP01.1 dependency remediation checkpoint
 
-| Ticket | Description | Workflow status | Evidence status |
-|---|---|---|---|
-| AG-002.1 | FastAPI Backend Foundation | REPORTED_COMPLETE | Runtime health VERIFIED; final pytest evidence pending |
-| AG-002.2 | React + TypeScript Frontend | REPORTED_COMPLETE | Commit VERIFIED; final regression checks user-reported |
-| AG-002.3 | Docker Compose Foundation | REPORTED_COMPLETE | Core runtime and proxy VERIFIED; lifecycle evidence pending |
-| AG-002.4 | Integration Tests & Sprint Handoff | REPORTED_COMPLETE | User reports tests passed; exact output and commit pending |
+- WP01.1 dependency remediation: VERIFIED_LOCALLY.
+- Required dependency lockfiles: 9/9.
+- Final setuptools baseline: 84.1.0.
+- Application lockfile advisory audit: 9/9 passed.
+- Backend regression: 100 passed, 8 skipped on each of four targets.
+- Offline Authlib PoC: 56 passed, 1 strict xfailed on each
+  of two required targets.
+- Generator replay and smoke compilation: 4/4 targets passed.
+- Docker runtime verification: AMD64 and ARM64 passed.
+- Isolated PostgreSQL migration lifecycle: passed.
+- PostgreSQL integration: 7 passed.
+- Stock Authlib PKCE DEBUG exposure remains a known security FAIL.
+- Authentication remains IMPLEMENTED_FOR_REVIEW and disabled by default.
+- Remote CI and Git integration remain pending.
+- ADR-0002 remains PROPOSED.
+- Production approval: NOT APPROVED.
+- Sprint S02: IN_PROGRESS / PARTIAL, 8/11 (72.7%).
 
-### Status Definitions
+See `docs/development/PYTHON_DEPENDENCIES.md` for the
+dependency policy, lockfile checksums, verification evidence
+and residual limitations.
 
-- **PLANNED:** Work has not started.
-- **IN_PROGRESS:** Implementation is underway.
-- **REPORTED_COMPLETE:** User reports that implementation or execution is complete.
-- **VERIFIED:** A specific acceptance criterion is supported by actual supplied execution evidence.
-- **REVIEWED:** Source or documentation has been reviewed, without claiming runtime success.
-- **PENDING_EVIDENCE:** Required confirmation or output has not been supplied.
-- **NOT_IMPLEMENTED:** Capability is explicitly absent.
-- **CLOSED:** Sprint scope has received user signoff; does not automatically upgrade evidence status.
+### Current execution checkpoint
 
-Ticket workflow status and evidence status are tracked separately.
+This is the latest resume checkpoint and supersedes older
+next-action instructions in this file.
+
+- Branch: `feat/s02-sprint-closeout`.
+- Last observed committed HEAD: `09e88f2`.
+- Dependency remediation changes are local and uncommitted.
+- Stage 1 technical execution: complete within verified scope.
+- Stage 1 documentation synchronization: included in this checkpoint.
+- Stage 2 owner approval: pending.
+- Stage 3 Git delivery and CI: pending.
+- Stage 4 final sprint closeout: pending.
+
+The next action is Stage 2: obtain explicit owner decisions
+on ADR-0002, conditional Authlib adoption, operator provisioning,
+development acceptance boundaries and remaining release gates.
+
+Do not regenerate dependency lockfiles or repeat completed
+regression suites without changed inputs or a new blocker.
+Do not start S03 or mark S02 complete.
 
 ---
 
-## 4. Git Checkpoint
+**Date:** 2026-11-24 (Asia/Ho_Chi_Minh)
+**Sprint:** S02 — Database & Authentication — IN_PROGRESS / PARTIAL
+**Closeout:** S02 is NOT DONE; production authentication is NOT APPROVED.
+**Current ticket:** AG-003.6 — Tech Lead / owner security and acceptance review
+**Review status:** Stage 2 accepted; Stage 3 Git delivery pending.
+**Acceptance:** 10/11 existing S02 success criteria verified (90.9%, rounded 91%).
+This is not production readiness or test coverage. See the
+[acceptance matrix and execution evidence](../sprints/S02_CLOSEOUT.md).
 
-| Field | Last recorded evidence |
+## Start here in the next session
+
+This is the authoritative resume checkpoint, not an override of the PRD or approved
+ADRs. Read AGENTS.md, this file, [INDEX.md](../sprints/INDEX.md),
+[S02.md](../sprints/S02.md), [S02_CLOSEOUT.md](../sprints/S02_CLOSEOUT.md),
+[security review](../sprints/S02_SECURITY_REVIEW.md) and
+[ADR-0002](../adr/0002-authentication.md) before continuing.
+**Inspect Git status, branch, HEAD and relevant diffs before changing any file**;
+reconcile them with the checkpoint below and preserve existing changes. Use
+user-supplied Git output if the session does not authorize command execution.
+Historical next actions in other documents are not instructions to repeat completed
+work or begin S03. Do not rerun tests solely because older checkpoints list them as pending.
+
+## Baselines and authority
+
+PRD v0.2; architecture v1.1; ADR-0001 ACCEPTED; ADR-0002 ACCEPTED — DEVELOPMENT MVP ONLY.
+Authentication is implemented for review and disabled by default. The preceding closeout task
+authorized isolated edits/tests/local commits, but no push, merge, ADR approval or
+activation. This checkpoint authorizes documentation updates only; no features,
+application tests, Docker changes, commits, pushes, merges or sprint closure.
+
+## Historical evidence preservation
+
+The complete **402-line** handoff from identity-branch commit
+`d2bed54825d83e17efad5b6cde442e8ff470665f` is preserved verbatim in the
+[historical handoff archive](S02_HISTORY_2026-11-23.md), with provenance, content hash
+and an evidence guide. Its older next actions and Git/approval statements are historical.
+
+The archive retains FastAPI Users AUTH-P failures/gaps, Authlib OIDC-P10 exposure
+and forced-XFAIL evidence, owner review-only authorization, SEC-03–07/SEC-10 and
+SEC-LOG-04/05 checkpoints, exact historical test results and commit references.
+SEC-10's supplied excerpt lacked a final Compose exit code; old 102/6 results
+predated that fix. The newer closeout runs below do not retroactively fill that gap.
+
+## Completed implementation for review
+
+PostgreSQL 17 Compose, bounded readiness/least-privilege access, async SQLAlchemy
+with explicit transactions, identity models and guarded Alembic migrations exist.
+Review-only Google OIDC/Authlib routes, atomic database state consumption, encrypted
+OIDC context, opaque digest-backed sessions, CSRF/logout, principal resolution,
+account disable/revocation and scoped logging mitigation are implemented. Auth is
+disabled by default; live-provider or production acceptance is not implied.
+The package-discovery fix, isolated DB regression runner and extended CI exist;
+remote closeout CI has not been verified. Detailed ticket outcomes follow below.
+
+## Recorded verification evidence — not rerun in this checkpoint
+
+- Backend Python 3.11 (fresh installed package): 100 passed / 8 skipped.
+- Backend Python 3.12 (local source): 100 passed / 8 skipped.
+- PostgreSQL: 7 passed; migration upgrade/downgrade/upgrade and least privilege passed.
+- Authlib PoC: 56 passed / 1 xfailed / 1 warning. Stock DEBUG disclosure remains security FAIL.
+- Node 22: 17 passed; typecheck/lint/build passed.
+- Isolated foundation: health, readiness, frontend/proxy and named-volume restart passed.
+- Shared-stack smoke: 3/3 read-only; deployed image equivalence is unverified.
+- Backend/PoC pip checks passed; these are not vulnerability audits.
+- Missing auth dependency package marker repaired after a fresh-install collection failure.
+- Legacy shared Compose test now opt-in; equivalent isolated contention assertions passed.
+- New CI workflow has three jobs; remote execution of this branch remains unverified.
+
+Source: preceding observed closeout execution recorded in
+[S02_CLOSEOUT.md](../sprints/S02_CLOSEOUT.md), including exact commands, failures and
+exit codes. Eight default skips comprise seven opt-in DB cases (passed separately)
+and one legacy shared-stack case (not run). Offline/fake-provider results are not
+live Google or browser verification. Stock XFAIL remains security FAIL; no new
+application tests or remote checks were executed for this documentation checkpoint.
+
+## Ticket state
+
+| Ticket | Current outcome |
 |---|---|
-| Repository | `https://github.com/NamNguyen0903/agentops-ai` |
-| Baseline commit | `a2d487c` |
-| Backend commit | `48aca5f` |
-| Frontend commit | `dee1f9b` |
-| Docker commit | `08b027a` |
-| Integration-test commit | PENDING_EVIDENCE |
-| Last observed branch | `feat/ag-002-2-react-frontend` |
-| Last observed HEAD | `dee1f9b` |
-| Last observed frontend remote | `origin/feat/ag-002-2-react-frontend` |
-| Last observed `main` | `a2d487c` |
-| Current branch and HEAD | UNKNOWN — must inspect |
-| Current working tree | UNKNOWN — must inspect |
-| Merge / PR status | PENDING_EVIDENCE |
+| AG-003.1 / AG-003.1B | Architecture accepted; Authlib conditionally approved for Development MVP |
+| AG-003.1A | Historical FastAPI Users PoC; stock approach not adopted |
+| AG-003.2 | Local foundation VERIFIED including persistence |
+| AG-003.3A / AG-003.3B | ORM/migrations VERIFIED in guarded isolated scope |
+| AG-003.4 | IMPLEMENTED_FOR_REVIEW; disabled; activation not authorized |
+| AG-003.5 | VERIFIED within offline and isolated PostgreSQL boundaries |
+| AG-003.6 | Stage 1 and Stage 2 complete locally; Git delivery, CI and final sign-off pending |
 
-### Historical Git Evidence
+## Observed Git checkpoint
 
-The last supplied Git preflight showed uncommitted Docker files, a modified Vite configuration and updates to the Sprint/handoff documents.
+- Worktree: `/Users/namnguyen/.codex/worktrees/s02-closeout/agentops-ai`.
+- Branch: `feat/s02-sprint-closeout` (locally renamed from `codex/s02-closeout`);
+  starts at identity branch commit `d2bed54`. The worktree path is unchanged.
+- Last observed verified code commit: `2b677e2`; CI import `5f7d180`.
+- Observed HEAD: `cc13f8a6f884652bc4f561e39ea01d4650ec947e` (historical handoff
+  archive correction); preceding closeout documentation commit: `0d4dc1f`.
+- At this checkpoint's start, five files were already modified: the four documents
+  listed below and `.github/workflows/backend-ci.yml` from the previous rename work.
+  This documentation pass preserves that existing workflow edit without modifying it.
+- Uncommitted checkpoint documents: `docs/handoff/CURRENT_STATE.md`,
+  `docs/sprints/S02.md`, `docs/sprints/INDEX.md`, `docs/sprints/S02_CLOSEOUT.md`.
+  Observed HEAD is the latest verified Git identity, not a claim that these uncommitted
+  changes were tested or committed. `2b677e2` remains the recorded code checkpoint.
+- Removed the obsolete `codex/**` push filter after inspecting repository workflows,
+  scripts and local/remote-tracking refs: no dependency found. Existing `feat/**`
+  covers this branch; pull-request triggers and CI jobs remain unchanged.
+- Original worktree remains on `feat/ag-003-3b-identity-migrations`.
+- Original modified README and untracked .github content hashes unchanged.
+- Last remote observation during the preceding 2026-11-23 closeout: PR #3 OPEN into
+  main, two existing checks SUCCESS; PR #4 MERGED into PostgreSQL
+  branch at `fa03f27cf986a638f52bdb48ef054478e0e2ddd8` (read-only GitHub evidence).
+  GitHub status was not refreshed in this documentation checkpoint.
+- No closeout push/PR/merge. Proposed PR base: identity branch; owner must review full stack.
 
-Subsequent Docker and integration-test commits have not been confirmed in the conversation.
+## Pending acceptance and security gates
 
-**Do not assume the historical branch or uncommitted-file state is still current.**
+Acceptance is now 10/11 within the owner-approved
+Development MVP boundary.
 
-### Git Preflight Commands
+Criterion 10 remains PARTIAL pending reviewed Git
+incorporation and remote CI.
 
-Run from the repository root:
+Final owner sign-off remains mandatory.
 
-```bash
-git branch --show-current
-git status -sb
-git log -6 --oneline --decorate
-git diff --check
-```
+All deferred release gates in ADR-0002 remain open.
+Production and real-user activation are not approved.
 
-Before any new commit, inspect staged changes, branch ancestry, generated files and secrets.
+## Blockers and restrictions
 
-Backend, frontend, Docker and integration changes currently follow a potentially stacked-branch history. Review PR base branches before merging into `main`.
+ADR acceptance, conditional auth adoption/security controls and reviewed remote
+integration remain incomplete. Live Google, deployed log collectors, key lifecycle,
+operator provisioning/disable procedures, retention jobs, distributed abuse protection,
+full advisory audit and process-kill/transport failure recovery are not verified.
+Multi-tab CSRF proof rotation remains a known limitation. Broader global/indirect
+default-privilege review and backup-restore verification remain incomplete. Tested
+account-wide revocation does not establish approved operator lifecycle procedures;
+configured-handler mitigation does not resolve stock PKCE logging exposure.
+No normal development DB migration, production enablement or S03 work occurred.
+Stopped isolated test containers/volumes remain; see closeout report for exact names.
+Never remove shared resources as cleanup. Root README may contain old status text;
+its user-owned changes were intentionally preserved.
 
----
+## Exactly one next action
 
-## 5. Implementation and Verification
+Stage 3 — review the local changes and prepare explicit Git staging and commit boundaries.
 
-| Component | Implementation | Evidence |
-|---|---|---|
-| FastAPI application | REPORTED_COMPLETE | Health endpoint observed |
-| `GET /api/v1/health` | Implemented | HTTP 200 and exact JSON VERIFIED |
-| Backend pytest | Implemented | Success reported; final output pending |
-| React + TypeScript frontend | REPORTED_COMPLETE | Commit `dee1f9b`; HTTP delivery VERIFIED |
-| Dashboard / New Research / History / 404 | Implemented | Final browser inspection pending |
-| Frontend validation and tests | Implemented | Final success user-reported |
-| Docker Compose API | Implemented | Container reported healthy |
-| Docker Compose Web | Implemented | Container reported healthy |
-| Vite API proxy | Implemented | Proxied health HTTP 200 VERIFIED |
-| Integration smoke script | REPORTED_COMPLETE | User reports successful execution |
-| Integration unit tests | REPORTED_COMPLETE | User reports successful execution |
-| Docker restart / recovery / shutdown | Pending verification | Final output not supplied |
-| PostgreSQL integration | NOT_IMPLEMENTED | Future sprint |
-| Authentication | NOT_IMPLEMENTED | Future sprint |
-| LangGraph workflow | NOT_IMPLEMENTED | Future sprint |
-| Amazon Bedrock integration | NOT_IMPLEMENTED | Future sprint |
-| CI/CD | NOT_VERIFIED | Future work |
-| Production deployment | NOT_IMPLEMENTED | Future work |
-
-### Observed Runtime Evidence — 2026-11-21
-
-The user supplied terminal output showing:
-
-- Direct API: HTTP 200, `{"status":"ok","service":"agentops-api"}`.
-- Frontend endpoint: HTTP 200.
-- API through Vite proxy: HTTP 200 with the expected JSON.
-- `docker compose ps`: both `api` and `web` reported `healthy`.
-
-These observations occurred before the final AG-002.4 automated test implementation. They must not be presented as results produced by that new script.
-
----
-
-## 6. Open Architecture Decisions
-
-| ADR | Decision | Status |
-|---|---|---|
-| ADR-0001 | Modular Monolith | PROPOSED |
-| ADR-0002 | Authentication | PLANNED |
-| ADR-0003 | Async Execution and Recovery | PLANNED |
-| ADR-0004 | LangGraph State and Boundaries | PLANNED |
-| ADR-0005 | AWS Deployment | PLANNED |
-| ADR-0006 | Model and Search Providers | PLANNED |
-| ADR-0007 | Security, Retention and Deletion | PLANNED |
-
-Do not silently consider an ADR accepted because related implementation has started.
-
----
-
-## 7. Carryover Items
-
-- [ ] Confirm AG-002.3 Docker commit and remote branch.
-- [ ] Confirm AG-002.4 integration-test commit and remote branch.
-- [ ] Review Git status, stacked-branch ancestry and merge state.
-- [ ] Record actual AG-002.4 unit and smoke-test outputs.
-- [ ] Record final backend pytest and frontend regression outputs.
-- [ ] Record Docker restart, recovery, teardown and rebuild evidence.
-- [ ] Confirm manual React rendering, navigation and responsive behavior.
-- [ ] Synchronize `docs/sprints/INDEX.md` with S01 closure.
-- [ ] Complete S00 documentation closeout and signoff.
-- [ ] Resolve ADR dependencies before the corresponding S02 implementation.
-
-These are explicit carryover items, not evidence that the S01 feature scope remains open.
-
----
-
-## 8. Immediate Resume Point
-
-**Current phase:** Reconcile Sprint S01 before starting S02 implementation.
-
-**Exactly one immediate action:** Inspect actual Git status and confirm the latest commits.
-
-Run:
-
-```bash
-cd /Users/namnguyen/agentops-ai
-git branch --show-current
-git status -sb
-git log -6 --oneline --decorate
-```
-
-After reconciliation:
-
-1. Finish outstanding Git commits or PR/merge work.
-2. Update the S01 evidence record using actual outputs.
-3. Confirm the S02 scope and relevant ADR decisions.
-4. Start the first S02 ticket on a clean, correctly based feature branch.
-
-Do not invent verification results or begin a dependent feature while its architecture decision remains unresolved.
-
----
-
-## 9. Handoff Update Rules
-
-After each ticket:
-
-1. Record the ticket ID and implementation status.
-2. Record commands actually executed and their outcomes.
-3. Record the Git commit hash only after Git confirms it.
-4. Distinguish observed outputs from user-reported success.
-5. Update the current branch and working tree only from fresh Git output.
-6. Record unresolved issues and the next single action.
-7. Update `docs/sprints/SXX.md` before refreshing this handoff.
-
-**This document is a current-state snapshot, not a full execution-history log.** Detailed test evidence and historical failures belong in the appropriate Sprint file.
+Do not start S03 before final S02 closeout.
