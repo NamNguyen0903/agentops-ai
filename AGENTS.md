@@ -1,5 +1,28 @@
 # AgentOps AI — Engineering Working Agreement
 
+## Mandatory Single Local Worktree Policy
+
+Effective from Sprint S03, by owner authorization.
+
+This policy supersedes previous workspace instructions
+that permit isolated worktrees or temporary repository clones.
+
+- Canonical directory: `/Users/namnguyen/agentops-ai`.
+- All development must use Local execution mode.
+- Edit, test and commit directly in the canonical directory.
+- Do not create additional Git worktrees or temporary clones
+  without explicit owner approval.
+- Use standard Git feature branches.
+- Preserve unrelated local changes and existing Git stashes.
+- Report a blocker if the canonical directory is unsafe.
+- Continue autonomous execution by large work packages.
+- Update sprint documentation and handoff proactively.
+- Do not repeat completed verification without changed inputs.
+- Preserve all S02 security controls and release gates.
+- Preserve existing owner approval boundaries.
+- Authentication remains disabled by default.
+- Production approval and deployment remain prohibited.
+
 **Version:** 1.2
 **Status:** Owner-authorized local execution workflow from S03
 **Project:** AgentOps AI

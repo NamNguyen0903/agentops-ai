@@ -1,5 +1,24 @@
 # AgentOps AI — Current State
 
+## Latest Workspace Checkpoint
+
+This section supersedes older workspace locations.
+
+- Canonical directory: `/Users/namnguyen/agentops-ai`.
+- Execution mode: Local.
+- Active branch: `feat/s03-research-persistence`.
+- Preserved WP01 implementation commit: `40f017e`.
+- Worktree consolidation: PASS.
+- Remaining Git worktrees: 1.
+- Previous local changes preserved in Git stash:
+  `backup: before S03 worktree consolidation`.
+- Do not apply or delete the backup stash automatically.
+- Additional worktrees require explicit owner approval.
+- WP01 acceptance evidence remains unchanged.
+- Review existing WP01 evidence before starting WP02.
+- All S02 release gates remain mandatory.
+- Production approval: NOT APPROVED.
+
 ## Authoritative resume checkpoint — 2026-11-24
 
 - Sprint: **S03 — Research Task API and Dashboard; IN_PROGRESS**.
