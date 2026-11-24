@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: isolated-test-only-postgres
+      POSTGRES_DB: postgres
+    tmpfs:
+      - /var/lib/postgresql/data
+    volumes:
+      - ../migration_lifecycle/bootstrap.sql:/docker-entrypoint-initdb.d/01-bootstrap.sql:ro
+    ports:
+      - "127.0.0.1:18765:5432"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -h 127.0.0.1 -U postgres -d postgres
+      interval: 2s
+      timeout: 2s
+      retries: 20

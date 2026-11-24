@@ -557,3 +557,13 @@ Next action: complete documentation synchronization and final regression.
 ### Exactly one next action
 
 Synchronize `docs/handoff/CURRENT_STATE.md`, then perform final scoped Git review and staging. Preserve unrelated root `README.md` changes.
+
+
+### S03-WP04 local integration checkpoint
+
+- WP01–WP03: VERIFIED_LOCALLY and committed.
+- WP04 local runtime/browser integration: VERIFIED.
+- AC01–AC10 verified; AC11 remote CI pending; AC12 pending.
+- Sprint S03 remains IN_PROGRESS, 10/12 formal acceptance.
+- Next: scoped WP04 local delivery commit and owner-authorized remote CI.
+- Production approval: NOT APPROVED.

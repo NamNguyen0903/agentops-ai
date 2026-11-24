@@ -6,7 +6,7 @@
 - Sprint status: IN_PROGRESS.
 - WP01: VERIFIED_LOCALLY and committed.
 - WP02: VERIFIED_LOCALLY and committed.
-- WP03: VERIFIED_LOCALLY; delivery commit pending.
+- WP03: VERIFIED_LOCALLY and committed.
 - AC01–AC10: VERIFIED_LOCALLY.
 - AC11–AC12: PENDING.
 - S03 cumulative acceptance: 10/12 (83.3%).
@@ -40,7 +40,7 @@
 ## Verification evidence
 
 - Native backend: 124 passed, 46 skipped.
-- Disposable PostgreSQL: 45 passed.
+- Disposable PostgreSQL: 48 passed.
 - Migration lifecycle and metadata parity: PASS.
 - Frontend: 39 passed, 0 failed.
 - TypeScript typecheck: PASS.
@@ -48,8 +48,8 @@
 - Frontend build: PASS.
 - Backend and dependency manifests unchanged: PASS.
 - One legacy shared Compose test remains unexecuted.
-- Full browser/API/PostgreSQL integration: PENDING.
-- Full runtime-role HTTP acceptance: PENDING.
+- Full browser/API/PostgreSQL integration: VERIFIED_LOCALLY.
+- Runtime-role HTTP acceptance: VERIFIED_LOCALLY in disposable scope.
 - Remote S03 CI: NOT_RUN.
 
 Detailed evidence: [S03 report](../sprints/S03.md).
@@ -74,7 +74,7 @@ Detailed evidence: [S03 report](../sprints/S03.md).
 - [S02 security review](../sprints/S02_SECURITY_REVIEW.md).
 - [S03 report](../sprints/S03.md).
 
-## Exactly one next action
+## Historical WP03 next action
 
 After observing the WP03 delivery commit, execute S03-WP04:
 Integration, CI & Closeout for AC11–AC12.
@@ -83,3 +83,47 @@ Use the canonical local directory only.
 Preserve prior verification evidence.
 Do not repeat completed checks without changed inputs,
 unless required by the integration acceptance gate.
+
+## Historical WP04 implementation checkpoint — 2026-11-24
+
+- WP03 delivery: 1b4f21c6f67328e2bf8578bc16857f46169900d8.
+- AC01–AC10: VERIFIED_LOCALLY.
+- AC11–AC12: PENDING.
+- Verified acceptance remains 10/12 (83.3%).
+- Disposable runtime-role HTTP tests prepared.
+- Frontend CI job prepared.
+- Existing backend, PostgreSQL and Authlib CI jobs retained.
+- Browser/API/PostgreSQL integration remains pending.
+- Remote CI remains NOT_RUN.
+- Owner sprint sign-off remains pending.
+- All S02 release gates remain mandatory.
+- Production approval remains NOT APPROVED.
+- Next action: execute disposable runtime-role verification.
+
+
+## Latest authoritative resume checkpoint — WP04
+
+- WP03 delivery commit: 1b4f21c6f67328e2bf8578bc16857f46169900d8.
+- WP04 local integration: VERIFIED.
+- AC01–AC10: VERIFIED_LOCALLY.
+- AC11: LOCAL_INTEGRATION_VERIFIED; REMOTE_CI_PENDING.
+- AC12: PENDING.
+- Formal acceptance: 10/12 (83.3%).
+- PostgreSQL: 48 passed.
+- Native backend checkpoint: 124 passed.
+- Frontend checkpoint: 39 passed.
+- Real Chrome browser integration: PASS.
+- Independent database persistence: PASS.
+- Frontend CI job implemented; remote execution NOT_RUN.
+- Production approval: NOT APPROVED.
+- All S02 release gates remain mandatory.
+- Existing backup stash must remain preserved.
+- No push, merge or deployment authorized.
+
+## Exactly one next action
+
+Review the WP04 scoped diff and commit locally.
+Then request owner authorization for remote Git/CI execution.
+
+Do not rerun completed local verification without changed inputs.
+Do not close S03 until AC11 and AC12 have actual evidence.

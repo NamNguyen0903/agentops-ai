@@ -255,6 +255,7 @@ python -m pytest -p no:cacheprovider -q --tb=short \
     tests/test_oidc_state_postgres.py \
     tests/test_auth_disable_concurrency.py \
     tests/test_research_postgres.py \
-    tests/test_research_api_postgres.py
+    tests/test_research_api_postgres.py \
+    tests/test_research_runtime_postgres.py
 
 echo "PASS: PostgreSQL integration tests"

@@ -6,7 +6,14 @@ CREATE ROLE agentops_migrator
     LOGIN
     PASSWORD 'isolated-test-only-migrator';
 
-CREATE ROLE agentops_app NOLOGIN;
+-- Synthetic runtime login for this disposable database only.
+CREATE ROLE agentops_app
+    LOGIN
+    PASSWORD 'isolated-test-only-runtime'
+    NOSUPERUSER
+    NOCREATEDB
+    NOCREATEROLE
+    NOREPLICATION;
 
 CREATE DATABASE agentops_migration_test
     OWNER agentops_migrator;
