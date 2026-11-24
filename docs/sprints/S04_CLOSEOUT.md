@@ -1,3 +1,98 @@
+# S04 — Authoritative Final Delivery Reconciliation
+
+**Reconciliation date:** 2026-11-24
+
+**Status:** FINAL — CLOSED — DEVELOPMENT MVP ONLY
+
+**Production authorization:** NOT APPROVED
+
+## 1. Final accepted S04 scope
+
+S04 delivered the single-agent offline LangGraph
+baseline within the approved Development MVP scope.
+
+- WP01-WP04: DELIVERED.
+- AC01-AC10: ACCEPTED.
+- Final sprint closeout: COMPLETE.
+- Final-state documentation synchronization: COMPLETE.
+- Remaining S04 delivery actions: NONE.
+
+This reconciliation records the already completed
+S04 delivery. It does not reopen S04, change its
+acceptance criteria or expand its accepted scope.
+
+## 2. Final delivery evidence
+
+| Evidence | Verified result |
+|---|---|
+| S04 implementation closeout PR #14 | MERGED |
+| Final-state documentation synchronization PR #15 | MERGED |
+| Final S04 main CI run | 45419682711 |
+| Main CI conclusion | SUCCESS — 4/4 jobs |
+| Final documentation synchronization | COMPLETE |
+| Sprint status | CLOSED |
+
+Final S04 main checkpoint:
+
+`104fc173abff205d82025ebcb08eadea8b01f353`
+
+Required successful CI jobs:
+
+- Backend Tests.
+- PostgreSQL Lifecycle and Auth.
+- Offline Authlib Compatibility.
+- Frontend Tests and Build.
+
+Evidence source: previously reviewed Project Owner
+terminal output, PR metadata and final main CI results.
+
+## 3. Preserved restrictions
+
+S04 is an offline single-agent baseline.
+
+S04 acceptance does not establish live research,
+semantic citation groundedness, durable execution,
+production security or production readiness.
+
+Existing authentication and release restrictions
+remain mandatory.
+
+No live provider activation, real-user activation
+or production deployment is approved.
+
+## 4. Successor sprint
+
+S05 Contract v1.0 is owner-approved.
+
+S05 introduces the separately versioned specialized
+Planner, Research and Writer workflow within
+Development MVP scope.
+
+The S04 baseline must remain available for
+regression tests and future controlled comparisons.
+
+Current successor work: S05-WP01 documentation only.
+
+S05 runtime implementation is not yet authorized.
+
+Current resume authority:
+
+`docs/handoff/CURRENT_STATE.md`
+
+---
+
+## Historical S04 closeout evidence
+
+The complete original S04 closeout document follows.
+
+Earlier IN_PROGRESS, PENDING or final synchronization
+instructions are historical and superseded by the
+authoritative final delivery reconciliation above.
+
+No historical verification result is removed.
+
+---
+
 # S04 — Final Acceptance and Closeout
 
 **Status:** FINAL — CLOSED — DEVELOPMENT MVP ONLY
