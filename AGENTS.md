@@ -1,5 +1,239 @@
 # AgentOps AI — Active S06 Engineering Policy Amendment
 
+## Authoritative S06 WP05-H closeout
+
+Recorded at: 2026-11-25T12:57:49.675347+00:00.
+
+Contract: v1.1 — S06-AMEND-001.
+
+Status: OWNER_ACCEPTED_CONDITIONAL — CLOSEOUT_PENDING.
+
+Scope: Offline Development MVP only.
+
+This section supersedes conflicting historical S06 status descriptions without rewriting them.
+
+### Acceptance governance
+
+Historical Contract v1.0 remains preserved:
+
+- VERIFIED: 18/24.
+- PARTIAL: AC05, AC07, AC09 and AC21.
+- PENDING_CI: AC23 at the historical review checkpoint.
+- PENDING_OWNER: AC24 at that checkpoint.
+
+This historical ledger is not rewritten to reflect
+the amended scope or subsequent delivery.
+
+Effective Contract v1.1 before final closeout delivery:
+
+- VERIFIED: 23/24.
+- Owner accepted: AC01-AC23.
+- AC24: OWNER_APPROVED_PENDING_CLOSEOUT_CI.
+- Final target after verified closure: 24/24.
+
+Security ledger:
+
+- VERIFIED within recorded scope: 13/16.
+- PARTIAL: SG06, SG08 and SG10.
+- Waived: zero.
+
+The final offline acceptance does not convert
+external security obligations into VERIFIED gates.
+
+### Implementation delivery identity
+
+- Contract: v1.1.
+- Amendment: S06-AMEND-001.
+- Contract PR: #21, delivered.
+- Implementation PR: #22, merged.
+- Feature commit: 102d273dca8cebaa6e846fa64318212bc4051323
+- Previous main: 322dc2878fac60bb1ac871c8b9b4d184812b78d8
+- Implementation merged main: 540666dbb9c40df0b500bcd6b143460128e5e3cc
+- Verified implementation tree: 750be5b82a36c138b44c08c26d2b7b0dcb775b10
+- Feature CI: 45616532423
+- Implementation main CI: 45617420446
+- Implementation delivery files: 56.
+- Merged implementation tree: identical to feature tree.
+- Combined implementation CI: 8/8 PASS.
+- WP05-G4 evidence SHA256: a6c5a4373ccb08821d97ca093a0c02bb196b59bef1d0270a907805fd32836f5a
+- Amendment evidence SHA256: 9d248326493bfffad7bf85dbce7b2681c0f55b98a26a5da0cafd8ac74b325085
+- Final Owner approval SHA256: 6dfc2fa4eca0c387af2284038722e691bf73cf54bdbff19aaf3e4b06c405076a
+
+### Work package completion
+
+- WP01: contract and architecture delivered.
+- WP02: offline acquisition foundation delivered.
+- WP03: synthetic evidence persistence delivered.
+- WP04: offline workflow and citations delivered.
+- WP05-A/B/C/D/E: integrated verification completed.
+- WP05-F: original acceptance review completed.
+- WP05-F-R01: approved amendment reconciled.
+- WP05-G1/G2/G3: feature delivery and CI completed.
+- WP05-G4: implementation merge and main CI completed.
+- WP05-H: final Owner approval recorded;
+  documentation delivery and final CI pending.
+
+### Binding closure condition
+
+This documentation records final Owner acceptance of
+the revised offline S06 deliverable, conditional on
+successful closeout delivery.
+
+AC01-AC23 are verified and Owner accepted.
+
+AC24 remains OWNER_APPROVED_PENDING_CLOSEOUT_CI
+until ALL of the following conditions are satisfied:
+
+1. The documentation-only closeout PR for branch
+   docs/s06-final-closeout passes all four mandatory
+   Backend CI jobs on its reviewed head commit.
+2. The Project Owner separately authorizes its merge.
+3. The closeout PR is merged into main without
+   bypassing applicable repository checks.
+4. The merge contains only the approved documentation
+   scope and preserves the implementation baseline.
+5. All four Backend CI jobs pass on the exact merged
+   main commit.
+6. Local main is synchronized, the working tree is
+   clean, and the backup stash and canonical worktree
+   remain preserved.
+7. Final closure evidence is exported and reconciled.
+
+When these conditions are verified, the effective
+acceptance result becomes 24/24 VERIFIED and Owner
+accepted under Contract v1.1.
+
+The effective sprint state then becomes:
+
+CLOSED — OFFLINE EVIDENCE AND CITATION FOUNDATION
+— DEVELOPMENT MVP ONLY.
+
+Until that point S06 remains CLOSEOUT_PENDING
+and S07 remains NOT_STARTED.
+
+The condition is intentionally based on observed
+GitHub delivery evidence rather than a prewritten
+future commit SHA.
+
+No additional commit or PR is needed solely to
+replace this conditional status or record the
+closeout commit's own SHA.
+
+### Mandatory S07/S08 successor obligations
+
+| ID | Mandatory obligation | Receiving sprint | Status | Original traceability |
+| --- | --- | --- | --- | --- |
+| D06-01 | Provider interoperability | S08 | OPEN | AC05 |
+| D06-02 | Secure connector verification | S07 | OPEN | AC07, SG06, SG08 |
+| D06-03 | External execution budgets and deadlines | S07 | OPEN | AC09, SG10 |
+| D06-04 | Actual provider usage and cost accounting | S08 | OPEN | AC05, AC09, SG10 |
+| D06-05 | Real evidence integration | S08 | OPEN | AC05 and real-data obligations of AC11-AC20 |
+| D06-06 | Integrated external security acceptance | S08 | OPEN | AC21, SG01-SG16 |
+
+All six obligations remain OPEN.
+
+S07 — Worker Reliability and Secure Acquisition
+must receive D06-02 and D06-03.
+
+S08 — Live Research Integration, Evaluation and
+Security must receive D06-01, D06-04, D06-05
+and D06-06.
+
+The original detailed acceptance requirements
+and dependency graph remain authoritative in
+S06-AMEND-001 in docs/sprints/S06.md.
+
+No receiving sprint may silently discard or
+further defer these obligations.
+
+S08 controlled live smoke testing requires
+separate explicit approval after applicable
+S07 prerequisites have been verified.
+
+Routine external activation requires complete
+applicable security acceptance and separate approval.
+
+S09 staging and release readiness remain dependent
+on applicable S07 and S08 verification.
+
+### Retained release restrictions
+
+Production remains NOT APPROVED.
+
+External execution remains unconditionally denied.
+
+No actual provider credentials, live provider API,
+paid search, paid inference, PAYG, shared database
+migration, worker activation, real-user authentication,
+report publication or deployment is authorized.
+
+Real evidence coverage remains zero.
+S06 workflow and evidence persistence are synthetic-only.
+Report candidates remain nonpublishable.
+
+Structural citation validation does not establish
+semantic grounding.
+
+Normalized excerpt integrity does not establish
+full fetched-page integrity.
+
+Isolated execution identifiers do not establish
+durable worker fencing.
+
+Repository scope checks are not database RLS.
+
+Hard cancellation and complete external execution
+accounting remain unverified.
+
+HTTPX production runtime dependency availability
+requires successor review.
+
+The existing Authlib strict security XFAIL remains.
+No production authentication approval is implied.
+
+All S02-S06 security gates remain mandatory.
+No original security gate or product requirement
+is waived by this closeout.
+
+### Release governance limitations
+
+GitHub reported NO_REQUIRED_CHECKS_REPORTED for
+implementation PR #22.
+
+The four mandatory project CI jobs were independently
+checked against the approved feature and main SHAs.
+
+This is evidence of observed CI success, not proof
+that repository branch protection enforces all
+required checks.
+
+Retain this governance limitation in S09 release
+readiness review. Verify required status checks,
+merge restrictions and applicable branch rules
+before production release authorization.
+
+No repository protection setting is changed here.
+
+Retain the previously observed Node.js action runtime
+deprecation concern for applicable CI maintenance.
+
+Local vulnerability audits are point-in-time checks,
+not complete deployment or infrastructure attestations.
+
+### Exactly one next action
+
+Complete the S06 documentation-only closeout PR
+and obtain separate Owner merge approval.
+
+Once the binding closure condition is satisfied,
+resume from the prepared S07 handoff.
+
+The current authorization does not extend to
+S07 implementation or external runtime activation.
+
+---
+
+
 > **Active S06 amendment — S06-AMEND-001:**
 > S06 Contract v1.1 is approved for the offline
 > Development MVP deliverable only. The approved
