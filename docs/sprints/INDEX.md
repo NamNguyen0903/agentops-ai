@@ -1,6 +1,6 @@
 # AgentOps AI — Authoritative Sprint Roadmap
 
-## Active roadmap — 2026-11-25, S05 FINAL_CLOSEOUT_PENDING
+## Active roadmap — 2026-11-25, S05 CLOSED; S06 NEXT
 
 **Scope:** Development MVP only.
 
@@ -13,8 +13,9 @@
 | S02 | CLOSED — 11/11 accepted | [S02 closeout](S02_CLOSEOUT.md) |
 | S03 | CLOSED — 12/12 accepted | [S03 closeout](S03_CLOSEOUT.md) |
 | S04 | CLOSED — Development MVP only | [S04 contract](S04.md), [S04 closeout](S04_CLOSEOUT.md) |
-| S05 | FINAL_CLOSEOUT_PENDING — WP05 AUTHORIZED | [S05 Contract v1.0](S05.md) |
-| S06-S09 | PLANNED | Original roadmap retained below |
+| S05 | CLOSED — 16/16 accepted; Development MVP only | [S05 Contract v1.0](S05.md) |
+| S06 | NEXT — NOT STARTED | Separate owner authorization required |
+| S07-S09 | PLANNED | Original roadmap retained below |
 
 S04 final-state synchronization PR #15 is MERGED.
 
@@ -28,33 +29,42 @@ delivery is implied.
 
 ### S05 — Specialized Planner, Research and Writer Nodes
 
-Contract v1.0: APPROVED.
-Development MVP only.
+**Status:** CLOSED — DEVELOPMENT MVP ONLY.
+
+Final owner acceptance: 2026-11-25.
 
 | Work package | Status |
 |---|---|
-| WP01 — Contract and Architecture | DELIVERED |
-| WP02 — Typed Contracts and Fixture Adapters | DELIVERED |
-| WP03 — Specialized Workflow Nodes | DELIVERED |
-| WP04 — Security and Execution Guards | DELIVERED |
-| WP05 — Integration, CI and Closeout | FINAL_DELIVERY_PENDING |
+| WP01 — Contract and Architecture | DELIVERED; ACCEPTED |
+| WP02 — Typed Contracts and Fixture Adapters | DELIVERED; ACCEPTED |
+| WP03 — Specialized Workflow Nodes | DELIVERED; ACCEPTED |
+| WP04 — Security and Execution Guards | DELIVERED; ACCEPTED |
+| WP05 — Integration, CI and Closeout | DELIVERED; ACCEPTED |
 
-Delivered work packages: 4/5.
-Technical acceptance readiness: 15/16.
+Delivered work packages: 5/5.
+Accepted criteria: 16/16.
 
-PR #18: MERGED.
-Implementation main CI 45570242447: 4/4 PASS.
-Local backend: 1632 passed, 49 historical skips.
-Local backend dependency audit: 64 packages,
-zero known findings after pip remediation.
+PR #18 and PR #19 are MERGED.
 
-WP05 authorized by the owner on 2026-11-25.
+Last verified main implementation and closeout baseline:
 
-Next action: final documentation PR, main CI
-verification and owner closeout.
+9a84d02e0f23958d93a35e64322e95519f8ffe55
 
-S06-S09 remain planned.
-No subsequent Sprint is authorized.
+Final documentation PR CI: 45571457482, 4/4 PASS.
+Final documentation main CI: 45571621625, 4/4 PASS.
+
+Backend: 1632 passed, 49 historical skips.
+Permanent named security tests: 547 passed.
+Local backend audit: 64 packages, zero known findings.
+
+All approved security and release gates remain mandatory.
+
+S06 is NEXT — NOT STARTED.
+S07-S09 remain PLANNED.
+
+Next action: await separate owner authorization
+for Sprint S06 after final status synchronization.
+
 Production remains NOT APPROVED.
 
 ### Retained historical S05 checkpoints
