@@ -1,6 +1,6 @@
 # AgentOps AI — Active Engineering Policy Amendment
 
-**Amendment:** S05-WP05 authorization and closeout
+**Amendment:** S05 final owner acceptance and closure
 
 **Decision date:** 2026-11-25
 
@@ -112,26 +112,20 @@ The existing backup stash must be preserved.
 
 ## 5. Current S05 authorization boundary
 
-The owner-approved S05 Contract v1.0, AD01-AD08,
-ND01-ND12 and SG01-SG12 remain unchanged.
-
-WP01-WP04 are DELIVERED.
-PR #18 is merged and all twelve required remote
-CI job results across push, PR and main passed.
+Sprint S05 is CLOSED for Development MVP only.
 
 On 2026-11-25, the Project Owner explicitly
-authorized WP05 for Development MVP only.
+accepted AC01-AC16 and WP01-WP05.
 
-WP05 is restricted to integration verification,
-dependency security review, documentation,
-final delivery and owner closeout.
+PR #18 and final documentation PR #19 are merged.
+Their recorded required CI gates have passed.
 
-No new runtime features or architecture decisions
-are authorized by WP05.
+The final status synchronization is documentation-only.
 
-Final Sprint closure requires the final documentation
-PR, required CI results, merged main verification
-and owner acceptance.
+S05 Contract v1.0, AD01-AD08, ND01-ND12 and
+SG01-SG12 remain unchanged.
+
+No additional runtime implementation is authorized.
 
 No live model providers, real search providers,
 database migrations, worker activation, report
@@ -143,7 +137,11 @@ Preserve the strict Authlib security XFAIL,
 all existing dependency lockfiles and all
 S02/S03 security and release gates.
 
-Sprint S06 requires separate owner authorization.
+Sprint S06 is NEXT but NOT STARTED.
+
+A separate explicit owner authorization is required
+before beginning S06 or expanding architecture scope.
+
 Production remains NOT APPROVED.
 
 ## 6. Documentation and evidence policy
