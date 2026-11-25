@@ -1,5 +1,255 @@
 # AgentOps AI — Product Requirements Document
 
+> **Active S06 amendment — S06-AMEND-001:**
+> S06 Contract v1.1 is approved for the offline
+> Development MVP deliverable only. The approved
+> amendment and revised milestone allocation supersede
+> conflicting historical S06 scope descriptions.
+> Original product requirements, security gates,
+> and historical verification remain preserved.
+> External execution remains denied.
+> Production remains NOT APPROVED.
+
+## S06-AMEND-001 — Approved Contract v1.1
+
+Recorded at: 2026-11-25T12:36:32.255498+00:00.
+
+Status: APPROVED — Development MVP only.
+
+S06 deliverable: Offline Evidence and Citation Foundation.
+
+Authoritative contract and acceptance matrices:
+docs/sprints/S06.md.
+
+- Original v1.0 acceptance: 18 VERIFIED, 4 PARTIAL,
+  1 PENDING_CI, 1 PENDING_OWNER.
+- Effective v1.1 local assessment: 22 VERIFIED,
+  1 PENDING_CI, 1 PENDING_OWNER.
+- Original security ledger: 13 VERIFIED, 3 PARTIAL.
+- Partial security gates: SG06, SG08 and SG10.
+- Official final owner acceptance: 0/24, pending closeout.
+- Deferred obligations: six, all OPEN.
+- Runtime source and tests unchanged.
+- Live execution denied.
+
+| ID | Obligation | Original traceability | Receiving milestone | Status |
+| --- | --- | --- | --- | --- |
+| D06-01 | Provider interoperability | AC05 | S08 | OPEN |
+| D06-02 | Secure connector verification | AC07, SG06, SG08 | S07 | OPEN |
+| D06-03 | External execution budgets and deadlines | AC09, SG10 | S07 | OPEN |
+| D06-04 | Actual provider usage and cost accounting | AC05, AC09, SG10 | S08 | OPEN |
+| D06-05 | Real evidence integration | AC05 and real-data obligations of AC11-AC20 | S08 | OPEN |
+| D06-06 | Integrated external security acceptance | AC21, SG01-SG16 | S08 | OPEN |
+
+### Mandatory release restrictions
+
+This amendment does not authorize live provider
+execution, actual credential access, paid inference,
+paid search, PAYG, shared database migrations,
+worker activation, real-user authentication,
+report publication or production deployment.
+
+External execution remains unconditionally denied
+throughout S06 delivery.
+
+All S02-S06 security gates remain mandatory.
+SG06, SG08 and SG10 remain PARTIAL in the original
+security ledger until successor evidence resolves
+their outstanding obligations.
+
+A controlled live smoke test requires separate
+explicit authorization after applicable transport,
+budget and security prerequisites have been verified.
+
+Routine external execution requires completed
+applicable security verification and its own
+explicit activation approval.
+
+Preserve the strict Authlib security XFAIL,
+approved dependency manifests, canonical worktree
+and all prior release restrictions.
+
+Production remains NOT APPROVED.
+
+### Product roadmap amendment
+
+This approved change modifies delivery allocation,
+not functional or nonfunctional product requirements.
+
+The original research product objectives, including
+authorized external search, real evidence, inspectable
+citations, bounded execution, evaluation and secure
+deployment remain mandatory.
+
+The original PRD requirements and product-level
+Definition of Done are preserved.
+
+Offline synthetic evidence cannot be represented as
+actual market or competitor research.
+
+S06 closure under v1.1 does not satisfy the full
+product-level live research milestone.
+
+### Approved revised milestone allocation
+
+| Sprint | Deliverable |
+| --- | --- |
+| S00 | Product planning and architecture — CLOSED |
+| S01 | Application foundation — CLOSED |
+| S02 | Database and authentication — CLOSED |
+| S03 | Research task API and dashboard — CLOSED |
+| S04 | LangGraph workflow baseline — CLOSED |
+| S05 | Specialized agent nodes — CLOSED |
+| S06 | Offline Evidence and Citation Foundation |
+| S07 | Worker Reliability and Secure Acquisition |
+| S08 | Live Research Integration, Evaluation and Security |
+| S09 | CI/CD and AWS Staging Preparation |
+
+The project retains ten planned sprints, S00-S09.
+The one-day sprint target is subject to workload
+review and is not a completion guarantee.
+
+S07 retains its original reliability, deadline,
+recovery and usage-budget objectives, and receives
+D06-02 and D06-03.
+
+S08 retains its original evaluation, integration and
+security objectives, and receives D06-01, D06-04,
+D06-05 and D06-06.
+
+S08 external execution depends on applicable S07
+connector and execution verification.
+
+S09 staging readiness depends on applicable S07
+and S08 delivery, operational and security evidence.
+
+Deferred obligations are mandatory. They must not
+be discarded or further deferred without a recorded
+owner-approved amendment.
+
+#### D06-01 — Provider interoperability
+
+Receiving milestone: S08.
+
+Original traceability: AC05.
+
+Status: OPEN.
+
+Dependencies: D06-02, D06-03.
+
+Acceptance requirements:
+
+- Verify approved provider API and runtime compatibility.
+- Verify actual account quota, billing and applicable data handling terms.
+- Verify required runtime dependency availability.
+- Perform separately authorized bounded provider smoke tests.
+- Record sanitized request, response and usage evidence.
+
+Release gate: Separate live-test authorization required.
+
+#### D06-02 — Secure connector verification
+
+Receiving milestone: S07.
+
+Original traceability: AC07, SG06, SG08.
+
+Status: OPEN.
+
+Dependencies: None within this deferred register.
+
+Acceptance requirements:
+
+- Exercise actual connector through integrated DNS, numeric connection, peer verification, TLS and HTTP.
+- Verify adversarial DNS answers and destination binding.
+- Verify trust, hostname mismatch, redirects and resource cleanup.
+- Do not substitute the entire connector in connector-correctness tests.
+- Preserve default-deny external authorization.
+
+Release gate: Required transport security evidence before live smoke authorization.
+
+#### D06-03 — External execution budgets and deadlines
+
+Receiving milestone: S07.
+
+Original traceability: AC09, SG10.
+
+Status: OPEN.
+
+Dependencies: None within this deferred register.
+
+Acceptance requirements:
+
+- Integrate acquisition budgets with application-owned execution context.
+- Preserve cumulative search, retrieval and retry accounting.
+- Enforce operation and running-task deadlines.
+- Document cancellation, timeout and recovery behavior.
+- Prevent retries and recovery from resetting applicable budgets.
+- Fail closed on incomplete or indeterminate execution.
+- Reconcile hard cancellation with verified adapter capabilities and approved execution contract.
+
+Release gate: Required bounded execution evidence before live smoke authorization.
+
+#### D06-04 — Actual provider usage and cost accounting
+
+Receiving milestone: S08.
+
+Original traceability: AC05, AC09, SG10.
+
+Status: OPEN.
+
+Dependencies: D06-01, D06-03.
+
+Acceptance requirements:
+
+- Verify actual provider usage metadata.
+- Reconcile provider credits with application-owned accounting.
+- Prevent automatic paid usage and unauthorized retries.
+- Verify missing or invalid usage handling.
+
+Release gate: No paid subscription or PAYG authorization.
+
+#### D06-05 — Real evidence integration
+
+Receiving milestone: S08.
+
+Original traceability: AC05 and real-data obligations of AC11-AC20.
+
+Status: OPEN.
+
+Dependencies: D06-01, D06-02, D06-03, D06-04.
+
+Acceptance requirements:
+
+- Extend acquisition and evidence contracts for explicitly authorized real evidence.
+- Preserve genuine retrieval timestamps, provenance and source identity.
+- Prevent synthetic records from being represented as real evidence.
+- Verify integrity, scope isolation, deduplication and citation resolution.
+- Integrate authorized real evidence into the bounded workflow.
+- Verify insufficient evidence behavior and factual grounding through evaluation.
+
+Release gate: Schema and dependency changes require applicable approvals.
+
+#### D06-06 — Integrated external security acceptance
+
+Receiving milestone: S08.
+
+Original traceability: AC21, SG01-SG16.
+
+Status: OPEN.
+
+Dependencies: D06-01, D06-02, D06-03, D06-04, D06-05.
+
+Acceptance requirements:
+
+- Complete all outstanding external security obligations.
+- Resolve SG06, SG08 and SG10 with required successor evidence.
+- Revalidate all applicable S06 and historical security gates.
+- Verify prompt-injection resistance, credential protection, authorization and cross-task isolation.
+- Record integrated security evidence and explicit release decisions.
+
+Release gate: Blocks routine external feature release until satisfied.
+
+
 **Version:** 0.2
 **Status:** Approved for Architecture Design — Implementation Pending
 **Owner:** Product Team / AI Engineering

@@ -86,4 +86,5 @@ def test_model_import_registers_only_expected_tables():
         "app.users", "app.auth_identities", "app.auth_sessions",
         "app.oidc_login_transactions", "app.research_tasks",
         "app.queue_control",
+        "app.research_evidence",
     }

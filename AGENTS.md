@@ -1,5 +1,105 @@
 # AgentOps AI — Active S06 Engineering Policy Amendment
 
+> **Active S06 amendment — S06-AMEND-001:**
+> S06 Contract v1.1 is approved for the offline
+> Development MVP deliverable only. The approved
+> amendment and revised milestone allocation supersede
+> conflicting historical S06 scope descriptions.
+> Original product requirements, security gates,
+> and historical verification remain preserved.
+> External execution remains denied.
+> Production remains NOT APPROVED.
+
+## S06-AMEND-001 — Approved Contract v1.1
+
+Recorded at: 2026-11-25T12:36:32.255498+00:00.
+
+Status: APPROVED — Development MVP only.
+
+S06 deliverable: Offline Evidence and Citation Foundation.
+
+Authoritative contract and acceptance matrices:
+docs/sprints/S06.md.
+
+- Original v1.0 acceptance: 18 VERIFIED, 4 PARTIAL,
+  1 PENDING_CI, 1 PENDING_OWNER.
+- Effective v1.1 local assessment: 22 VERIFIED,
+  1 PENDING_CI, 1 PENDING_OWNER.
+- Original security ledger: 13 VERIFIED, 3 PARTIAL.
+- Partial security gates: SG06, SG08 and SG10.
+- Official final owner acceptance: 0/24, pending closeout.
+- Deferred obligations: six, all OPEN.
+- Runtime source and tests unchanged.
+- Live execution denied.
+
+| ID | Obligation | Original traceability | Receiving milestone | Status |
+| --- | --- | --- | --- | --- |
+| D06-01 | Provider interoperability | AC05 | S08 | OPEN |
+| D06-02 | Secure connector verification | AC07, SG06, SG08 | S07 | OPEN |
+| D06-03 | External execution budgets and deadlines | AC09, SG10 | S07 | OPEN |
+| D06-04 | Actual provider usage and cost accounting | AC05, AC09, SG10 | S08 | OPEN |
+| D06-05 | Real evidence integration | AC05 and real-data obligations of AC11-AC20 | S08 | OPEN |
+| D06-06 | Integrated external security acceptance | AC21, SG01-SG16 | S08 | OPEN |
+
+### Mandatory release restrictions
+
+This amendment does not authorize live provider
+execution, actual credential access, paid inference,
+paid search, PAYG, shared database migrations,
+worker activation, real-user authentication,
+report publication or production deployment.
+
+External execution remains unconditionally denied
+throughout S06 delivery.
+
+All S02-S06 security gates remain mandatory.
+SG06, SG08 and SG10 remain PARTIAL in the original
+security ledger until successor evidence resolves
+their outstanding obligations.
+
+A controlled live smoke test requires separate
+explicit authorization after applicable transport,
+budget and security prerequisites have been verified.
+
+Routine external execution requires completed
+applicable security verification and its own
+explicit activation approval.
+
+Preserve the strict Authlib security XFAIL,
+approved dependency manifests, canonical worktree
+and all prior release restrictions.
+
+Production remains NOT APPROVED.
+
+### Active execution policy
+
+Use the approved v1.1 scope for S06 delivery.
+
+Retain FAST-TRACK execution, single canonical
+workspace and existing owner approval boundaries.
+
+Do not reinterpret the original v1.0 PARTIAL
+criteria as completed external functionality.
+
+Do not start S07 until S06 v1.1 has been closed
+and the S07 contract has been approved.
+
+The S07 contract must include D06-02 and D06-03.
+The S08 contract must include D06-01, D06-04,
+D06-05 and D06-06.
+
+Do not reopen an independent S06 WP02 package
+solely to duplicate completed verification.
+
+Do not repeat local test suites unless affected
+source, environment or verification scope changes.
+
+Required feature and merged-main CI are not waived.
+
+Exactly one next action after WP05-F-R01:
+owner-controlled WP05-G delivery review.
+
+
 **Decision date:** 2026-11-25
 
 **Contract:** S06 Contract v1.0 — OWNER APPROVED

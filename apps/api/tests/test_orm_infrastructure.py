@@ -49,6 +49,7 @@ def test_metadata_registers_approved_identity_models() -> None:
         "app.oidc_login_transactions",
         "app.research_tasks",
         "app.queue_control",
+        "app.research_evidence",
     }
 
     assert set(Base.metadata.tables) == expected_tables
