@@ -1,3 +1,855 @@
+# AgentOps AI - Current State
+
+> **Active S06 amendment — S06-AMEND-001:**
+> S06 Contract v1.1 is approved for the offline
+> Development MVP deliverable only. The approved
+> amendment and revised milestone allocation supersede
+> conflicting historical S06 scope descriptions.
+> Original product requirements, security gates,
+> and historical verification remain preserved.
+> External execution remains denied.
+> Production remains NOT APPROVED.
+
+## S06-AMEND-001 — Approved Contract v1.1
+
+### Authoritative S06 WP05-F-R01 checkpoint
+
+Recorded at: 2026-11-25T12:36:32.255498+00:00.
+
+- Sprint: S06 — IN_PROGRESS.
+- Contract: v1.1, S06-AMEND-001 — APPROVED.
+- Deliverable: Offline Evidence and Citation Foundation.
+- Scope: Development MVP only.
+- Mode: FAST-TRACK.
+- Branch: feat/s06-search-evidence-citations
+- Main SHA: 322dc2878fac60bb1ac871c8b9b4d184812b78d8
+- Migration head: b6e0326a7103.
+
+### Work packages
+
+- WP01: DELIVERED.
+- WP02: VERIFIED_LOCAL_OFFLINE_SCOPE.
+- Original external WP02 obligations: OPEN in
+  D06-01, D06-02, D06-03 and D06-04.
+- WP03: VERIFIED_LOCAL_SYNTHETIC.
+- WP04: VERIFIED_LOCAL_OFFLINE.
+- WP05-A/B/C/D/E: VERIFIED_LOCAL.
+- WP05-F: REVIEWED_LOCAL, original v1.0 ledger preserved.
+- WP05-F-R01: APPROVED_AMENDMENT_RECONCILED.
+- WP05-G: DELIVERY_REVIEW_REQUIRED.
+- WP05-H: PENDING.
+
+### Acceptance state
+
+Original v1.0:
+18 VERIFIED, 4 PARTIAL, 1 PENDING_CI,
+1 PENDING_OWNER.
+
+Effective v1.1:
+22 VERIFIED, 1 PENDING_CI (AC23),
+1 PENDING_OWNER (AC24).
+
+These are technical assessments.
+Official final owner acceptance remains 0/24.
+
+Security ledger:
+13 VERIFIED, 3 PARTIAL.
+SG06, SG08 and SG10 remain PARTIAL.
+
+No original external obligation or security gate
+has been marked complete by this amendment.
+
+### Mandatory successor obligations
+
+| ID | Obligation | Original traceability | Receiving milestone | Status |
+| --- | --- | --- | --- | --- |
+| D06-01 | Provider interoperability | AC05 | S08 | OPEN |
+| D06-02 | Secure connector verification | AC07, SG06, SG08 | S07 | OPEN |
+| D06-03 | External execution budgets and deadlines | AC09, SG10 | S07 | OPEN |
+| D06-04 | Actual provider usage and cost accounting | AC05, AC09, SG10 | S08 | OPEN |
+| D06-05 | Real evidence integration | AC05 and real-data obligations of AC11-AC20 | S08 | OPEN |
+| D06-06 | Integrated external security acceptance | AC21, SG01-SG16 | S08 | OPEN |
+
+All six obligations are OPEN.
+
+S07 must include D06-02 and D06-03.
+S08 must include D06-01, D06-04, D06-05 and D06-06.
+
+### Retained verification
+
+- Backend: 2112 passed, 75 skipped, zero failed.
+- Disposable PostgreSQL: 74 passed.
+- S06 PostgreSQL: 26/26 passed.
+- Offline Authlib: 56 passed, one security XFAIL.
+- Frontend: 39 passed; typecheck/lint/build PASS.
+- Backend dependency audit: 64 packages, zero findings.
+- Frontend audit: zero findings.
+- Backend pip: 26.2.
+- Runtime source and tests unchanged.
+- Application dependency manifests unchanged.
+- External authorization barrier unchanged.
+- Test suite reruns: zero.
+
+### Exactly one next action
+
+Prepare WP05-G delivery review from the reconciled
+56-file documentation and implementation checkpoint.
+
+Obtain explicit owner authorization before staging,
+commit, push or PR creation.
+
+Verify all four expected feature PR CI jobs.
+Obtain owner-controlled merge approval.
+Verify all four expected merged-main CI jobs.
+
+Final S06 v1.1 closure requires WP05-H documentation
+and explicit owner acceptance.
+
+Do not start S07 before S06 closure and separate
+approval of the S07 contract.
+
+### Mandatory release restrictions
+
+This amendment does not authorize live provider
+execution, actual credential access, paid inference,
+paid search, PAYG, shared database migrations,
+worker activation, real-user authentication,
+report publication or production deployment.
+
+External execution remains unconditionally denied
+throughout S06 delivery.
+
+All S02-S06 security gates remain mandatory.
+SG06, SG08 and SG10 remain PARTIAL in the original
+security ledger until successor evidence resolves
+their outstanding obligations.
+
+A controlled live smoke test requires separate
+explicit authorization after applicable transport,
+budget and security prerequisites have been verified.
+
+Routine external execution requires completed
+applicable security verification and its own
+explicit activation approval.
+
+Preserve the strict Authlib security XFAIL,
+approved dependency manifests, canonical worktree
+and all prior release restrictions.
+
+Production remains NOT APPROVED.
+
+All subsequent checkpoint sections are historical
+unless explicitly identified as the current authority.
+
+
+## Authoritative S06 WP05-F local checkpoint
+
+Reviewed at: 2026-11-25T12:30:47.011733+00:00.
+
+- Sprint: S06 - IN_PROGRESS.
+- Mode: FAST-TRACK.
+- Scope: Development MVP only.
+- Branch: feat/s06-search-evidence-citations
+- Main SHA: 322dc2878fac60bb1ac871c8b9b4d184812b78d8
+- Migration head: b6e0326a7103.
+- WP01: DELIVERED.
+- WP02: VERIFIED_LOCAL_PARTIAL.
+- WP03: VERIFIED_LOCAL_SYNTHETIC.
+- WP04: VERIFIED_LOCAL_OFFLINE.
+- WP05-A/B/C/D/E: VERIFIED_LOCAL.
+- WP05-F: REVIEWED_LOCAL; OWNER_DECISION_PENDING.
+- WP05-G/H: PENDING.
+
+### Authoritative acceptance assessment
+
+- AC VERIFIED: 18/24.
+- AC PARTIAL: AC05, AC07, AC09, AC21.
+- AC PENDING_CI: AC23.
+- AC PENDING_OWNER: AC24.
+- Technical readiness: 75 percent.
+- Official owner acceptance: 0/24.
+- SG VERIFIED: 13/16.
+- SG PARTIAL: SG06, SG08, SG10.
+
+The latest matrix in docs/sprints/S06.md supersedes
+historical status tables for assessment purposes.
+It does not amend the original contract requirements.
+
+### Retained verification
+
+- Backend: 2112 passed, 75 skipped, zero failed.
+- Disposable PostgreSQL: 74 passed.
+- S06 PostgreSQL: 26/26 passed.
+- Authlib: 56 passed, one required security XFAIL.
+- Frontend: 39 passed; typecheck/lint/build PASS.
+- Backend audit: 64 packages, zero findings.
+- Frontend audit: zero findings.
+- Backend pip: 26.2.
+- Application dependencies and lockfiles unchanged.
+- Real evidence coverage: zero.
+- External execution authorization: denied.
+- Runtime and test source unchanged in WP05-F.
+- Test suites repeated: zero.
+
+### Exactly one next action
+
+Obtain an explicit Project Owner scope decision
+using the WP05-F owner decision alternatives in
+docs/sprints/S06.md.
+
+Recommended: partial offline feature delivery with
+all unresolved acceptance and security obligations
+retained as open.
+
+Do not equate delivery approval with sprint acceptance.
+
+Until the decision is recorded, do not stage, commit,
+push, merge, close S06 or start S07.
+
+No independent WP02 reopening is implied.
+
+Preserve canonical workspace, backup stash,
+historical evidence and all previous release gates.
+
+No live external execution, shared database mutation,
+worker activation, publication or deployment.
+
+Production remains NOT APPROVED.
+
+All sections below are historical evidence.
+
+---
+
+# AgentOps AI - Current State
+
+## Authoritative S06 WP05-D-R02 local checkpoint
+
+Verified at: 2026-11-25T12:26:51.600150+00:00.
+
+- Sprint: S06 - IN_PROGRESS.
+- Mode: FAST-TRACK.
+- Scope: Development MVP only.
+- Branch: feat/s06-search-evidence-citations
+- Main SHA: 322dc2878fac60bb1ac871c8b9b4d184812b78d8
+- Migration head: b6e0326a7103.
+- WP01: DELIVERED.
+- WP02: IMPLEMENTATION_EXTENDED; ACCEPTANCE_PENDING.
+- WP03: VERIFIED_LOCAL.
+- WP04: VERIFIED_LOCAL_OFFLINE.
+- WP05-A/B: VERIFIED_LOCAL.
+- WP05-C: VERIFIED_LOCAL.
+- WP05-D: VERIFIED_LOCAL.
+- WP05-E: VERIFIED_LOCAL.
+- WP05-F: NEXT.
+- WP05-G/H: PENDING.
+
+### Final local verification evidence
+
+- Backend: 2112 passed, 75 skipped, zero failed.
+- Disposable PostgreSQL: 74 passed.
+- S06 PostgreSQL: 26/26 passed.
+- Authlib: 56 passed, one required security XFAIL.
+- Frontend: 39 passed across four test files.
+- Frontend typecheck, lint and build: PASS.
+- Frontend vulnerability findings: zero.
+- Backend dependency consistency: PASS.
+- Backend pip upgraded: 24.0 to 26.2.
+- Backend packages audited: 64.
+- Backend audit skipped packages: zero.
+- Backend known vulnerability findings: zero.
+- Only pip distribution changed.
+- Application dependencies and lockfiles unchanged.
+- Backend source and tests unchanged.
+- Authorization barrier unchanged.
+- Test suites repeated: zero.
+- Repository changed files: 53.
+
+Audit SHA256: 2f6646439b747b2ebc6248518eb90fba3f66c221d273382ec31ee8e394dd1e3a.
+
+### Remaining acceptance obligations
+
+Local WP05-C/D/E verification is complete.
+
+Official acceptance of AC01-AC24 and SG01-SG16
+remains pending.
+
+AC05, AC07 and AC09 require explicit reconciliation
+against the owner-approved S06 contract.
+
+Real provider compatibility remains unverified.
+Real evidence coverage remains zero.
+Workflow execution remains fixture-only.
+Hard process cancellation is not established.
+
+Do not claim production readiness or real research
+delivery from isolated verification evidence.
+
+### Exactly one next action
+
+Execute WP05-F acceptance reconciliation.
+
+Produce the complete acceptance and security gate
+matrix, identify unresolved contractual requirements,
+and obtain any necessary owner scope decision before
+feature PR delivery.
+
+Do not open another independent WP02 work package.
+Do not repeat verified suites without an affected
+source or environment change.
+
+Preserve the canonical worktree, backup stash,
+historical evidence and previous release restrictions.
+
+No live external execution, shared database mutation,
+worker activation, publication or deployment.
+
+Official S06 acceptance remains pending.
+Production remains NOT APPROVED.
+
+All sections below are historical evidence.
+
+---
+
+# AgentOps AI - Current State
+
+## Authoritative S06 WP05-DE-R01 local checkpoint
+
+Verified at: 2026-11-25T12:22:40.166781+00:00.
+
+- Sprint: S06 - IN_PROGRESS.
+- Mode: FAST-TRACK.
+- Scope: Development MVP only.
+- Branch: feat/s06-search-evidence-citations
+- Main SHA: 322dc2878fac60bb1ac871c8b9b4d184812b78d8
+- Migration head: b6e0326a7103.
+- WP01: DELIVERED.
+- WP02: IMPLEMENTATION_EXTENDED; ACCEPTANCE_PENDING.
+- WP03: VERIFIED_LOCAL.
+- WP04: VERIFIED_LOCAL_OFFLINE.
+- WP05-A/B: VERIFIED_LOCAL.
+- WP05-C: VERIFIED_LOCAL.
+- WP05-D: PARTIAL_BLOCKED.
+- WP05-E: VERIFIED_LOCAL.
+- WP05-F/G/H: PENDING.
+
+### Preserved verification
+
+- Backend: 2112 passed, 75 skipped, zero failed.
+- Disposable PostgreSQL: 74 passed.
+- S06 PostgreSQL: 26/26 passed.
+- Migration lifecycle: PASS.
+- Disposable resource cleanup: PASS.
+- Backend and PostgreSQL suites were not repeated.
+
+### WP05-DE-R01 actual results
+
+- AUDIT_TOOL_ENVIRONMENT: PASS.
+- BACKEND_VULNERABILITY_GATE: BLOCKED.
+- AUTHLIB_COMPATIBILITY_GATE: PASS.
+- HISTORICAL_SECURITY_GATE: PASS.
+- FRONTEND_DEPENDENCY_GATE: PASS.
+- FRONTEND_VULNERABILITY_GATE: PASS.
+- FRONTEND_TYPECHECK: PASS.
+- FRONTEND_ESLINT: PASS.
+- FRONTEND_REGRESSION: PASS.
+- FRONTEND_BUILD: PASS.
+
+### Remaining blockers
+
+- BACKEND_VULNERABILITY_GATE: 12 known findings; owner remediation decision required
+
+Backend pip version remains 24.0.
+Application dependencies and lockfiles are unchanged.
+External execution authorization remains default-deny.
+
+### Exactly one next action
+
+Review recorded blockers and obtain any required owner remediation approval. Repeat only affected verification gates.
+
+AC05, AC07 and AC09 still require formal reconciliation
+with the owner-approved contract and verified evidence.
+
+Do not accept criteria beyond their demonstrated scope.
+
+No real evidence persistence, live provider execution,
+shared database mutation, worker activation, report
+publication or deployment.
+
+Official S06 acceptance remains pending.
+
+Production remains NOT APPROVED.
+
+All sections below are historical evidence.
+
+---
+
+# AgentOps AI - Current State
+
+## Authoritative S06 WP05-AB-R01 local checkpoint
+
+Date: 2026-11-25.
+
+- Sprint: S06 - IN_PROGRESS.
+- Scope: Development MVP only.
+- Mode: FAST-TRACK.
+- Branch: feat/s06-search-evidence-citations
+- Main SHA: 322dc2878fac60bb1ac871c8b9b4d184812b78d8
+- Migration head: b6e0326a7103.
+- WP01: DELIVERED.
+- WP02: IMPLEMENTATION_EXTENDED; ACCEPTANCE_PENDING.
+- WP03: VERIFIED_LOCAL.
+- WP04: VERIFIED_LOCAL_OFFLINE.
+- WP05-A/B: VERIFIED_LOCAL.
+- WP05-C/D/E: NEXT.
+
+### Recovery evidence
+
+The first WP05-A/B implementation passed 22 security
+tests but detected two outdated ORM metadata tests.
+The original 48 changed files were restored.
+
+R01 reinstated the acquisition implementation and
+updated the exact approved table inventory in the two
+historical tests without weakening strict equality.
+
+### Verified results
+
+- ORM correction: 2/2 passed.
+- Final acquisition security tests: 22/22 passed.
+- Full backend regression: 2112 passed.
+- Historical integration skips: 49.
+- S06 disposable PostgreSQL skips: 26.
+- Total skips: 75.
+- Failed: zero.
+- Xfailed: zero.
+- Xpassed: zero.
+- Dependency consistency: PASS.
+- Authorization policy unchanged.
+- Real external execution: disabled.
+- Real evidence coverage: zero.
+
+### Exactly one next action
+
+Execute WP05-C/D/E:
+
+1. Disposable PostgreSQL lifecycle and integration.
+2. Dependency vulnerability and security gate review.
+3. Frontend regression and production build.
+
+Reconcile the 26 skipped S06 PostgreSQL tests with
+the existing disposable lifecycle harness.
+
+Reconcile AC05, AC07 and AC09 against the
+owner-approved contract. Do not waive acceptance gates
+or start another independent WP02 work package.
+
+Preserve canonical worktree, backup stash, dependency
+lockfiles and prior sprint release restrictions.
+
+No shared database migration, live provider execution,
+worker activation, report publication or deployment.
+
+Official S06 acceptance remains pending.
+
+Production remains NOT APPROVED.
+
+All sections below are historical evidence.
+
+---
+
+# AgentOps AI - Current State
+
+## Authoritative S06 WP02-FINAL local checkpoint
+
+Date: 2026-11-25.
+
+- Sprint: S06 - IN_PROGRESS.
+- Mode: FAST-TRACK.
+- Scope: Development MVP only.
+- Branch: feat/s06-search-evidence-citations
+- Main SHA: 322dc2878fac60bb1ac871c8b9b4d184812b78d8
+- Migration head: b6e0326a7103.
+- WP01: DELIVERED.
+- WP02: VERIFIED_LOCAL_PARTIAL.
+- WP03: VERIFIED_LOCAL.
+- WP04: VERIFIED_LOCAL_OFFLINE.
+- WP05: PENDING.
+
+### WP02-FINAL verification
+
+- New focused tests: 31 passed.
+- Affected acquisition regression: 231 passed.
+- Vendor execution boundary implemented.
+- Credential denial and redaction verified.
+- Resolver bounded waiting verified.
+- Numeric socket factory implemented behind authorization.
+- Shared retrieval execution implemented.
+- Existing bounded wire reader preserved.
+- Real authorization policy unchanged.
+- Live requests: zero.
+- Real evidence coverage: zero.
+
+### Exactly one next action
+
+Review WP02-FINAL evidence against the owner-approved
+S06 contract and determine the smallest remaining
+implementation and verification obligations.
+
+Do not repeatedly rebuild the same acquisition modules.
+
+AC05, AC07 and AC09 remain open where the required
+implementation or proof is still incomplete.
+
+Do not falsely count external data as synthetic data.
+Do not activate live external execution.
+
+Preserve all previous security gates and release
+restrictions, canonical worktree, and backup stash.
+
+No shared database migration, worker activation,
+report publication or deployment.
+
+Official acceptance remains pending.
+
+Production remains NOT APPROVED.
+
+All sections below are historical evidence.
+
+---
+
+# AgentOps AI - Current State
+
+## Authoritative S06 WP02-R-R02 local checkpoint
+
+Date: 2026-11-25.
+
+- Sprint: S06 - IN_PROGRESS.
+- Scope: Development MVP only.
+- Mode: FAST-TRACK.
+- Branch: feat/s06-search-evidence-citations
+- Main SHA: 322dc2878fac60bb1ac871c8b9b4d184812b78d8
+- Migration head: b6e0326a7103.
+- WP01: DELIVERED.
+- WP02: VERIFIED_LOCAL_PARTIAL.
+- WP03: VERIFIED_LOCAL.
+- WP04: VERIFIED_LOCAL_OFFLINE.
+- WP05: PENDING.
+
+### WP02-R-R02 verification
+
+- Focused security tests: 51 passed.
+- Affected acquisition regression: 180 passed.
+- Bounded HTTP wire processing: isolated verified.
+- Fixture DNS and redirect integration: verified.
+- Socket ownership: local socket-pair verified.
+- Credential access: default-deny.
+- Live provider requests: zero.
+- Real evidence coverage: zero.
+
+The previous recovery failures occurred before source
+write. R02 is self-contained and does not depend on any
+clipboard content or previously saved script.
+
+### Exactly one next action
+
+Review the exported R02 evidence and reconcile remaining
+AC05, AC07 and AC09 obligations before WP05 acceptance.
+
+Do not represent isolated transport tests as proof of
+full live provider compatibility.
+
+No live API execution without separate owner approval.
+
+Preserve canonical worktree, backup stash, lockfiles,
+historical verification and prior release restrictions.
+
+No deployment, worker activation or report publication.
+
+Official sprint acceptance remains pending.
+
+Production remains NOT APPROVED.
+
+All sections below are historical evidence.
+
+---
+
+# AgentOps AI — Current State
+
+## Authoritative S06 WP04 offline integration checkpoint
+
+Date: 2026-11-25.
+
+- Sprint: S06 — IN_PROGRESS.
+- Scope: Development MVP only.
+- Mode: FAST-TRACK.
+- Contract: v1.0 OWNER APPROVED.
+- Main SHA: 322dc2878fac60bb1ac871c8b9b4d184812b78d8
+- Branch: feat/s06-search-evidence-citations
+- Migration head: b6e0326a7103.
+- WP01: DELIVERED.
+- WP02: VERIFIED_LOCAL_PARTIAL.
+- WP03: VERIFIED_LOCAL.
+- WP04: VERIFIED_LOCAL_OFFLINE.
+- WP05: PENDING.
+
+### Verified WP04 evidence
+
+- WP04-A focused tests: 73 passed.
+- WP04-B focused tests: 32 passed.
+- Affected security scanner: one passed.
+- WP04 PostgreSQL integration: 9 passed.
+- Existing migration and PostgreSQL runner: PASS.
+- Disposable database cleanup: PASS.
+
+Application-owned fixture acquisition, evidence
+persistence, versioned LangGraph and repository-backed
+citation revalidation are locally verified.
+
+Real evidence coverage: zero.
+Publishable reports: zero.
+
+### Exactly one next action
+
+Reconcile the open WP02 obligations AC05, AC07 and AC09
+before WP05 integrated acceptance.
+
+Complete the vendor adapter execution boundary, integrated
+DNS/redirect/pinned transport verification, socket
+ownership, absolute deadlines and remaining security
+requirements within the approved Development MVP scope.
+
+Do not execute live provider requests without separate
+owner authorization.
+
+Preserve all previous security and release gates,
+dependency lockfiles, canonical worktree and backup stash.
+
+No report publication, worker activation or deployment.
+
+Official acceptance remains pending.
+
+Production remains NOT APPROVED.
+
+All sections below are historical evidence.
+
+---
+
+# AgentOps AI — Current State
+
+## Authoritative S06 WP03 local verification checkpoint
+
+Date: 2026-11-25.
+
+- Sprint: S06 — IN_PROGRESS.
+- Scope: Development MVP only.
+- Mode: FAST-TRACK.
+- Contract: v1.0 OWNER APPROVED.
+- Main SHA: 322dc2878fac60bb1ac871c8b9b4d184812b78d8
+- Branch: feat/s06-search-evidence-citations
+- WP01: DELIVERED.
+- WP02: VERIFIED_LOCAL_PARTIAL.
+- WP03: VERIFIED_LOCAL.
+- WP04: PREPARATION NEXT.
+- WP05: PENDING.
+
+### WP03 evidence
+
+- Migration head: b6e0326a7103.
+- Latest WP03 focused tests: 91 passed.
+- Affected agent security scanner: one passed.
+- S06 PostgreSQL integration: 17 passed.
+- Existing migration lifecycle: PASS.
+- Existing PostgreSQL integration harness: PASS.
+- Disposable database cleanup: PASS.
+
+AC11-AC15 have local technical verification evidence.
+
+No development/shared database migration occurred.
+No worker, live provider or report publication is enabled.
+All implementation changes remain uncommitted.
+
+### Remaining WP02 obligations
+
+AC05, AC07 and AC09 remain open.
+
+Actual vendor execution, integrated DNS and redirect
+handling, production-equivalent socket ownership,
+and absolute transport deadlines remain unresolved.
+
+### Exactly one next action
+
+Prepare WP04 versioned offline evidence workflow,
+task-scoped citation validation and candidate reports.
+
+Reconcile WP02 obligations before integrated acceptance.
+Do not treat synthetic evidence as real evidence.
+
+Preserve all existing security and release gates,
+dependency lockfiles, canonical worktree and backup stash.
+
+Production remains NOT APPROVED.
+
+All sections below are historical evidence.
+
+---
+
+# AgentOps AI — Current State
+
+## Authoritative S06 WP03 implementation checkpoint
+
+Date: 2026-11-25.
+
+- Sprint: S06 — IN_PROGRESS.
+- Scope: Development MVP only.
+- Mode: FAST-TRACK.
+- Contract: v1.0 OWNER APPROVED.
+- Main SHA: 322dc2878fac60bb1ac871c8b9b4d184812b78d8
+- Branch: feat/s06-search-evidence-citations
+- WP01: DELIVERED.
+- WP02: VERIFIED_LOCAL_PARTIAL.
+- WP03: NEXT.
+- WP04 and WP05: pending dependencies.
+
+### Verified WP02 evidence
+
+- Latest S06 focused tests: 180 passed.
+- R04 S04/S05 regression: 80 passed.
+- Source and test files: 16.
+- Modified documentation files: 4.
+- Tavily mock adapter: verified.
+- Isolated TLS and HTTP processing: verified.
+- External socket authorization barrier: verified.
+- No live external calls or dependency changes.
+- All changes remain unstaged and uncommitted.
+
+### Remaining WP02 obligations
+
+AC05, AC07 and AC09 remain open.
+
+Actual vendor execution, integrated DNS and redirect
+handling, production-equivalent socket ownership and
+absolute transport deadlines remain unresolved.
+
+Do not claim full WP02 acceptance or production safety.
+
+### Exactly one next action
+
+Implement WP03 Evidence Persistence and Provenance:
+strict evidence contracts, normalization, stable IDs,
+task and execution isolation, repository operations,
+Alembic migration and disposable PostgreSQL tests.
+
+Derive implementation from the existing database
+models, migrations and repository contracts.
+
+No shared database mutation, worker activation,
+task lifecycle changes, live provider calls or
+report publication.
+
+Preserve the single canonical workspace, backup stash,
+dependency lockfiles, disabled-by-default authentication,
+strict Authlib security XFAIL and all release gates.
+
+Production remains NOT APPROVED.
+
+All sections below are historical evidence.
+
+---
+
+# AgentOps AI — Current State
+
+## Authoritative S06 provider authorization checkpoint
+
+Date: 2026-11-25.
+
+- Sprint: S06 — IN_PROGRESS, WP02.
+- Contract: v1.0 OWNER APPROVED.
+- Scope: Development MVP only.
+- Mode: FAST-TRACK.
+- WP01: DELIVERED.
+- Main SHA: 322dc2878fac60bb1ac871c8b9b4d184812b78d8
+- Branch: feat/s06-search-evidence-citations.
+- WP02 hardened offline tests: 127 passed.
+- Historical R04 S04/S05 regression: 80 passed.
+- Tavily provider selection: OWNER APPROVED.
+- Basic search and HTTPX REST adapter: APPROVED.
+- Secure transport and isolated tests: APPROVED.
+- Actual vendor and transport implementation: PENDING.
+- Live external execution: NOT AUTHORIZED.
+- Production: NOT APPROVED.
+
+### Exactly one next action
+
+Implement the approved Tavily REST adapter and secure
+transport, with external execution disabled and
+isolated security verification.
+
+Preserve all previous security and release gates.
+
+All sections below are historical evidence.
+
+---
+
+# AgentOps AI — Current State
+
+## Authoritative S06 WP02 offline checkpoint
+
+Date: 2026-11-25.
+
+- Sprint S06: IN_PROGRESS — WP02.
+- Contract v1.0: OWNER APPROVED.
+- Mode: FAST-TRACK.
+- Scope: Development MVP only.
+- Production authorization: NOT APPROVED.
+
+### Delivered baseline
+
+- WP01: DELIVERED.
+- PR #21: MERGED.
+- Main SHA: 322dc2878fac60bb1ac871c8b9b4d184812b78d8
+- PR CI 45592928446: 4/4 PASS.
+- Main CI 45593289063: 4/4 PASS.
+
+### Current implementation
+
+Branch: feat/s06-search-evidence-citations
+
+- WP02 offline acquisition foundation: implemented.
+- R04 focused tests: 105 passed.
+- R04 S04/S05 security tests: 80 passed.
+- Hardened S06 focused tests: 127 passed.
+- New runtime Python files: 8.
+- New test Python files: 2.
+- Modified documentation files: 3.
+- No dependency or migration changes.
+- Changes remain unstaged and uncommitted.
+
+### Unresolved acceptance gates
+
+- AC05: vendor selection and integration.
+- AC07: actual transport-level security verification.
+- Actual network streaming and hard interruption
+  are not verified.
+- Task-scoped evidence persistence is WP03 scope.
+- Integrated citation validation is WP04 scope.
+- Final regression and delivery are pending.
+
+### Exactly one next action
+
+Review the hardened WP02 evidence and resolve the
+search vendor and actual transport verification gates.
+
+Do not activate live network access, workers,
+report publication or production deployment.
+
+Preserve authentication disabled by default,
+strict Authlib security XFAIL, dependency lockfiles,
+the single canonical worktree and backup stash.
+
+All sections below retain historical evidence.
+
+---
+
 # AgentOps AI — Current State
 
 ## Authoritative S06 startup checkpoint

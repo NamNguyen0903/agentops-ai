@@ -44,13 +44,19 @@ expected_tables = {
     "oidc_login_transactions",
     "research_tasks",
     "queue_control",
+    "research_evidence",
 }
 
-revision = "94e4c1a20902"
-if phase == "research":
+revision = "b6e0326a7103"
+if phase == "queue":
+    expected_tables.remove("research_evidence")
+    revision = "94e4c1a20902"
+elif phase == "research":
+    expected_tables.remove("research_evidence")
     expected_tables.remove("queue_control")
     revision = "83d3b0f10901"
 elif phase == "identity":
+    expected_tables.remove("research_evidence")
     expected_tables.remove("queue_control")
     expected_tables.remove("research_tasks")
     revision = "0291ce4556fe"
@@ -94,7 +100,7 @@ try:
             assert tables == set(), tables
             assert current_revision is None
 
-        elif phase in {"upgraded", "research", "identity"}:
+        elif phase in {"upgraded", "queue", "research", "identity"}:
             assert tables == expected_tables, tables
             assert current_revision == revision
 
@@ -126,13 +132,43 @@ try:
                     ).scalar_one()
 
                     expected = (
-                        table_name != "queue_control"
-                        or privilege in {"SELECT", "UPDATE"}
+                        privilege in {"SELECT", "INSERT"}
+                        if table_name == "research_evidence"
+                        else (
+                            table_name != "queue_control"
+                            or privilege in {"SELECT", "UPDATE"}
+                        )
                     )
                     assert permitted == expected, (
                         f"Unexpected {privilege} permission "
                         f"on app.{table_name}"
                     )
+
+            if "research_evidence" in expected_tables:
+                owner = connection.scalar(text(
+                    "SELECT tableowner FROM pg_tables "
+                    "WHERE schemaname = 'app' "
+                    "AND tablename = 'research_evidence'"
+                ))
+
+                assert owner == "agentops_migrator"
+
+                for privilege in (
+                    "TRUNCATE", "REFERENCES", "TRIGGER"
+                ):
+                    allowed = connection.scalar(
+                        text(
+                            "SELECT has_table_privilege("
+                            "'agentops_app', "
+                            "'app.research_evidence', "
+                            ":privilege)"
+                        ),
+                        {"privilege": privilege},
+                    )
+
+                    assert not allowed
+
+                print("PASS: S06 evidence ownership and grants")
 
             if "queue_control" in expected_tables:
                 rows = connection.execute(text(
@@ -210,7 +246,20 @@ python -m alembic -c alembic.ini upgrade head
 check_state upgraded
 python -m alembic -c alembic.ini check
 
+echo "=== S06 Evidence-only migration lifecycle ==="
+
+python -m alembic -c alembic.ini downgrade 94e4c1a20902
+check_state queue
+
+python -m alembic -c alembic.ini upgrade head
+check_state upgraded
+python -m alembic -c alembic.ini check
+
+echo "PASS: S06 evidence-only downgrade and upgrade"
+
 echo "=== 2a. Queue-only downgrade preserves WP01 schema ==="
+python -m alembic -c alembic.ini downgrade 94e4c1a20902
+check_state queue
 python -m alembic -c alembic.ini downgrade 83d3b0f10901
 check_state research
 python -m alembic -c alembic.ini upgrade head
@@ -259,3 +308,20 @@ python -m pytest -p no:cacheprovider -q --tb=short \
     tests/test_research_runtime_postgres.py
 
 echo "PASS: PostgreSQL integration tests"
+
+echo "=== S06 Evidence PostgreSQL Integration ==="
+
+python -m pytest -p no:cacheprovider -q --tb=short tests/test_s06_evidence_postgres.py
+
+echo "PASS: S06 evidence PostgreSQL integration tests"
+
+echo "=== S06 Workflow PostgreSQL Integration ==="
+
+export LANGSMITH_TRACING=false
+export LANGSMITH_TRACING_V2=false
+export LANGCHAIN_TRACING=false
+export LANGCHAIN_TRACING_V2=false
+
+python -m pytest -p no:cacheprovider -q --tb=short tests/test_s06_workflow_postgres.py
+
+echo "PASS: S06 workflow PostgreSQL integration tests"

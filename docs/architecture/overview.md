@@ -1,5 +1,151 @@
 # AgentOps AI — System Architecture
 
+> **Active S06 amendment — S06-AMEND-001:**
+> S06 Contract v1.1 is approved for the offline
+> Development MVP deliverable only. The approved
+> amendment and revised milestone allocation supersede
+> conflicting historical S06 scope descriptions.
+> Original product requirements, security gates,
+> and historical verification remain preserved.
+> External execution remains denied.
+> Production remains NOT APPROVED.
+
+## S06-AMEND-001 — Approved Contract v1.1
+
+Recorded at: 2026-11-25T12:36:32.255498+00:00.
+
+Status: APPROVED — Development MVP only.
+
+S06 deliverable: Offline Evidence and Citation Foundation.
+
+Authoritative contract and acceptance matrices:
+docs/sprints/S06.md.
+
+- Original v1.0 acceptance: 18 VERIFIED, 4 PARTIAL,
+  1 PENDING_CI, 1 PENDING_OWNER.
+- Effective v1.1 local assessment: 22 VERIFIED,
+  1 PENDING_CI, 1 PENDING_OWNER.
+- Original security ledger: 13 VERIFIED, 3 PARTIAL.
+- Partial security gates: SG06, SG08 and SG10.
+- Official final owner acceptance: 0/24, pending closeout.
+- Deferred obligations: six, all OPEN.
+- Runtime source and tests unchanged.
+- Live execution denied.
+
+| ID | Obligation | Original traceability | Receiving milestone | Status |
+| --- | --- | --- | --- | --- |
+| D06-01 | Provider interoperability | AC05 | S08 | OPEN |
+| D06-02 | Secure connector verification | AC07, SG06, SG08 | S07 | OPEN |
+| D06-03 | External execution budgets and deadlines | AC09, SG10 | S07 | OPEN |
+| D06-04 | Actual provider usage and cost accounting | AC05, AC09, SG10 | S08 | OPEN |
+| D06-05 | Real evidence integration | AC05 and real-data obligations of AC11-AC20 | S08 | OPEN |
+| D06-06 | Integrated external security acceptance | AC21, SG01-SG16 | S08 | OPEN |
+
+### Mandatory release restrictions
+
+This amendment does not authorize live provider
+execution, actual credential access, paid inference,
+paid search, PAYG, shared database migrations,
+worker activation, real-user authentication,
+report publication or production deployment.
+
+External execution remains unconditionally denied
+throughout S06 delivery.
+
+All S02-S06 security gates remain mandatory.
+SG06, SG08 and SG10 remain PARTIAL in the original
+security ledger until successor evidence resolves
+their outstanding obligations.
+
+A controlled live smoke test requires separate
+explicit authorization after applicable transport,
+budget and security prerequisites have been verified.
+
+Routine external execution requires completed
+applicable security verification and its own
+explicit activation approval.
+
+Preserve the strict Authlib security XFAIL,
+approved dependency manifests, canonical worktree
+and all prior release restrictions.
+
+Production remains NOT APPROVED.
+
+### Architecture scope reconciliation
+
+S06 implements an offline evidence foundation in
+the existing modular monolith.
+
+The versioned S06 graph consumes validated synthetic
+evidence, not unrestricted external provider output.
+
+Application-owned acquisition services enforce
+permissions and bounded operations outside the graph.
+
+The application evidence repository uses scoped
+owner, task and isolated execution identifiers.
+
+Isolated execution identifiers do not establish
+durable worker fencing or recovery semantics.
+
+Repository scope checks do not constitute database
+row-level security.
+
+S07 must establish authorized durable execution,
+recovery, lease/fencing behavior and bounded
+acquisition under its separately approved contract.
+
+D06-02 and D06-03 are S07 obligations.
+
+S08 must reconcile real provider interoperability,
+actual usage accounting, real evidence integration
+and external security acceptance.
+
+D06-01, D06-04, D06-05 and D06-06 are S08 obligations.
+
+The original architecture and ADR boundaries remain
+in force. No external activation, new dependency,
+shared schema mutation or worker execution is
+authorized by this documentation amendment.
+
+### Approved revised milestone allocation
+
+| Sprint | Deliverable |
+| --- | --- |
+| S00 | Product planning and architecture — CLOSED |
+| S01 | Application foundation — CLOSED |
+| S02 | Database and authentication — CLOSED |
+| S03 | Research task API and dashboard — CLOSED |
+| S04 | LangGraph workflow baseline — CLOSED |
+| S05 | Specialized agent nodes — CLOSED |
+| S06 | Offline Evidence and Citation Foundation |
+| S07 | Worker Reliability and Secure Acquisition |
+| S08 | Live Research Integration, Evaluation and Security |
+| S09 | CI/CD and AWS Staging Preparation |
+
+The project retains ten planned sprints, S00-S09.
+The one-day sprint target is subject to workload
+review and is not a completion guarantee.
+
+S07 retains its original reliability, deadline,
+recovery and usage-budget objectives, and receives
+D06-02 and D06-03.
+
+S08 retains its original evaluation, integration and
+security objectives, and receives D06-01, D06-04,
+D06-05 and D06-06.
+
+S08 external execution depends on applicable S07
+connector and execution verification.
+
+S09 staging readiness depends on applicable S07
+and S08 delivery, operational and security evidence.
+
+Deferred obligations are mandatory. They must not
+be discarded or further deferred without a recorded
+owner-approved amendment.
+
+
 | Field | Value |
 |---|---|
 | Document version | 1.1 |

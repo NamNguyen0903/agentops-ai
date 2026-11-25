@@ -1,5 +1,99 @@
 # ADR-0004 — S06 Scoped Architecture Amendment
 
+> **Active S06 amendment — S06-AMEND-001:**
+> S06 Contract v1.1 is approved for the offline
+> Development MVP deliverable only. The approved
+> amendment and revised milestone allocation supersede
+> conflicting historical S06 scope descriptions.
+> Original product requirements, security gates,
+> and historical verification remain preserved.
+> External execution remains denied.
+> Production remains NOT APPROVED.
+
+## S06-AMEND-001 — Approved Contract v1.1
+
+Recorded at: 2026-11-25T12:36:32.255498+00:00.
+
+Status: APPROVED — Development MVP only.
+
+S06 deliverable: Offline Evidence and Citation Foundation.
+
+Authoritative contract and acceptance matrices:
+docs/sprints/S06.md.
+
+- Original v1.0 acceptance: 18 VERIFIED, 4 PARTIAL,
+  1 PENDING_CI, 1 PENDING_OWNER.
+- Effective v1.1 local assessment: 22 VERIFIED,
+  1 PENDING_CI, 1 PENDING_OWNER.
+- Original security ledger: 13 VERIFIED, 3 PARTIAL.
+- Partial security gates: SG06, SG08 and SG10.
+- Official final owner acceptance: 0/24, pending closeout.
+- Deferred obligations: six, all OPEN.
+- Runtime source and tests unchanged.
+- Live execution denied.
+
+| ID | Obligation | Original traceability | Receiving milestone | Status |
+| --- | --- | --- | --- | --- |
+| D06-01 | Provider interoperability | AC05 | S08 | OPEN |
+| D06-02 | Secure connector verification | AC07, SG06, SG08 | S07 | OPEN |
+| D06-03 | External execution budgets and deadlines | AC09, SG10 | S07 | OPEN |
+| D06-04 | Actual provider usage and cost accounting | AC05, AC09, SG10 | S08 | OPEN |
+| D06-05 | Real evidence integration | AC05 and real-data obligations of AC11-AC20 | S08 | OPEN |
+| D06-06 | Integrated external security acceptance | AC21, SG01-SG16 | S08 | OPEN |
+
+### Mandatory release restrictions
+
+This amendment does not authorize live provider
+execution, actual credential access, paid inference,
+paid search, PAYG, shared database migrations,
+worker activation, real-user authentication,
+report publication or production deployment.
+
+External execution remains unconditionally denied
+throughout S06 delivery.
+
+All S02-S06 security gates remain mandatory.
+SG06, SG08 and SG10 remain PARTIAL in the original
+security ledger until successor evidence resolves
+their outstanding obligations.
+
+A controlled live smoke test requires separate
+explicit authorization after applicable transport,
+budget and security prerequisites have been verified.
+
+Routine external execution requires completed
+applicable security verification and its own
+explicit activation approval.
+
+Preserve the strict Authlib security XFAIL,
+approved dependency manifests, canonical worktree
+and all prior release restrictions.
+
+Production remains NOT APPROVED.
+
+### ADR-0004 offline scope clarification
+
+The versioned S06 workflow remains fixture-only.
+
+Graph nodes cannot directly perform external network
+I/O, database writes, worker lifecycle mutations or
+publication.
+
+The deterministic writer operates exclusively on
+approved synthetic evidence.
+
+Structural citation validation does not establish
+semantic grounding against actual external sources.
+
+D06-05 governs real evidence workflow integration.
+D06-06 governs integrated external security.
+
+Existing S04/S05 graph boundaries, invocation limits
+and repair restrictions remain unchanged.
+
+No new graph execution permission is granted.
+
+
 Date: 2026-11-25.
 
 Status: ACCEPTED — Development MVP only.
@@ -564,5 +658,53 @@ WP04-WP05 remain NOT AUTHORIZED.
 No live providers, real retrieval, lifecycle mutation,
 publication, worker activation or production deployment
 are authorized.
+
+Production remains NOT APPROVED.
+
+
+## S06 WP04 offline application integration
+
+Date: 2026-11-25.
+
+Status: Development MVP — offline locally verified.
+
+Workflow version: s06.evidence.v1.
+
+The application owns orchestration and repository access.
+The graph receives a bounded evidence snapshot and has
+no direct database or network I/O.
+
+A deterministic extractive writer produces synthetic
+claims only from approved evidence records. Every claim
+is checked against its scoped evidence ID, content hash
+and exact retained excerpt.
+
+The service re-reads the scoped inventory before
+returning its validated outcome.
+
+The minimum fixture threshold is two distinct retrieved
+URLs. This does not establish real source independence,
+research relevance or semantic grounding.
+
+Graph recursion limit: 12.
+Application cooperative workflow deadline: 30 seconds.
+Model calls: zero.
+Repair calls: zero.
+Persistent graph checkpoints: none.
+
+Tracing is denied when enabled through the checked
+environment flags and explicitly suppressed during
+the service-owned graph invocation.
+
+WP04-A focused tests: 73 passed.
+WP04-B focused tests: 32 passed.
+Workflow PostgreSQL integration: 9 passed.
+
+Synthetic reports remain nonpublishable.
+No worker, API route or live provider activation.
+
+Point-in-time validation does not authorize later
+publication. Durable execution fencing, hard deadlines
+and real evidence integration remain unresolved.
 
 Production remains NOT APPROVED.
