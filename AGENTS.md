@@ -1,3 +1,153 @@
+# AgentOps AI — Active S07 Engineering Policy Amendment
+
+Recorded at: 2026-11-25T15:19:46.940631+00:00.
+
+**S07 Contract v1.0 — OWNER APPROVED.**
+
+Authoritative contract: `docs/sprints/S07.md`.
+
+Immediate authorized package: WP01 documentation only.
+
+> APPROVE S07 CONTRACT v1.0 — Development MVP only. Approve WP01–WP06, AC01–AC36, S07-SG01–S07-SG20, AD07-01–AD07-12 and proposed worker defaults. Preserve all existing security and release restrictions. Dependency manifest changes require separate approval. Authorize WP01 documentation execution only as the immediate next package. Continue FAST-TRACK. Production remains NOT APPROVED.
+
+## Reconciled S06 closure
+
+- S00–S06: CLOSED.
+- S06 Contract v1.1, S06-AMEND-001.
+- Scope: Offline Development MVP only.
+- Official S06 acceptance: 24/24.
+- Cumulative delivery CI: 16/16 PASS.
+- Implementation PR: #22.
+- Final closeout PR: #23.
+- Final main CI: 45619735364.
+- Last reconciled main: `1414c65df805d9980a84472d6b2ae54d25034f52`.
+- Backup stash: `13ab03b82e68364c8f4f022821e12dca5ec7b731`.
+- Single canonical workspace: `/Users/namnguyen/agentops-ai`.
+
+S06 binding closure conditions were satisfied according to
+the final closure evidence reconciled during S07 startup.
+Historical CLOSEOUT_PENDING text remains preserved and does
+not reopen S06.
+
+Final closure evidence SHA256:
+
+`d1fea7db66eeaa9a304fda8711cf97b1f4d7e0a5b7c94d48e8173f6b15962c02`
+
+Original S06 v1.0 acceptance ledger remains historical.
+Original S06 security ledger remains 13 VERIFIED, 3 PARTIAL.
+SG06, SG08 and SG10 remain PARTIAL at S07 startup.
+No security gates are waived.
+
+
+## Effective architecture authority
+
+- ADR-0001: ACCEPTED; preserve modular monolith.
+- ADR-0002: ACCEPTED — Development MVP only.
+- ADR-0003: ACCEPTED for scoped S07 durable execution development.
+- ADR-0004: Existing ACCEPTED scope preserved.
+  Application-owned context integration must respect its
+  approved graph and agent boundaries.
+- ADR-0005: NOT APPROVED.
+- ADR-0006: PARTIALLY ACCEPTED, expanded by scoped S07 decisions.
+- ADR-0007: PARTIALLY ACCEPTED, expanded by scoped S07 decisions.
+
+Unrelated open decisions are not approved.
+Architecture approval is not worker activation authorization.
+
+
+## Mandatory security and release boundaries
+
+- Production remains NOT APPROVED.
+- External execution remains unconditionally denied.
+- Authentication remains disabled by default.
+- Preserve the strict Authlib security XFAIL.
+- No actual provider credentials or live provider API calls.
+- No paid inference, paid search or PAYG.
+- No shared database migrations.
+- No worker activation outside isolated, authorized test scope.
+- No real-user authentication, report publication or deployment.
+- No security gate waiver.
+- Preserve all S02–S06 security and release requirements.
+- Dependency manifest and lockfile changes require separate approval.
+- Preserve NO_REQUIRED_CHECKS_REPORTED governance limitation.
+- CI success does not establish enforced branch protection.
+- Retain the governance review obligation for S09.
+- Preserve one canonical worktree and the unrelated backup stash.
+- No history rewriting, force push, destructive cleanup or bypass.
+- Owner controls commits, pushes, merges, deployment and material
+  architecture decisions.
+- No autonomous repository modifications by the assistant.
+- Do not repeat completed local tests without changed source,
+  environment or verification scope.
+- Mandatory feature/PR and merged-main CI are not waived.
+
+Approval of S07 architecture establishes permitted development
+scope, not implemented behavior or production readiness.
+
+
+## Mandatory successor obligations
+
+| ID | Obligation | Sprint | Status |
+| --- | --- | --- | --- |
+| D06-01 | Provider interoperability | S08 | OPEN |
+| D06-02 | Secure connector verification | S07 | OPEN |
+| D06-03 | External execution budgets and deadlines | S07 | OPEN |
+| D06-04 | Actual provider usage and cost accounting | S08 | OPEN |
+| D06-05 | Real evidence integration | S08 | OPEN |
+| D06-06 | Integrated external security acceptance | S08 | OPEN |
+
+### D06-02 acceptance requirements
+
+- Exercise actual DNS, numeric connection, peer verification,
+  TLS and HTTP execution path.
+- Verify adversarial DNS answers and destination binding.
+- Verify certificate trust, hostname mismatch, redirects and cleanup.
+- Do not replace the entire connector in correctness tests.
+- Preserve unconditional default-deny external authorization.
+
+### D06-03 acceptance requirements
+
+- Integrate acquisition budgets with application-owned execution context.
+- Preserve cumulative search, retrieval and retry accounting.
+- Enforce operation and running-task deadlines.
+- Verify cancellation, timeout and recovery semantics.
+- Prevent retry or recovery from resetting applicable budgets.
+- Fail closed on incomplete or indeterminate execution.
+- Reconcile hard cancellation with verified adapter capabilities.
+
+### Dependency preservation
+
+- D06-01 depends on D06-02 and D06-03.
+- D06-04 depends on D06-01 and D06-03.
+- D06-05 depends on D06-01 through D06-04.
+- D06-06 depends on D06-01 through D06-05.
+
+All six obligations remain OPEN until their actual acceptance
+requirements are verified.
+
+Do not silently defer D06-02 or D06-03.
+S08 controlled live smoke tests require separate authorization.
+S08 integrated external security acceptance remains mandatory.
+
+
+## Exactly one next action
+
+Review the locally prepared WP01 documentation changes
+and their evidence before staging or committing.
+
+WP01 delivery requires Owner-controlled commit, push,
+PR review, mandatory CI, merge and merged-main CI.
+
+WP02 must not begin before WP01 delivery is verified.
+
+No runtime implementation or activation is authorized
+by the immediate WP01 execution package.
+
+
+All sections below are retained historical policy. This active S07 amendment supersedes conflicting historical sprint status and scoped authorization statements. Nonconflicting requirements remain mandatory.
+
+---
+
 # AgentOps AI — Active S06 Engineering Policy Amendment
 
 ## Authoritative S06 WP05-H closeout

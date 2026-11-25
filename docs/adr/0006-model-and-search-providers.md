@@ -1,3 +1,104 @@
+# ADR-0006 — S07 scoped acceptance amendment
+
+Recorded at: 2026-11-25T15:19:46.940631+00:00.
+
+**Status: PARTIALLY ACCEPTED — expanded S07 scope.**
+
+Authority: Owner-approved S07 Contract v1.0.
+
+AD07-07, AD07-08, AD07-09, AD07-11 and AD07-12 apply within the approved S07 scope.
+
+## Secure acquisition architecture
+
+Reuse the existing S06 acquisition implementation:
+URL/IP policy, resolver, pinned transport, bounded HTTP,
+integrated retrieval, fixed-origin provider transport and
+external authorization barriers.
+
+Do not rewrite completed acquisition modules without a
+source-derived reason.
+
+Verify the actual connector path using isolated test networks:
+DNS resolution, numeric TCP connection, connected peer checks,
+TLS trust, hostname validation, HTTP exchange and redirect
+revalidation.
+
+Exercise unsafe DNS answers, rebinding attempts, mismatched
+peers, untrusted certificates, hostname mismatches, unsafe
+redirects, malformed HTTP and cleanup failure paths.
+
+Do not substitute the entire connector in correctness tests.
+
+Keep controlled test certificates, test-only authorization seams
+and isolated endpoint configuration outside normal runtime authority.
+
+Preserve response bounds and existing URL, DNS, TLS and HTTP
+policy. No production policy exceptions for test convenience.
+
+Review HTTPX runtime availability against actual runtime
+manifests and supported images. Do not add, replace or unlock
+dependencies without separate Owner approval.
+
+External authorization remains unconditionally denied.
+
+
+## Application-owned execution context
+
+Integrate acquisition accounting with durable task and attempt
+authority, not with model-owned state or fresh per-attempt counters.
+
+Reserve applicable capacity before dispatch:
+
+1. Validate task, attempt, fencing generation and lease.
+2. Validate task and operation deadlines.
+3. Validate remaining cumulative budget.
+4. Persist reservation transactionally.
+5. Commit before executing the operation.
+6. Execute outside the database transaction.
+7. Record outcome with current ownership verification.
+
+Conservatively retain consumed/reserved capacity across crashes.
+Do not automatically refund uncertain dispatch reservations.
+Do not retry an operation with indeterminate execution status.
+
+Count retries toward all applicable cumulative ceilings.
+Recovery cannot reset task budgets or running deadlines.
+
+Use authoritative durable deadline timestamps and appropriately
+bounded local monotonic timing. Lease renewal does not extend
+the task deadline.
+
+Maintain the distinction between caller timeout,
+cooperative cancellation, local termination and remote effects.
+
+Evaluate isolated process execution where synchronous adapters
+lack reliable interruption capabilities. A specific isolation
+implementation is not selected merely by this evaluation.
+
+Cancelling a future or coroutine does not prove that its
+underlying synchronous operation has stopped.
+
+Fail closed when completion, cancellation or execution state
+cannot be established. Never claim hard cancellation without
+verified adapter capabilities.
+
+Actual provider billing and usage reconciliation remain D06-04.
+Only deterministic model/token/estimated-cost verification
+is authorized in S07.
+
+
+D06-02 and D06-03 remain OPEN pending verification.
+
+Preserve previous vendor decisions and restrictions.
+
+No live provider compatibility or billing claim.
+
+Production remains NOT APPROVED.
+
+Previous ADR content remains preserved below.
+
+---
+
 # ADR-0006 — Model and Search Providers
 
 > **Active S06 amendment — S06-AMEND-001:**
