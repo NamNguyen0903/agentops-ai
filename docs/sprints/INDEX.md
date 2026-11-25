@@ -1,6 +1,6 @@
 # AgentOps AI — Authoritative Sprint Roadmap
 
-## Active roadmap — 2026-11-24, S05-WP01 FINALIZING
+## Active roadmap — 2026-11-25, S05-WP04 DESIGN_IN_PROGRESS
 
 **Scope:** Development MVP only.
 
@@ -13,7 +13,7 @@
 | S02 | CLOSED — 11/11 accepted | [S02 closeout](S02_CLOSEOUT.md) |
 | S03 | CLOSED — 12/12 accepted | [S03 closeout](S03_CLOSEOUT.md) |
 | S04 | CLOSED — Development MVP only | [S04 contract](S04.md), [S04 closeout](S04_CLOSEOUT.md) |
-| S05 | IN_PROGRESS — WP01 FINALIZING | [S05 Contract v1.0](S05.md) |
+| S05 | IN_PROGRESS — WP04 AUTHORIZED | [S05 Contract v1.0](S05.md) |
 | S06-S09 | PLANNED | Original roadmap retained below |
 
 S04 final-state synchronization PR #15 is MERGED.
@@ -38,42 +38,679 @@ Approved scope: Development MVP only.
 
 | Work package | Status |
 |---|---|
-| WP01 — Contract and Architecture | DELIVERY_VERIFIED |
-| WP02 — Typed Contracts and Fixture Adapters | NOT_STARTED |
-| WP03 — Specialized Workflow Nodes | NOT_STARTED |
-| WP04 — Security and Execution Guards | NOT_STARTED |
-| WP05 — Integration, CI and Closeout | NOT_STARTED |
+| WP01 — Contract and Architecture | DELIVERED |
+| WP02 — Typed Contracts and Fixture Adapters | LOCAL_ACCEPTED; DELIVERY_PENDING |
+| WP03 — Specialized Workflow Nodes | LOCAL_ACCEPTED; DELIVERY_PENDING |
+| WP04 — Security and Execution Guards | AUTHORIZED; DESIGN_IN_PROGRESS |
+| WP05 — Integration, CI and Closeout | NOT_AUTHORIZED |
 
-Technical work packages delivered: 1/5.
+Work packages delivered: 1/5.
 
-Technical acceptance criteria verified: 2/16.
+Acceptance criteria accepted: 2/16.
 
-Official final acceptance remains pending checkpoint
-synchronization delivery.
-
-WP01-01 through WP01-06 are VERIFIED.
-WP01-07A through WP01-07F are VERIFIED.
-WP01-07G1 synchronization branch is VERIFIED.
-
-Verified WP01 delivery evidence:
+WP01 final acceptance and synchronization: COMPLETE.
 
 - PR #16: MERGED.
-- Merge checkpoint: `cae5d35bdfb955866560c763fb41c5714e60c41d`.
-- PR CI 45425694993: 4/4 PASS.
-- Main CI 45426129070: 4/4 PASS.
+- PR #17: MERGED.
+- Final Main CI 45428619901: 4/4 PASS.
+- WP01 required CI job results across four runs: 16/16 PASS.
+- Final WP01 main checkpoint:
+  `a7f485e3b57e5d898c3a29bf76c4d5c96ae035c1`.
 
-Only WP01 final documentation reconciliation is authorized.
+WP02 owner authorization: APPROVED on 2026-11-24.
+Authorized criteria: AC03-AC05.
 
-After synchronization delivery verification, WP01 is
-eligible for DELIVERED status and AC01-AC02 acceptance.
+Active branch: `feat/s05-specialized-workflow`.
 
-WP02 requires separate explicit owner authorization.
+WP02-01 and WP02-02 are VERIFIED.
 
-Runtime implementation remains NOT AUTHORIZED.
+WP02-03 typed contracts are VERIFIED_LOCALLY.
 
-No live model providers, real retrieval, worker
-activation, publication or production deployment
-are approved.
+WP02-04 validation and immutable context are
+VERIFIED_LOCALLY.
+
+WP02-04C2 documentation checkpoint: PASS.
+
+WP02-05 deterministic fixture adapters are
+VERIFIED_LOCALLY.
+
+WP02-05C ambiguous replacement marker recovery: PASS.
+
+WP02-05D1 adapter integration verification: PASS.
+
+All three specialized offline fixture adapters
+are verified locally.
+
+Adapter integration tests: 32 passed.
+
+WP02-05D2 documentation checkpoint: PASS.
+
+WP02-06 contract and fixture negative tests are
+VERIFIED_LOCALLY.
+
+WP02-06A signed-zero integrity tests: 16 passed.
+WP02-06B additional contract boundaries: 39 passed.
+WP02-06C fixture negative tests: 42 passed.
+
+Consolidated WP02-06 tests: 97 passed.
+WP02-06 focused suite: 458 passed.
+
+WP02-06D-R1 documentation diagnostic: PASS.
+
+WP02-06D-R2 documentation checkpoint: PASS.
+
+WP02-07A/B/C/D regression and security verification:
+PASS.
+
+WP02-07 is VERIFIED_LOCALLY.
+
+Seven backend and two Authlib hash lockfiles preserved.
+
+SEC-03 and SEC-04 remediated within reproduced cases.
+
+Diagnostic replay: 62 safe rejections, zero findings.
+
+Security tests: 74 passed.
+S05 focused tests: 532 passed.
+S04 regression: 74 passed.
+Combined regression: 606 passed.
+
+Full backend regression:
+775 collected, 726 passed, 49 approved opt-in skips.
+Zero failures, errors or XFAILs.
+
+WP02-07E initial documentation preparation stopped
+before writes on a literal marker assertion.
+
+WP02 main tickets verified locally: 8/8.
+WP02 local completion: OWNER ACCEPTED, 2026-11-25.
+
+WP02-07E-R1 execution and evidence review: PASS.
+
+WP02-07E-R2 documentation review: PASS.
+
+WP02-08A-R1 diagnostic: 35/36 checks passed.
+WP02-08A-R2 corrected verification: 36/36 PASS.
+
+AC03-AC05 local technical evidence: PASS.
+
+WP02-08A Tech Lead review: ACCEPTED.
+
+WP02-08B initial AC inventory assertion stopped
+documentation preparation before repository writes.
+
+WP02-08B-R1 uses section-aware AC validation.
+Final documentation review: PASS.
+
+WP02 integrated delivery remains pending PR B.
+No official AC03-AC05 acceptance is claimed.
+
+WP03 owner authorization: APPROVED, 2026-11-25.
+Authorized criteria: AC06-AC09 only.
+
+WP03-01A baseline: VERIFIED.
+WP03-01B1 engineering authorization: VERIFIED.
+WP03-01B2 technical design: VERIFIED.
+WP03-01B3 final reconciliation: VERIFIED.
+
+WP03-02A interface compatibility: VERIFIED.
+WP03-02B Planner implementation: VERIFIED.
+WP03-02B-R1 manifest recovery: VERIFIED.
+WP03-02C testing and source review: VERIFIED.
+
+Planner unit tests: 34 passed.
+Security tests: 74 passed.
+S05 focused tests: 566 passed.
+S04 regression: 74 passed.
+Combined regression: 640 passed.
+
+AC06 Planner component evidence: PASS locally.
+Official AC06 acceptance remains PENDING.
+
+WP03-02D documentation review: PASS.
+
+WP03-03A Research implementation: VERIFIED.
+WP03-03B testing and source review: VERIFIED.
+
+Research unit tests: 41 passed.
+Current S05 focused regression: 607 passed.
+Current combined regression: 681 passed.
+
+All six execution exit codes: zero.
+Test identities reconciled.
+
+AC07 Research component evidence: PASS locally.
+Official AC07 acceptance remains PENDING.
+
+WP03-03C documentation review: PASS.
+
+WP03-04A Evidence implementation: VERIFIED.
+WP03-04B testing and source review: VERIFIED.
+
+Evidence unit tests: 65 passed.
+Fixture availability cases: 16 passed.
+Invalid state cases: 28 passed.
+Tampered evidence cases: 11 passed.
+Routing revalidation cases: 6 passed.
+
+Current S05 focused regression: 672 passed.
+Current combined regression: 746 passed.
+
+All seven execution exit codes: zero.
+Test identities reconciled.
+
+Evidence Validation component evidence: PASS locally.
+Official AC07-AC09 acceptance remains PENDING.
+
+Actual LangGraph Writer bypass was pending
+at this historical Evidence checkpoint and was
+subsequently verified in WP03-06D.
+
+WP03-04C documentation review: PASS.
+
+WP03-05A Report Validator: VERIFIED.
+
+Historical initial result: 49 passed, 3 failed.
+Root cause: UUID_COMPARATOR_INCOMPATIBILITY.
+Targeted correction and recovery: VERIFIED.
+
+Original three failed tests recovered.
+Eight new UUID regression tests passed.
+Report Validator: 60 passed.
+
+WP03-05B Writer implementation: VERIFIED.
+WP03-05C node testing: VERIFIED.
+WP03-05D combined regression: VERIFIED.
+
+Writer and Report Validation: 61 passed.
+Node-level combined regression: 195 passed.
+
+Current S05 focused regression: 793 passed.
+Current S04 regression: 74 passed.
+Current combined regression: 867 passed.
+
+All previous test identities preserved.
+Exactly 61 new Writer test identities.
+
+AC08 component evidence: PASS locally.
+Official AC08 acceptance remains PENDING.
+
+Mixed-error security classification requires
+hardening before repair activation.
+
+WP03-05E documentation review: PASS.
+
+WP03-06A Outcome implementation: VERIFIED.
+WP03-06B Outcome testing: VERIFIED.
+Outcome tests: 63 passed.
+Terminal component regression: 258 passed.
+
+WP03-06C LangGraph construction: VERIFIED.
+WP03-06D actual graph execution: VERIFIED.
+Actual LangGraph workflow tests: 35 passed.
+Actual Writer bypass: 15 passed.
+Graph component regression: 293 passed.
+
+WP03-06E combined regression: VERIFIED.
+
+Latest S05 focused regression: 891 passed.
+Latest S04 regression: 74 passed.
+Latest combined regression: 965 passed.
+
+Exactly 98 additional test identities.
+All previous test identities preserved.
+
+AC09 normal-path orchestration evidence:
+PASS locally.
+
+Official AC09 acceptance remains PENDING.
+
+Global repair is not enabled.
+SEC05-SEC11 security obligations remain OPEN.
+
+WP03-06F documentation review: PASS.
+
+WP03-07A initial preflight: BLOCKED.
+WP03-07A-R1/R1B historical diagnosis: COMPLETE.
+WP03-07A-R2 full backend regression: VERIFIED.
+WP03-07B acceptance traceability: VERIFIED.
+
+Full backend collected: 1134.
+Full backend passed: 1085.
+Historical approved skips: 49.
+New skips: zero.
+Failures and errors: zero.
+
+All 775 historical identities preserved.
+All 359 new WP03 identities passed.
+All 965 combined regression identities passed.
+
+AC06 primary test accounting: 34.
+AC07 primary test accounting: 106.
+AC08 primary test accounting: 121.
+AC09 primary test accounting: 98.
+
+AC06-AC09 local implementation evidence: PASS.
+Official acceptance remains PENDING.
+
+Historical artifact directory and exact skip
+reason comparison were corrected without
+application changes or weakened gates.
+
+SEC05-SEC11 remain OPEN.
+
+PostgreSQL integration remains NOT_RUN.
+
+WP03-08A initial ledger preparation: BLOCKED.
+WP03-08A-R1 ledger diagnosis: PASS.
+WP03-08A-R2 documentation review: PASS.
+WP03-08B-R2 final technical review: PASS.
+
+WP03 final Project Owner acceptance: APPROVED.
+WP03 main tickets accepted locally: 8/8.
+WP03 status: LOCAL COMPLETE.
+
+AC06-AC09 local implementation evidence accepted.
+Integrated delivery remains pending PR B.
+
+WP03-08C initial documentation sync stopped
+before writes on a duplicate authorization marker.
+
+WP03-08C-R1 authorization diagnosis: PASS.
+WP03-08C-R2 section-aware documentation recovery.
+
+The full backend result of 726 passed and
+49 skipped remains historical WP02 evidence.
+
+Authoritative current authorization — 2026-11-25.
+
+WP03: LOCAL COMPLETE, 8/8.
+WP04: AUTHORIZED for AC10-AC14 only.
+WP04 implementation: NOT_STARTED.
+WP05 remains NOT AUTHORIZED.
+
+Local completed work packages: 3/5.
+Officially delivered work packages: 1/5.
+Official sprint acceptance: 2/16.
+
+AC03-AC09 remain pending integrated delivery.
+
+Actual LangGraph orchestration was implemented
+and verified locally in WP03.
+
+Runtime implementation authorization: WP04 ONLY.
+
+SEC05-SEC11 remain OPEN.
+
+All official Sprint Contract security gates
+and approved architecture decisions are preserved.
+
+No live model providers, real retrieval, database
+writes, lifecycle mutation, worker activation,
+publication or production deployment are approved.
+
+Production remains NOT APPROVED.
+
+Historical WP04-01 technical design checkpoint:
+
+WP04-01A baseline: VERIFIED.
+WP04-01B design: VERIFIED.
+WP04-01C documentation: VERIFIED.
+WP04-01D design verification: PASS.
+
+Ten WP04 main tickets are defined in S05.md
+section 37.
+
+WP04 main tickets accepted: 1/10.
+Runtime implementation remains NOT_STARTED.
+
+GD01-GD12 design review: PASS. Runtime verification remains pending.
+
+Official SG01-SG12 remain unchanged.
+SEC05-SEC11 remain OPEN.
+AC10-AC14 acceptance remains PENDING.
+
+Repair activation remains disabled pending
+the applicable security and execution guards.
+
+### Historical WP04-02 acceptance checkpoint
+
+WP04-02 - Mixed-error security classification:
+VERIFIED locally.
+
+SEC05: VERIFIED_LOCAL for the tested component
+boundaries. Integrated acceptance remains pending.
+
+WP04 main tickets accepted: 2/10.
+Runtime implementation: IN_PROGRESS.
+
+Latest accepted regression baseline:
+
+- Diagnostic replay: 25/25 passed.
+- Previously reproduced findings: 16/16 corrected.
+- Original controls: 9/9 preserved.
+- New permanent SEC05 tests: 46 passed.
+- Report Validator: 104 passed.
+- Writer: 63 passed.
+- Security boundaries: 74 passed.
+- S05: 937 passed.
+- S04: 74 passed.
+- Combined S04/S05: 1011 passed.
+- Full backend: 1180 collected, 1131 passed, 49 skipped.
+- Historical identities and statuses: 1134 preserved.
+- Historical skip identities and reasons: 49 preserved.
+- Failures, errors and new skips: zero.
+
+SEC06-SEC11 remain OPEN.
+AC10-AC14 integrated acceptance remains pending.
+SG01-SG12 remain mandatory and unchanged.
+
+Public workflow repair remains disabled.
+
+Local completed work packages: 3/5.
+Officially delivered work packages: 1/5.
+Official Sprint acceptance: 2/16.
+
+WP05 remains NOT AUTHORIZED.
+Production remains NOT APPROVED.
+
+No live providers, real retrieval, database writes,
+lifecycle mutation, publication, worker activation
+or deployment are authorized.
+
+This checkpoint supersedes earlier WP04 design-only
+status and regression baseline statements.
+
+
+### Historical WP04-03 acceptance checkpoint
+
+WP04-03 - Strict terminal-result integrity:
+VERIFIED locally.
+
+SEC05 and SEC06: VERIFIED_LOCAL.
+Integrated security acceptance remains pending.
+
+WP04 main tickets accepted: 3/10.
+Runtime implementation: IN_PROGRESS.
+
+Latest accepted regression baseline:
+
+- SEC06 diagnostic replay: 54/54 passed.
+- Previously reproduced SEC06 findings: 24/24 corrected.
+- Public workflow findings: 4/4 corrected.
+- Original positive controls: 2/2 preserved.
+- Original negative controls: 28/28 preserved.
+- New permanent SEC06 tests: 62 passed.
+- Previous permanent SEC05 tests: 46 preserved.
+- Workflow: 97 passed.
+- Outcome: 63 passed.
+- Report Validator: 104 passed.
+- Writer: 63 passed.
+- Security boundaries: 74 passed.
+- S05: 999 passed.
+- S04: 74 passed.
+- Combined S04/S05: 1073 passed.
+- Full backend: 1242 collected, 1193 passed, 49 skipped.
+- Historical identities and statuses: 1180 preserved.
+- Historical skip identities, types and reasons: 49 preserved.
+- Failures, errors and new skips: zero.
+
+SEC07-SEC11 remain OPEN.
+AC10-AC14 integrated acceptance remains pending.
+SG01-SG12 remain mandatory and unchanged.
+
+Public workflow repair remains disabled.
+
+Local completed work packages: 3/5.
+Officially delivered work packages: 1/5.
+Official Sprint acceptance: 2/16.
+
+WP05 remains NOT AUTHORIZED.
+Production remains NOT APPROVED.
+
+No live providers, real retrieval, database writes,
+lifecycle mutation, publication, worker activation
+or deployment are authorized.
+
+This checkpoint supersedes prior WP04 progress
+and regression baseline statements.
+
+### Historical WP04-04 acceptance checkpoint
+
+WP04-04 - Safe exception category mapping:
+VERIFIED locally.
+
+SEC05, SEC06 and SEC07: VERIFIED_LOCAL.
+Integrated security acceptance remains pending.
+
+WP04 main tickets accepted: 4/10.
+Runtime implementation: IN_PROGRESS.
+
+Latest accepted regression baseline:
+
+- SEC07 diagnostic replay: 15/15 passed.
+- Previously reproduced SEC07 findings: 8/8 corrected.
+- Original controls: 7/7 preserved.
+- Unauthorized category property reads: zero.
+- Raw exception escapes in replay: zero.
+- New permanent SEC07 tests: 53 passed.
+- Previous SEC05 tests: 46 preserved.
+- Previous SEC06 tests: 62 preserved.
+- Workflow: 150 passed.
+- Outcome: 63 passed.
+- Report Validator: 104 passed.
+- Writer: 63 passed.
+- Security boundaries: 74 passed.
+- S05: 1052 passed.
+- S04: 74 passed.
+- Combined S04/S05: 1126 passed.
+- Full backend: 1295 collected, 1246 passed, 49 skipped.
+- Historical identities and statuses: 1242 preserved.
+- Historical skip identities, types and reasons: 49 preserved.
+- Failures, errors and new skips: zero.
+
+SEC08-SEC11 remain OPEN.
+AC10-AC14 integrated acceptance remains pending.
+SG01-SG12 remain mandatory and unchanged.
+
+Public workflow repair remains disabled.
+
+Local completed work packages: 3/5.
+Officially delivered work packages: 1/5.
+Official Sprint acceptance: 2/16.
+
+WP05 remains NOT AUTHORIZED.
+Production remains NOT APPROVED.
+
+No live providers, real retrieval, database writes,
+lifecycle mutation, publication, worker activation
+or deployment are authorized.
+
+This checkpoint supersedes prior WP04 progress
+and regression baseline statements.
+
+### Authoritative WP04-05 acceptance checkpoint
+
+WP04-05 - Exact node update ownership:
+VERIFIED locally.
+
+SEC05, SEC06, SEC07 and SEC08: VERIFIED_LOCAL.
+Integrated security acceptance remains pending.
+
+WP04 main tickets accepted: 5/10.
+Runtime implementation: IN_PROGRESS.
+
+Latest accepted regression baseline:
+
+- Original SEC08 diagnostic replay: 39/39 passed.
+- Additional SEC08 diagnostic replay: 17/17 passed.
+- Total SEC08 diagnostic replay: 56/56 passed.
+- Original reproduced findings: 32/32 corrected.
+- Additional reproduced findings: 16/16 corrected.
+- Total SEC08 reproduced findings: 48/48 corrected.
+- Invalid update downstream calls in replay: zero.
+- Invalid payload boundary passes in replay: zero.
+- Unsafe public results in replay: zero.
+- Original permanent SEC08 tests: 121 passed.
+- Additional permanent SEC08 tests: 21 passed.
+- Total permanent SEC08 tests: 142 passed.
+- Previous SEC05 tests: 46 preserved.
+- Previous SEC06 tests: 62 preserved.
+- Previous SEC07 tests: 53 preserved.
+- Total permanent SEC05-SEC08 tests: 303 passed.
+- Workflow: 292 passed.
+- Outcome: 63 passed.
+- Report Validator: 104 passed.
+- Writer: 63 passed.
+- Security boundaries: 74 passed.
+- S05: 1194 passed.
+- S04: 74 passed.
+- Combined S04/S05: 1268 passed.
+- Full backend: 1437 collected, 1388 passed, 49 skipped.
+- Historical identities and statuses: 1416 preserved.
+- Historical skip identities, types and reasons: 49 preserved.
+- Failures, errors and new skips: zero.
+
+SEC09-SEC11 remain OPEN.
+AC10-AC14 integrated acceptance remains pending.
+SG01-SG12 remain mandatory and unchanged.
+
+Public workflow repair remains disabled.
+
+Local completed work packages: 3/5.
+Officially delivered work packages: 1/5.
+Official Sprint acceptance: 2/16.
+
+WP05 remains NOT AUTHORIZED.
+Production remains NOT APPROVED.
+
+No live providers, real retrieval, database writes,
+lifecycle mutation, publication, worker activation
+or deployment are authorized.
+
+This checkpoint supersedes prior WP04 progress
+and regression baseline statements.
+
+
+### Authoritative WP04-06 acceptance checkpoint
+
+Date: 2026-11-25.
+
+WP04-06: ACCEPTED LOCAL - DEVELOPMENT MVP ONLY.
+
+SEC05-SEC08: VERIFIED_LOCAL.
+SEC09: VERIFIED_LOCAL for invocation accounting,
+controller allowance and positive repair eligibility.
+Actual public repair verification remains pending
+under WP04-07.
+
+SEC10 and SEC11 remain OPEN.
+
+WP04 main tickets accepted: 6/10 (60%).
+Runtime implementation: IN_PROGRESS.
+
+Full backend: 1580 collected, 1531 passed, 49 skipped,
+zero failures and zero errors.
+
+Historical identities: 1437 preserved.
+Historical skip identities, types and reasons: preserved.
+
+SEC09 permanent tests: 143 passed.
+SEC05-SEC09 permanent security tests: 446 passed.
+Accounting and eligibility diagnostics: 54/54 passed.
+Corrected diagnostic finding cases: 18.
+Remaining reproduced findings: zero.
+
+Evidence directory:
+
+`/tmp/agentops-s05-wp04-06f.t3EjJ5`
+
+Evidence SHA-256:
+
+`6e1cd1f3c27367fa5756f3eac90fd5a487484aeffb49c4c7ee69aeef9ef060ae`
+
+Full backend JUnit SHA-256:
+
+`748573473136c7e6ce4e2bc312f54d9df19367a33266a69514836d18d09a8b42`
+
+See S05.md section 42 for delivered implementation,
+regression evidence and residual limitations.
+
+Public workflow repair remains DISABLED.
+WP04-07 is the next authorized ticket.
+
+Local completed work packages: 3/5.
+Officially delivered work packages: 1/5.
+Official Sprint acceptance: 2/16.
+
+Integrated AC10-AC14 acceptance remains pending.
+SG01-SG12 remain mandatory and unchanged.
+
+WP05 remains NOT AUTHORIZED.
+Production remains NOT APPROVED.
+
+The WP04-05 and earlier checkpoints are retained
+as historical evidence. This WP04-06 checkpoint
+supersedes their progress and resume instructions.
+
+### Authoritative WP04 final acceptance checkpoint
+
+Date: 2026-11-25.
+
+WP04: ACCEPTED LOCAL - DEVELOPMENT MVP ONLY.
+WP04 tickets: 10/10 completed (100%).
+
+SEC05-SEC11: VERIFIED_LOCAL within tested scopes.
+
+Backend: 1681 collected, 1632 passed, 49 skipped,
+zero failures and zero errors.
+
+Prior integration test identities: 1655 preserved.
+Historical skip identities and reasons: preserved.
+Final named security test inventory: 547.
+
+Public guarded repair: IMPLEMENTED AND VERIFIED_LOCAL.
+Global repair allowance: one.
+Maximum adapter invocations: four.
+Soft deadline: maximum 30 seconds.
+Recursion limit: 12.
+
+Evidence directory:
+
+`/tmp/agentops-s05-wp04-final-integration.Vlj7x5`
+
+Final JUnit SHA-256:
+
+`b8c7003bce2821030e68096158abf01a26a245361a9926a9a841e5df24b5447f`
+
+Local completed work packages: 4/5.
+Officially delivered work packages: 1/5.
+Official Sprint acceptance: 2/16.
+
+Next action: prepare owner-controlled WP02-WP04
+feature PR delivery.
+
+WP05 remains NOT AUTHORIZED.
+Production remains NOT APPROVED.
+
+Earlier checkpoints remain historical evidence.
+See S05.md section 43 for the implementation,
+verification evidence and residual limitations.
+
+Next action:
+
+Prepare owner-controlled Git delivery of
+WP02-WP04 through the authorized feature PR.
+
+Review the complete feature diff and release gates
+before staging, committing or pushing.
+
+WP04 is locally accepted for Development MVP only.
+Integrated remote CI and owner approval remain
+required before delivery acceptance.
+
+Do not start WP05 without explicit owner authorization.
+Production remains NOT APPROVED.
 
 ### Current resume authority
 

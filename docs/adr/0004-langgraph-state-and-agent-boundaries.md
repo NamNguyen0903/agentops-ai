@@ -439,3 +439,67 @@ Runtime implementation remains NOT AUTHORIZED
 until separate explicit owner approval.
 
 Production remains NOT APPROVED.
+
+
+### S05 WP01 final acceptance and WP02 authorization
+
+Date: 2026-11-24.
+
+Final synchronization PR #17 is MERGED.
+
+- PR CI 45428102016: 4/4 PASS.
+- Final Main CI 45428619901: 4/4 PASS.
+- Final main checkpoint:
+  `a7f485e3b57e5d898c3a29bf76c4d5c96ae035c1`.
+- WP01: DELIVERED.
+- AC01-AC02: ACCEPTED.
+
+The Project Owner explicitly accepted WP01 and
+authorized WP02 only, covering AC03-AC05.
+
+This later authorization supersedes earlier WP01-only
+execution restrictions for the authorized WP02 scope.
+
+The S05 package may implement typed contracts,
+strict validation, immutable context and deterministic
+offline fixture adapters.
+
+No architecture decision AD01-AD08 is changed.
+
+The approved execution limits remain unchanged.
+
+WP03-WP05 remain NOT AUTHORIZED.
+
+No live providers, real evidence persistence,
+worker activation or report publication are authorized.
+
+Production remains NOT APPROVED.
+
+
+### S05 WP02 local acceptance and WP03 authorization
+
+Date: 2026-11-25.
+
+The Project Owner explicitly accepted:
+
+- WP02 local completion: 8/8 main tickets.
+- AC03-AC05 local technical evidence.
+- WP03 implementation authorization: AC06-AC09 only.
+- Development MVP scope.
+
+WP02 integrated delivery remains pending PR B.
+Official sprint acceptance remains 2/16.
+
+This subsequent authorization supersedes earlier
+WP02-only implementation restrictions for WP03.
+
+AD01-AD08, the approved topology, execution limits
+and security boundaries remain unchanged.
+
+WP04-WP05 remain NOT AUTHORIZED.
+
+No live providers, real retrieval, lifecycle mutation,
+publication, worker activation or production deployment
+are authorized.
+
+Production remains NOT APPROVED.
