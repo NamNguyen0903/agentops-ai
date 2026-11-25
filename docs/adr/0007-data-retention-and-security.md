@@ -1,3 +1,50 @@
+# ADR-0007 — S07 scoped acceptance amendment
+
+Recorded at: 2026-11-25T15:19:46.940631+00:00.
+
+**Status: PARTIALLY ACCEPTED — expanded S07 scope.**
+
+Authority: Owner-approved S07 Contract v1.0.
+
+AD07-10: attempt-fenced evidence and outcome handling.
+
+## Attempt-fenced evidence security
+
+Preserve owner/task isolation, synthetic-only evidence
+constraints, evidence integrity and existing citation validation.
+
+An isolated execution UUID alone is not durable fencing.
+
+Integrate evidence and outcome handling with authoritative
+attempt ownership, fencing generation, lease validity,
+task deadline and deletion barriers.
+
+Stale attempts must not insert newly authoritative evidence
+or produce accepted outcomes.
+
+Existing S06 offline evidence behavior must not be silently
+removed or converted into worker execution.
+
+Use explicitly authorized disposable PostgreSQL verification.
+No shared database migration.
+
+All report candidates remain nonpublishable.
+Do not claim semantic grounding or real evidence verification
+from structural citation tests.
+
+Existing repository scope checks are not database RLS.
+
+
+No unrelated retention or deletion policy expansion.
+
+Implementation and verification remain pending.
+
+Production remains NOT APPROVED.
+
+Previous ADR content remains preserved below.
+
+---
+
 # ADR-0007 — Data Retention and Security
 
 > **Active S06 amendment — S06-AMEND-001:**
