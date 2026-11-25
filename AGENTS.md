@@ -1,3 +1,99 @@
+# AgentOps AI — Active S06 Engineering Policy Amendment
+
+**Decision date:** 2026-11-25
+
+**Contract:** S06 Contract v1.0 — OWNER APPROVED
+
+**Scope:** Development MVP only
+
+**Production authorization:** NOT APPROVED
+
+## Active authority
+
+This owner-approved S06 amendment supersedes conflicting
+S05 execution-mode restrictions, historical sprint
+status statements and obsolete ADR status descriptions.
+
+All prior security, testing, evidence, Git and release
+requirements remain mandatory.
+
+The authoritative S06 contract is:
+
+`docs/sprints/S06.md`
+
+## S06 execution mode
+
+FAST-TRACK, owner-operated local execution.
+
+ChatGPT performs Tech Lead, architecture, development,
+AI engineering, security, QA, DevOps, project planning,
+implementation generation and evidence review.
+
+The Project Owner performs local command execution,
+file application, tests, commits, pushes, PR creation
+and merges, and retains architecture and release control.
+
+Group related tickets into large work packages.
+Use complete Terminal blocks where practical.
+Only one active authorized work package at a time.
+
+Do not request routine implementation approvals.
+Separate authorization is required for new architecture,
+scope, live providers and release boundary changes.
+
+No autonomous repository edits or Git actions by an
+assistant are authorized under this manual workflow.
+
+## Active ADR baseline
+
+| ADR | Status |
+|---|---|
+| ADR-0001 | ACCEPTED |
+| ADR-0002 | ACCEPTED — Development MVP only |
+| ADR-0003 | PARTIALLY ACCEPTED — admission only |
+| ADR-0004 | ACCEPTED — including scoped S06 amendment |
+| ADR-0005 | NOT APPROVED |
+| ADR-0006 | PARTIALLY ACCEPTED — offline interfaces and retrieval policy |
+| ADR-0007 | PARTIALLY ACCEPTED — scoped evidence security |
+
+ADR-0003 does not authorize durable claiming, attempts,
+leases, fencing or recovery.
+
+ADR-0006 does not authorize a search vendor, external
+network execution or live model inference.
+
+ADR-0007 authorizes evidence persistence implementation
+and migration verification on disposable PostgreSQL only.
+
+## Security and operational controls
+
+- Preserve one canonical worktree.
+- Preserve the unrelated backup stash.
+- Preserve approved dependency lockfiles.
+- Authentication disabled by default.
+- Preserve strict Authlib security XFAIL.
+- Preserve S02–S05 security and release gates.
+- Enforce S06 SG01–SG16.
+- No destructive Git cleanup or force pushes.
+- No unauthorized shared database mutations.
+- No worker activation or task lifecycle changes.
+- No report publication or deployment.
+- Do not invent execution evidence.
+
+The owner approved S06 WP01–WP05, AC01–AC24,
+SG01–SG16 and scoped AD01–AD08.
+
+WP01 is the immediate authorized package.
+Later packages must respect dependencies, verified
+acceptance evidence and unresolved approval gates.
+
+S05 remains CLOSED. S06 does not reopen S05.
+
+All sections below are retained historical policy.
+Their nonconflicting requirements remain mandatory.
+
+---
+
 # AgentOps AI — Active Engineering Policy Amendment
 
 **Amendment:** S05 final owner acceptance and closure

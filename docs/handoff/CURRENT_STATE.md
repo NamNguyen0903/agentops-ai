@@ -1,5 +1,101 @@
 # AgentOps AI — Current State
 
+## Authoritative S06 startup checkpoint
+
+Date: 2026-11-25.
+
+- Sprint: S06.
+- Status: IN_PROGRESS — WP01.
+- Scope: Development MVP only.
+- Contract: S06 v1.0 — OWNER APPROVED.
+- Execution: FAST-TRACK, owner-operated local execution.
+- Production authorization: NOT APPROVED.
+
+### Reconciled S05 baseline
+
+S05 remains CLOSED, 16/16 accepted.
+
+PR #18, PR #19 and PR #20: MERGED.
+
+Final S05 main SHA:
+
+664fb3d47179b5730f1cbb9341641f6a71d59d12
+
+Final main CI: 45572996996, 4/4 PASS.
+
+Startup: clean main, local HEAD equals origin/main,
+one canonical worktree and required stash preserved.
+
+### Approved S06 architecture
+
+- AD01–AD08: owner-approved within contract boundaries.
+- ADR-0003: admission only; no worker expansion.
+- ADR-0004: scoped S06 amendment.
+- ADR-0006: offline interfaces and retrieval policy only.
+- ADR-0007: scoped evidence security and disposable
+  PostgreSQL persistence verification only.
+- Vendor selection and live external execution:
+  separate owner approval required.
+
+### Active package
+
+WP01: VERIFIED_LOCAL — PR delivery pending.
+
+- AC01: VERIFIED — startup reconciliation.
+- AC02: OWNER_APPROVED — contract and architecture.
+- AC03: VERIFIED_LOCAL — documentation review PASS.
+- WP01 technical readiness: 3/3.
+- Local evidence: S06_WP01_RESUME_VERIFICATION_PASS.
+- Official S06 acceptance: 0/24.
+- WP02–WP05: PLANNED.
+- Runtime implementation: NOT_STARTED.
+
+### Git and workspace
+
+Canonical workspace: /Users/namnguyen/agentops-ai.
+
+Last verified main:
+664fb3d47179b5730f1cbb9341641f6a71d59d12
+
+Target documentation branch:
+docs/s06-contract-adr
+
+Backup stash SHA:
+13ab03b82e68364c8f4f022821e12dca5ec7b731
+
+Future commit and PR identifiers are not predicted.
+
+### Open gates
+
+- WP01 PR delivery, required CI, merge and main CI.
+- Search vendor approval.
+- Live external execution approval.
+- Source-derived implementation contracts.
+- Runtime acceptance criteria AC04–AC24 remain pending.
+
+Preserve authentication disabled by default,
+strict Authlib security XFAIL, dependency lockfiles
+and all existing S02–S05 security gates.
+
+No worker activation, unauthorized lifecycle mutation,
+official report publication or deployment.
+
+### Exactly one next action
+
+Complete owner-controlled PR A delivery and required
+CI, then reconcile the observed main checkpoint.
+
+Do not start runtime implementation before
+WP01 delivery is verified.
+
+All sections below are historical checkpoints.
+This checkpoint supersedes their earlier status and
+resume instructions without erasing historical evidence.
+
+---
+
+# AgentOps AI — Current State
+
 ## Authoritative S05 CLOSED checkpoint
 
 Date: 2026-11-25.

@@ -1,6 +1,6 @@
 # AgentOps AI — Authoritative Sprint Roadmap
 
-## Active roadmap — 2026-11-25, S05 CLOSED; S06 NEXT
+## Active roadmap — 2026-11-25, S05 CLOSED; S06 IN_PROGRESS
 
 **Scope:** Development MVP only.
 
@@ -14,7 +14,7 @@
 | S03 | CLOSED — 12/12 accepted | [S03 closeout](S03_CLOSEOUT.md) |
 | S04 | CLOSED — Development MVP only | [S04 contract](S04.md), [S04 closeout](S04_CLOSEOUT.md) |
 | S05 | CLOSED — 16/16 accepted; Development MVP only | [S05 Contract v1.0](S05.md) |
-| S06 | NEXT — NOT STARTED | Separate owner authorization required |
+| S06 | IN_PROGRESS — WP01 | [S06 Contract v1.0](S06.md) |
 | S07-S09 | PLANNED | Original roadmap retained below |
 
 S04 final-state synchronization PR #15 is MERGED.
@@ -26,6 +26,32 @@ Final S04 main CI run 45419682711: 4/4 PASS.
 
 S04 is CLOSED. No S04 reopening or additional closeout
 delivery is implied.
+
+### S06 — Search, Evidence and Citation Validation
+
+**Status:** IN_PROGRESS — WP01.
+
+**Contract:** [S06 Contract v1.0](S06.md).
+
+Owner approved on 2026-11-25, Development MVP only.
+
+| Work package | Status |
+|---|---|
+| WP01 — Contract and Architecture | VERIFIED_LOCAL; DELIVERY_PENDING |
+| WP02 — Search and Secure Retrieval | PLANNED |
+| WP03 — Evidence Persistence and Provenance | PLANNED |
+| WP04 — Evidence-backed Workflow and Citation Validation | PLANNED |
+| WP05 — Integration, Security, CI and Closeout | PLANNED |
+
+AC01–AC24, SG01–SG16 and scoped AD01–AD08 approved
+as the contract baseline, not as completed implementation.
+
+Official acceptance: 0/24.
+
+Search vendor and live external execution require
+separate approval.
+
+Production remains NOT APPROVED.
 
 ### S05 — Specialized Planner, Research and Writer Nodes
 
