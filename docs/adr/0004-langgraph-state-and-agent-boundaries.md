@@ -1,3 +1,66 @@
+# ADR-0004 — S06 Scoped Architecture Amendment
+
+Date: 2026-11-25.
+
+Status: ACCEPTED — Development MVP only.
+
+Authority: Owner-approved S06 Contract v1.0.
+
+## Approved extension
+
+AD01, AD06, AD07 and AD08 authorize a separately
+versioned S06 workflow for evidence acquisition,
+validation and nonpublishable report candidates.
+
+Preserve existing S04 and S05 workflows, typed contracts,
+execution guards, tests and historical evidence.
+
+The S06 workflow uses application-owned typed provider
+interfaces and evidence provenance contracts.
+
+Retrieved content is untrusted data, never an
+authority for policies, permissions, budgets or tools.
+
+The writer receives only validated evidence.
+Citation validation is deterministic, task-scoped
+and fail-closed.
+
+Unknown, fabricated, deleted, cross-task or
+otherwise invalid evidence references must fail.
+
+Insufficient evidence produces an explicit bounded
+outcome, not invented citations.
+
+Structural validation does not prove factual
+or semantic groundedness.
+
+## Execution boundary
+
+Preserve existing S05 limits in the S05 workflow.
+S06 execution limits remain within approved
+application-owned budgets and contract ceilings.
+
+No live model provider, external retrieval, persistent
+graph checkpointing, durable worker attempts,
+task lifecycle transition or report publication
+is authorized by this amendment.
+
+Offline graph verification is authorized only after
+the relevant work package dependencies pass.
+
+Evidence persistence is separately governed by ADR-0007.
+Provider and retrieval policy is governed by ADR-0006.
+
+Graph nodes have no independent database write authority.
+
+Production remains NOT APPROVED.
+
+All sections below retain historical ADR evidence.
+This amendment supersedes conflicting historical
+S06 restrictions only within its explicit scope.
+
+---
+
 # ADR-0004 — LangGraph State and Agent Boundaries
 
 | Field | Value |
