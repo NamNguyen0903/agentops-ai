@@ -1,6 +1,6 @@
 # AgentOps AI — Active Engineering Policy Amendment
 
-**Amendment:** S05-WP04 authorization
+**Amendment:** S05-WP05 authorization and closeout
 
 **Decision date:** 2026-11-25
 
@@ -112,52 +112,26 @@ The existing backup stash must be preserved.
 
 ## 5. Current S05 authorization boundary
 
-Sprint S05 Contract v1.0 and AD01-AD08 are
-owner-approved.
+The owner-approved S05 Contract v1.0, AD01-AD08,
+ND01-ND12 and SG01-SG12 remain unchanged.
 
-WP01 is DELIVERED and AC01-AC02 are ACCEPTED.
+WP01-WP04 are DELIVERED.
+PR #18 is merged and all twelve required remote
+CI job results across push, PR and main passed.
 
-Final synchronization PR #17 is MERGED.
-Final Main CI 45428619901 passed all four required jobs.
+On 2026-11-25, the Project Owner explicitly
+authorized WP05 for Development MVP only.
 
-On 2026-11-24, the Project Owner explicitly accepted
-WP01 and authorized WP02 only, covering AC03-AC05.
+WP05 is restricted to integration verification,
+dependency security review, documentation,
+final delivery and owner closeout.
 
-On 2026-11-25, the Project Owner accepted WP02
-local completion (8/8 tickets) and AC03-AC05
-local technical evidence.
+No new runtime features or architecture decisions
+are authorized by WP05.
 
-WP02 integrated delivery remains pending PR B.
-
-On 2026-11-25, the Project Owner accepted WP03
-local completion (8/8 tickets) and AC06-AC09
-local implementation evidence.
-
-WP02 and WP03 integrated delivery remains
-pending PR B.
-
-Runtime implementation is AUTHORIZED for WP04 only:
-Security and Execution Guards, AC10-AC14,
-under the unchanged S05 Contract v1.0.
-
-WP04 technical design must be reviewed before
-runtime implementation begins.
-
-AD01-AD08, ND01-ND12 and SG01-SG12 remain
-mandatory and unchanged.
-
-SEC05-SEC11 are outstanding hardening review
-items that must be addressed within WP04.
-
-WP05 remains NOT AUTHORIZED.
-
-A subsequent work package requires its own explicit
-owner authorization.
-
-No CI result or documentation status automatically
-grants implementation authority.
-
-The S05 workflow remains deterministic and offline.
+Final Sprint closure requires the final documentation
+PR, required CI results, merged main verification
+and owner acceptance.
 
 No live model providers, real search providers,
 database migrations, worker activation, report
@@ -166,8 +140,11 @@ publication or production deployment are authorized.
 Authentication remains disabled by default.
 
 Preserve the strict Authlib security XFAIL,
-all seven backend dependency lockfiles and all
-existing S02/S03 security and release gates.
+all existing dependency lockfiles and all
+S02/S03 security and release gates.
+
+Sprint S06 requires separate owner authorization.
+Production remains NOT APPROVED.
 
 ## 6. Documentation and evidence policy
 

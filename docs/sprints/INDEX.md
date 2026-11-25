@@ -1,6 +1,6 @@
 # AgentOps AI — Authoritative Sprint Roadmap
 
-## Active roadmap — 2026-11-25, S05-WP04 DESIGN_IN_PROGRESS
+## Active roadmap — 2026-11-25, S05 FINAL_CLOSEOUT_PENDING
 
 **Scope:** Development MVP only.
 
@@ -13,7 +13,7 @@
 | S02 | CLOSED — 11/11 accepted | [S02 closeout](S02_CLOSEOUT.md) |
 | S03 | CLOSED — 12/12 accepted | [S03 closeout](S03_CLOSEOUT.md) |
 | S04 | CLOSED — Development MVP only | [S04 contract](S04.md), [S04 closeout](S04_CLOSEOUT.md) |
-| S05 | IN_PROGRESS — WP04 AUTHORIZED | [S05 Contract v1.0](S05.md) |
+| S05 | FINAL_CLOSEOUT_PENDING — WP05 AUTHORIZED | [S05 Contract v1.0](S05.md) |
 | S06-S09 | PLANNED | Original roadmap retained below |
 
 S04 final-state synchronization PR #15 is MERGED.
@@ -28,25 +28,41 @@ delivery is implied.
 
 ### S05 — Specialized Planner, Research and Writer Nodes
 
-Owner approval date: 2026-11-24.
-
-Contract: v1.0, APPROVED.
-
-Architecture: [ADR-0004 amendment](../adr/0004-langgraph-state-and-agent-boundaries.md).
-
-Approved scope: Development MVP only.
+Contract v1.0: APPROVED.
+Development MVP only.
 
 | Work package | Status |
 |---|---|
 | WP01 — Contract and Architecture | DELIVERED |
-| WP02 — Typed Contracts and Fixture Adapters | LOCAL_ACCEPTED; DELIVERY_PENDING |
-| WP03 — Specialized Workflow Nodes | LOCAL_ACCEPTED; DELIVERY_PENDING |
-| WP04 — Security and Execution Guards | AUTHORIZED; DESIGN_IN_PROGRESS |
-| WP05 — Integration, CI and Closeout | NOT_AUTHORIZED |
+| WP02 — Typed Contracts and Fixture Adapters | DELIVERED |
+| WP03 — Specialized Workflow Nodes | DELIVERED |
+| WP04 — Security and Execution Guards | DELIVERED |
+| WP05 — Integration, CI and Closeout | FINAL_DELIVERY_PENDING |
 
-Work packages delivered: 1/5.
+Delivered work packages: 4/5.
+Technical acceptance readiness: 15/16.
 
-Acceptance criteria accepted: 2/16.
+PR #18: MERGED.
+Implementation main CI 45570242447: 4/4 PASS.
+Local backend: 1632 passed, 49 historical skips.
+Local backend dependency audit: 64 packages,
+zero known findings after pip remediation.
+
+WP05 authorized by the owner on 2026-11-25.
+
+Next action: final documentation PR, main CI
+verification and owner closeout.
+
+S06-S09 remain planned.
+No subsequent Sprint is authorized.
+Production remains NOT APPROVED.
+
+### Retained historical S05 checkpoints
+
+The following historical progress records are
+retained for traceability. Their earlier pending
+statuses and resume instructions are superseded
+by the active roadmap above.
 
 WP01 final acceptance and synchronization: COMPLETE.
 

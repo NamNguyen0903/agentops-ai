@@ -1,6 +1,131 @@
 # AgentOps AI — Current State
 
-## Active checkpoint — 2026-11-25, S05-WP04 DESIGN_IN_PROGRESS
+## Authoritative S05 final acceptance checkpoint
+
+Date: 2026-11-25.
+
+**Scope:** Development MVP only.
+**Sprint status:** FINAL_CLOSEOUT_PENDING.
+**Production authorization:** NOT APPROVED.
+
+The Project Owner explicitly authorized WP05 for
+Development MVP only on 2026-11-25.
+
+WP01-WP04: DELIVERED.
+WP05-A: VERIFIED.
+WP05-B: Documentation prepared for final delivery.
+WP05-C: Final PR, merge, main CI and owner closeout pending.
+
+AC01-AC02: previously owner accepted.
+AC03-AC15: technical evidence verified.
+AC16: final delivery and owner signoff pending.
+
+Technical acceptance readiness: 15/16.
+Final official Sprint acceptance is not yet claimed.
+
+### Verified Git delivery
+
+- Feature PR #18: MERGED.
+- Feature commit:
+  `50846e8b5d6fd0ef1ba07917dce7e4276d81c054`.
+- Last verified main implementation commit:
+  `c5ed557cd241028e38022acf926ed18e63759ddf`.
+- PR merged at: 2026-11-25T07:42:26Z.
+- Push CI: 45569981130, 4/4 PASS.
+- Pull request CI: 45569989694, 4/4 PASS.
+- Main CI: 45570242447, 4/4 PASS.
+- Total required remote jobs: 12/12 PASS.
+- Last observed implementation worktree: clean.
+
+### Final local verification
+
+- Backend: 1681 collected, 1632 passed, 49 historical skips.
+- Failures and errors: zero.
+- Named SEC05-SEC11 security tests: 547 passed.
+- Historical test identities and skip reasons preserved.
+- Accepted delivery scope: 29 files.
+- Two whitespace-only corrections verified.
+- Python source AST verification: 24/24 PASS.
+- Dependency consistency: PASS.
+- No new pytest execution claimed during WP05-A.
+
+JUnit SHA-256:
+
+`b8c7003bce2821030e68096158abf01a26a245361a9926a9a841e5df24b5447f`
+
+### Dependency security review
+
+Tool: pip-audit 2.10.1, isolated audit environment.
+
+Initial local backend inventory audit:
+
+- 64 external packages audited.
+- 12 reported findings, six unique advisory IDs.
+- All reported findings affected pip 25.0.
+- No skipped or missing packages.
+
+Remediation:
+
+- Local packaging tool upgraded to pip 26.2.
+- No explicit repository pip constraint found.
+- All other installed application packages preserved.
+- No dependency lockfile changes.
+
+Final audit:
+
+- 64 external packages audited.
+- Zero known vulnerability findings reported.
+- Zero skipped or missing packages.
+- Audit exit code: zero.
+- Dependency consistency: PASS.
+
+Audit evidence SHA-256:
+
+`2f6646439b747b2ebc6248518eb90fba3f66c221d273382ec31ee8e394dd1e3a`
+
+Evidence directories:
+
+- `/tmp/agentops-s05-wp05-a.Sln3Ue`
+- `/tmp/agentops-s05-wp05-audit.Dei3Gh`
+- `/tmp/agentops-s05-wp05-audit-fix.yAk6Jf`
+
+### Release restrictions
+
+All SG01-SG12 security gates remain mandatory.
+All previously approved release gates remain unchanged.
+
+The workflow is deterministic, offline and nonpublishable.
+No live providers, external retrieval, task lifecycle
+mutation, database writes, worker activation, publication
+or production deployment are authorized.
+
+Authentication remains disabled by default.
+Preserve the strict Authlib security XFAIL.
+
+ADR-0001 remains ACCEPTED.
+ADR-0002 remains ACCEPTED for Development MVP only.
+ADR-0003 remains PARTIALLY ACCEPTED, admission only.
+ADR-0004 remains ACCEPTED including the S05 amendment.
+ADR-0005 through ADR-0007 remain NOT APPROVED.
+
+### Exactly one next action
+
+Review and deliver the WP05 final documentation PR.
+Require all four CI jobs on the final PR and merged main,
+followed by explicit owner closeout acceptance.
+
+Do not start Sprint S06 before S05 final closure and
+separate owner authorization.
+
+Production remains NOT APPROVED.
+
+All earlier dated checkpoints and resume instructions
+are retained as historical evidence and are superseded
+by this authoritative checkpoint.
+
+---
+
+## Historical checkpoint — 2026-11-25, S05-WP04 DESIGN_IN_PROGRESS
 
 This active checkpoint supersedes earlier WP02
 resume instructions retained below.
