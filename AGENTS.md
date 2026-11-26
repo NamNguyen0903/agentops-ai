@@ -1,3 +1,110 @@
+# AgentOps AI — Active S08 Engineering Policy Amendment
+
+**Date:** 2026-11-26
+
+**Authority:** S08 Contract v1.0 — OWNER APPROVED.
+
+**Scope:** Development MVP only.
+
+**Authoritative contract:** `docs/sprints/S08.md`.
+
+**Current package:** WP01 documentation.
+
+## Exact Owner authorization
+
+APPROVE S08 CONTRACT v1.0 — DEVELOPMENT MVP ONLY.
+
+Approve WP01–WP07, AC01–AC36, S08-SG01–S08-SG20, AD08-01–AD08-12, proposed evaluation dataset and retained execution budgets.
+
+Authorize FAST-TRACK implementation, testing, scoped debugging and documentation within approved work-package boundaries, without repeated routine approvals.
+
+Authorize WP01 documentation as the immediate next execution package.
+
+Preserve D06-02 and D06-03 scoped closure. D06-01, D06-04, D06-05 and D06-06 remain mandatory S08 obligations.
+
+Dependency changes, unapproved material schema or architecture changes, live credentials, controlled live smoke testing, Git delivery and merges retain separate Owner authorization.
+
+No paid usage, routine external activation or production deployment.
+
+PRODUCTION REMAINS NOT APPROVED.
+
+## Active checkpoint
+
+- S00–S07: CLOSED.
+- S07 acceptance: 36/36.
+- S07 scoped security: 20/20.
+- S07 cumulative delivery CI: 16/16 PASS.
+- S07 final main: `99c220233a296dcaf6a007865d1a1e52d854602c`.
+- S07 final main CI: 45793307007.
+- Protected stash: `13ab03b82e68364c8f4f022821e12dca5ec7b731`.
+- WP00 discovery: VERIFIED, 36/36 PASS.
+- S08: IN_PROGRESS, WP01.
+- S09: PLANNED.
+
+The authoritative active checkpoint is
+`docs/handoff/CURRENT_STATE.md`.
+
+The Owner-operated FAST-TRACK workflow remains binding.
+The assistant prepares complete reviewable Terminal packages.
+The Owner applies changes and runs commands locally.
+
+Do not autonomously mutate the repository.
+
+## Mandatory successor obligations
+
+| ID | Obligation | Dependencies | Status |
+| --- | --- | --- | --- |
+| D06-01 | Provider interoperability | D06-02, D06-03 | OPEN |
+| D06-02 | Secure connector verification | None | CLOSED_VERIFIED_ISOLATED_DEVELOPMENT_MVP |
+| D06-03 | Execution budgets and deadlines | None | CLOSED_VERIFIED_ISOLATED_DEVELOPMENT_MVP |
+| D06-04 | Actual provider usage and cost accounting | D06-01, D06-03 | OPEN |
+| D06-05 | Real evidence integration | D06-01 through D06-04 | OPEN |
+| D06-06 | Integrated external security acceptance | D06-01 through D06-05 | OPEN |
+
+D06-02 and D06-03 closure remains limited to
+verified isolated Development MVP scope.
+
+All original acceptance requirements for the remaining
+four obligations are retained.
+
+## Engineering authority
+
+AD08-01–AD08-12 are approved only within the scope of
+S08 Contract v1.0.
+
+Preserve all nonconflicting historical policies and ADR decisions.
+
+ADR-0005 remains NOT APPROVED.
+Dependency changes require separate approval.
+
+External execution remains denied until separately authorized.
+Worker activation remains disabled by default.
+Preserve existing Development MVP authentication under ADR-0002
+and its approved restrictions. No real-user authentication or
+production authentication is authorized.
+No live credentials or live smoke execution before G04.
+No paid usage or production deployment.
+
+Preserve the strict Authlib XFAIL, historical security gates,
+single worktree, protected stash, and release governance limitation.
+
+Git delivery and merges require separate Owner authorization.
+
+WP01 is the immediate authorized work package.
+WP02 cannot begin before contract delivery and its mandatory
+feature/merged-main CI are verified.
+
+Exactly one next action after local WP01 preparation:
+review evidence and request G02 contract delivery authorization.
+
+PRODUCTION REMAINS NOT APPROVED.
+
+---
+
+# Retained historical record
+
+The following original content is preserved verbatim. Nonconflicting requirements remain binding. The active S08 amendment above supersedes conflicting historical sprint-status and authorization statements.
+
 # Active S07 WP04 FAST-TRACK authority — 2026-11-26
 
 The Owner's MASTER EXECUTION DIRECTIVE — COMPLETE SPRINT S07 supersedes

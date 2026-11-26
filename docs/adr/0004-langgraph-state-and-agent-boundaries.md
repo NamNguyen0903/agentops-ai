@@ -1,3 +1,44 @@
+# ADR-0004 — S08 scoped workflow and evaluation amendment
+
+Date: 2026-11-26.
+
+Status: ACCEPTED — Development MVP only.
+
+Authority: S08 Contract v1.0, AD08-08 and AD08-10.
+
+Preserve existing typed LangGraph state, bounded routing,
+specialized agent boundaries and application-owned permissions.
+
+## Approved S08 additions
+
+- Integrate explicitly authorized real evidence into
+  the existing bounded workflow.
+- Do not give models direct provider or credential access.
+- Keep retrieved content untrusted and unable to alter policy.
+- Preserve structural citation validation and provenance.
+- Maintain safe insufficient-evidence behavior.
+- Create versioned evaluation dataset and frozen fixtures.
+- Preserve held-out separation from tuning.
+- Compare manual, single-model and AgentOps baselines.
+- Use human review for semantic grounding.
+- Preserve stricter S05 invocation, repair, recursion and
+  cooperative deadline limits.
+
+No live model selection or live inference is approved.
+No paid inference or report publication.
+No semantic accuracy claim based only on structural validation.
+
+D06-05 remains OPEN pending actual real-evidence integration
+and evaluation evidence.
+
+Production remains NOT APPROVED.
+
+---
+
+# Retained historical record
+
+The following original content is preserved verbatim. Nonconflicting requirements remain binding. The active S08 amendment above supersedes conflicting historical sprint-status and authorization statements.
+
 # ADR-0004 — S06 Scoped Architecture Amendment
 
 > **Active S06 amendment — S06-AMEND-001:**
