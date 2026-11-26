@@ -1,3 +1,28 @@
+## S08 WP06-B-R03 CI recovery resume
+
+Original feature commit: `23ce5d5ee4da15a31604e1b8927d26446329d682`.
+Feature PR: #28.
+R02 evidence SHA256: `abc23d1ef990b19635ddc061f3a6913fa58175ee78a39cf8bdff53c48f811f1f`.
+
+Six affected historical S06 provider regression cases passed
+in the Docker network-none test run (6 passed in 0.97s).
+
+JUnit export failed after the container stopped. The
+original pytest stdout is retained; no JUnit result is
+claimed or reconstructed.
+
+Exact test diff and original fixture identities verified.
+No local test rerun and no additional runtime modifications.
+
+Mandatory four-job successor feature CI remains required.
+Contract v1.1 and S08-AMEND-001 remain effective.
+D06-05 and D06-06 remain OPEN.
+Mandatory S09 obligations remain unchanged.
+
+PRODUCTION REMAINS NOT APPROVED.
+
+---
+
 # Authoritative S08 v1.1 checkpoint
 
 - Amendment: S08-AMEND-001, Owner approved.
