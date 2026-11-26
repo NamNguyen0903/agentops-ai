@@ -1,3 +1,42 @@
+# ADR-0003 — S08 scoped accounting amendment
+
+Date: 2026-11-26.
+
+Status: ACCEPTED — scoped Development MVP additions only.
+
+Authority: S08 Contract v1.0, AD08-05, AD08-06,
+AD08-09 and AD08-12.
+
+Preserve all approved S03 and S07 execution decisions.
+
+## Approved S08 scope
+
+- Actual provider usage integrated with durable accounting.
+- Application-owned reservations before dispatch.
+- Idempotent settlement and duplicate reconciliation.
+- Cumulative budgets survive retries and recovery.
+- No automatic retry or refund after indeterminate execution.
+- Preserve deadlines, leases, fencing and terminal immutability.
+- Preserve transactional writes and deletion barriers.
+- External execution and routine worker activation remain denied.
+
+Provider calls must remain outside database transactions.
+Settlement must not permit stale attempts to publish outcomes.
+
+D06-03 retains isolated closure.
+D06-04 remains OPEN until actual accounting evidence is verified.
+
+No new database migration or material architecture change
+outside approved scope is authorized by this amendment.
+
+No production or external activation authorization.
+
+---
+
+# Retained historical record
+
+The following original content is preserved verbatim. Nonconflicting requirements remain binding. The active S08 amendment above supersedes conflicting historical sprint-status and authorization statements.
+
 # ADR-0003 — S07 scoped acceptance amendment
 
 Recorded at: 2026-11-25T15:19:46.940631+00:00.

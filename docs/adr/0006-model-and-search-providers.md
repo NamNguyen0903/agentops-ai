@@ -1,3 +1,66 @@
+# ADR-0006 — S08 scoped provider and authorization amendment
+
+Date: 2026-11-26.
+
+Status: PARTIALLY ACCEPTED — scoped Development MVP additions.
+
+Authority: S08 Contract v1.0, AD08-02 through AD08-06,
+AD08-08 and AD08-12.
+
+## Provider baseline
+
+Retain the previously selected Tavily Researcher Free Plan,
+Basic Search and HTTPX REST adapter implementation direction.
+
+Vendor selection does not authorize live external execution.
+Free-plan status does not prove protection against billing.
+
+Before actual provider acceptance, verify current official API,
+account quota, billing settings, applicable data handling terms,
+runtime dependency availability and actual bounded smoke evidence.
+
+HTTPX runtime availability must be established in the actual
+supported runtime environment.
+
+No new dependency or lockfile change without separate approval.
+
+## Approved integration scope
+
+- Prepare narrow controlled live-smoke authorization.
+- Keep authorization application-owned and non-model-controlled.
+- Preserve default-deny behavior.
+- Reuse S07 secure connector, DNS validation, numeric destination
+  binding, peer verification, TLS and bounded HTTP behavior.
+- Reserve budget before dispatch.
+- Validate actual provider usage.
+- Reconcile provider credits with application accounting.
+- Fail closed on missing, invalid or indeterminate usage.
+- No unauthorized retry, paid fallback or automatic billing.
+
+Separate G04 approval is required before credential use
+or controlled live-provider smoke execution.
+
+G04 must establish exact scope, endpoints, operations,
+request/credit allowance, deadline, billing safeguards,
+sanitization and stop conditions.
+
+No routine live execution is approved.
+No paid search, paid inference, PAYG or deployment.
+
+Amazon Bedrock remains the intended model-provider direction.
+No concrete live model, AWS region or account activation is approved.
+
+D06-02 and D06-03 preserve their isolated closure.
+D06-01 and D06-04 remain OPEN.
+
+Production remains NOT APPROVED.
+
+---
+
+# Retained historical record
+
+The following original content is preserved verbatim. Nonconflicting requirements remain binding. The active S08 amendment above supersedes conflicting historical sprint-status and authorization statements.
+
 # ADR-0006 — S07 scoped acceptance amendment
 
 Recorded at: 2026-11-25T15:19:46.940631+00:00.

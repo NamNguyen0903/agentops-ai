@@ -1,3 +1,54 @@
+# ADR-0007 — S08 scoped real evidence and security amendment
+
+Date: 2026-11-26.
+
+Status: PARTIALLY ACCEPTED — scoped Development MVP additions.
+
+Authority: S08 Contract v1.0, AD08-03, AD08-07,
+AD08-09, AD08-10, AD08-11 and AD08-12.
+
+## Approved scope
+
+- Explicit real/synthetic evidence distinction.
+- Genuine retrieval timestamps and provenance.
+- Source identity, integrity and deduplication.
+- Owner/task/attempt isolation and fenced persistence.
+- Preserve deletion barriers and stale-attempt rejection.
+- Reject fabricated, unknown, deleted and cross-task citations.
+- Treat provider output and retrieved content as untrusted.
+- Preserve credential protection and sanitized logs/errors.
+- Separate fixture evaluation from actual external evaluation.
+- Keep report candidates nonpublishable.
+
+Do not imply normalized excerpt integrity proves full fetched-page
+integrity unless the complete integrity boundary is verified.
+
+Application-level repository scope checks are not database RLS.
+
+No provider-specific retention guarantee is assumed.
+Do not send confidential internal data, secrets or sensitive
+personal information to external providers.
+
+D06-05 and D06-06 remain OPEN pending actual evidence.
+Historical S06 SG06, SG08 and SG10 require proper reconciliation.
+
+Preserve all historical authorization, security, retention,
+deletion and release restrictions.
+
+Material schema changes require applicable approval.
+Shared database migration remains prohibited.
+
+No routine external activation, real-user authentication,
+report publication or production deployment.
+
+Production remains NOT APPROVED.
+
+---
+
+# Retained historical record
+
+The following original content is preserved verbatim. Nonconflicting requirements remain binding. The active S08 amendment above supersedes conflicting historical sprint-status and authorization statements.
+
 # ADR-0007 — S07 scoped acceptance amendment
 
 Recorded at: 2026-11-25T15:19:46.940631+00:00.

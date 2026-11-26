@@ -1,3 +1,40 @@
+# Authoritative active roadmap — 2026-11-26
+
+S08 Contract v1.0 — OWNER APPROVED.
+
+| Sprint | Deliverable | Effective status |
+| --- | --- | --- |
+| S00 | Product planning and architecture | CLOSED |
+| S01 | Application foundation | CLOSED |
+| S02 | Database and authentication | CLOSED |
+| S03 | Research task API and dashboard | CLOSED |
+| S04 | LangGraph workflow baseline | CLOSED |
+| S05 | Specialized agent nodes | CLOSED |
+| S06 | Offline Evidence and Citation Foundation | CLOSED |
+| S07 | Worker Reliability and Secure Acquisition | CLOSED |
+| S08 | Live Research Integration, Evaluation and Security | IN_PROGRESS — WP01 |
+| S09 | CI/CD and AWS Staging Preparation | PLANNED |
+
+Eight of ten planned sprints are closed.
+This is not a production-readiness measurement.
+
+S08 authoritative contract: `docs/sprints/S08.md`.
+
+D06-02 and D06-03 remain closed within isolated Development MVP.
+D06-01, D06-04, D06-05 and D06-06 remain mandatory S08 obligations.
+
+The active checkpoint is `docs/handoff/CURRENT_STATE.md`.
+
+S09 is not authorized to begin.
+
+Production remains NOT APPROVED.
+
+---
+
+# Retained historical record
+
+The following original content is preserved verbatim. Nonconflicting requirements remain binding. The active S08 amendment above supersedes conflicting historical sprint-status and authorization statements.
+
 # AgentOps AI — S07 authoritative closeout checkpoint
 
 ## Authoritative S07 final closeout record
