@@ -186,6 +186,7 @@ async def revalidate_outcome(
     scope,
     question,
     outcome,
+    execution_handle=None,
 ):
     """Re-read current scoped records and validate output.
 
@@ -202,10 +203,15 @@ async def revalidate_outcome(
             MAX_QUESTION_CHARS,
         )
 
-        current = await list_evidence(
-            session,
-            scope=scope,
-        )
+        if execution_handle is None:
+            current = await list_evidence(
+                session, scope=scope,
+            )
+        else:
+            current = await list_evidence(
+                session, scope=scope,
+                execution_handle=execution_handle,
+            )
 
         assessment = assess_evidence(
             scope,

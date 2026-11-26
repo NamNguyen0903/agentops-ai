@@ -12,6 +12,7 @@ from .contracts import (
     validate_contract,
 )
 from .errors import AcquisitionError, ErrorCode
+from .budgets import acquisition_boundary
 from .network_policy import (
     validate_url,
     bind_destination,
@@ -180,20 +181,11 @@ def retrieve_offline(
 
     while True:
         budget.check(deadline)
-        budget.reserve_retrieval(deadline)
-
-        target = bind_destination(
-            current.url, resolver
-        )
-
-        budget.check(deadline)
-
-        timeout = budget.remaining(deadline)
 
         try:
-            response = transport.send(
-                target,
-                timeout=timeout,
+            target, response = _accounted_hop(
+                current, budget, resolver, transport, deadline,
+                redirects=redirects,
             )
         except TransientTransportError:
             budget.check(deadline)
@@ -203,10 +195,6 @@ def retrieve_offline(
 
             retries += 1
             continue
-        except Exception:
-            raise AcquisitionError(
-                ErrorCode.TRANSPORT_FAILURE
-            ) from None
 
         budget.check(deadline)
 
@@ -269,3 +257,21 @@ def retrieve_offline(
             body=body,
             synthetic=True,
         )
+
+
+@acquisition_boundary("retrieval", hop=True)
+def _accounted_hop(current, budget, resolver, transport, deadline, *, redirects):
+    budget.check(deadline)
+    budget.reserve_retrieval(deadline)
+    target = bind_destination(current.url, resolver)
+    budget.check(deadline)
+    timeout = budget.remaining(deadline)
+    try:
+        response = transport.send(target, timeout=timeout)
+    except TransientTransportError:
+        raise
+    except Exception:
+        # Only transport-body failures are sanitized here. Budget, deadline
+        # and DNS policy errors above retain their original error codes.
+        raise AcquisitionError(ErrorCode.TRANSPORT_FAILURE) from None
+    return target, response

@@ -40,6 +40,8 @@ def test_metadata_registers_approved_identity_models() -> None:
         User,
     )
 
+    from agentops_api.models import research, queue, evidence, execution, execution_context  # noqa: F401
+
     assert Base.metadata.schema == APP_SCHEMA
 
     expected_tables = {
@@ -50,6 +52,9 @@ def test_metadata_registers_approved_identity_models() -> None:
         "app.research_tasks",
         "app.queue_control",
         "app.research_evidence",
+        "app.research_execution_attempts",
+        "app.research_execution_contexts",
+        "app.research_operation_ledger",
     }
 
     assert set(Base.metadata.tables) == expected_tables

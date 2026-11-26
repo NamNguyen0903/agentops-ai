@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from math import isfinite
 
 import httpx
+from agentops_api.agent.durable_hooks import acquisition_boundary
 
 from agentops_api.agent.s06.budgets import Budget
 from agentops_api.agent.s06.contracts import (
@@ -203,6 +204,7 @@ def prepare_basic_request(request):
     return {'query': request.query, 'search_depth': 'basic', 'topic': 'general', 'max_results': request.max_results, 'auto_parameters': False, 'include_answer': False, 'include_raw_content': False, 'include_images': False, 'include_image_descriptions': False, 'include_favicon': False, 'include_usage': True}
 
 
+@acquisition_boundary("search")
 def _execute(
     request,
     budget,

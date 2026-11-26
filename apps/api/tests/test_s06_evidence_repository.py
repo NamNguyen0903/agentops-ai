@@ -89,6 +89,7 @@ def test_insert_evidence_under_task_lock():
 
     session = FakeSession((
         context.task_id,
+        False,
         None,
         0,
         value.id,
@@ -105,7 +106,7 @@ def test_insert_evidence_under_task_lock():
 
     assert "FOR UPDATE" in sql(session.statements[0])
 
-    statement = sql(session.statements[3])
+    statement = sql(session.statements[4])
 
     assert "INSERT INTO app.research_evidence" in statement
     assert "ON CONFLICT" in statement
@@ -118,6 +119,7 @@ def test_duplicate_reuses_existing_record():
 
     session = FakeSession((
         context.task_id,
+        False,
         row(value),
     ))
 
@@ -127,7 +129,7 @@ def test_duplicate_reuses_existing_record():
 
     assert result.created is False
     assert result.record == value
-    assert len(session.statements) == 2
+    assert len(session.statements) == 3
 
 
 @pytest.mark.parametrize("count", [20, 21, 100])
@@ -137,6 +139,7 @@ def test_task_wide_limit(count):
 
     session = FakeSession((
         context.task_id,
+        False,
         None,
         count,
     ))
@@ -148,12 +151,12 @@ def test_task_wide_limit(count):
             record=value,
         ))
 
-    query = sql(session.statements[2])
+    query = sql(session.statements[3])
 
     assert "research_evidence.owner_id" in query
     assert "research_evidence.task_id" in query
     assert "research_evidence.execution_id" not in query
-    assert len(session.statements) == 3
+    assert len(session.statements) == 4
 
 
 @pytest.mark.parametrize("count", [
@@ -164,6 +167,7 @@ def test_invalid_count_rejected(count):
 
     session = FakeSession((
         context.task_id,
+        False,
         None,
         count,
     ))
@@ -224,6 +228,7 @@ def test_get_evidence_scoped_query():
 
     session = FakeSession((
         context.task_id,
+        False,
         row(value),
     ))
 
@@ -233,14 +238,14 @@ def test_get_evidence_scoped_query():
         evidence_id=value.id,
     )) == value
 
-    query = sql(session.statements[1])
+    query = sql(session.statements[2])
 
     for field in (
         "owner_id", "task_id", "execution_id", "id"
     ):
         assert f"research_evidence.{field}" in query
 
-    parameters = session.statements[1].compile(
+    parameters = session.statements[2].compile(
         dialect=postgresql.dialect()
     ).params
 
@@ -259,6 +264,7 @@ def test_missing_evidence_returns_none():
 
     session = FakeSession((
         context.task_id,
+        False,
         None,
     ))
 
@@ -275,6 +281,7 @@ def test_list_evidence_scope_and_order():
 
     session = FakeSession((
         context.task_id,
+        False,
         [row(value)],
     ))
 
@@ -282,7 +289,7 @@ def test_list_evidence_scope_and_order():
         session, scope=context
     )) == (value,)
 
-    query = sql(session.statements[1])
+    query = sql(session.statements[2])
 
     assert "research_evidence.execution_id" in query
     assert "ORDER BY" in query
@@ -295,6 +302,7 @@ def test_list_excessive_rows_rejected():
 
     session = FakeSession((
         context.task_id,
+        False,
         [row(value)] * 21,
     ))
 
@@ -310,6 +318,7 @@ def test_list_duplicate_rows_rejected():
 
     session = FakeSession((
         context.task_id,
+        False,
         [row(value), row(value)],
     ))
 
@@ -339,6 +348,7 @@ def test_conflict_without_scoped_record_rejected():
 
     session = FakeSession((
         context.task_id,
+        False,
         None,
         0,
         None,
@@ -359,6 +369,7 @@ def test_tampered_database_content_rejected():
 
     session = FakeSession((
         context.task_id,
+        False,
         row(replace(value, excerpt="tampered")),
     ))
 
@@ -376,6 +387,7 @@ def test_cross_execution_row_rejected():
 
     session = FakeSession((
         context.task_id,
+        False,
         row(record(
             replace(context, execution_id=scope().execution_id)
         )),
@@ -387,3 +399,19 @@ def test_cross_execution_row_rejected():
             scope=context,
             evidence_id=value.id,
         ))
+
+
+
+def test_legacy_scope_cannot_bypass_worker_attempt():
+    context = scope()
+    session = FakeSession((context.task_id, True))
+
+    with pytest.raises(EvidenceUnavailable):
+        run(store_evidence(
+            session, scope=context, record=record(context),
+        ))
+
+    assert len(session.statements) == 2
+    assert "research_execution_attempts" in sql(
+        session.statements[1]
+    )
