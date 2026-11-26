@@ -1,3 +1,136 @@
+# AgentOps AI — S07 authoritative closeout checkpoint
+
+## Authoritative S07 final closeout record
+
+Owner authorization: 2026-11-26.
+
+Contract v1.0 — Worker Reliability & Secure Acquisition.
+
+**Status: CLOSEOUT AUTHORIZED — binding finalization required.**
+
+**Effective final status: CLOSED — DEVELOPMENT MVP ONLY.**
+
+The effective CLOSED designation, official acceptance 36/36,
+and scoped security acceptance 20/20 become valid only after
+the exact docs-only closeout PR is merged, final main CI passes
+all four mandatory jobs, the strict Authlib expected XFAIL is
+verified, and the final clean repository checkpoint is recorded
+in `S07_FINAL_CLOSEOUT_EVIDENCE.txt` with exit code 0.
+
+Until those conditions are satisfied, S07 remains CLOSEOUT_PENDING.
+This document does not claim a future CI result has already passed.
+
+### Accepted implementation checkpoint
+
+- S00–S06: CLOSED.
+- S07 WP01–WP05: reviewed technical implementation complete.
+- WP06-A/B/C: verified delivery and feature-main CI.
+- Feature PR: #25, MERGED.
+- Feature commit: `7c64d9d10dfa9a737f03f8c1ee6c96b99886d2f3`.
+- Feature merge commit: `6ee84559156cdebed98751033dff3f652b98e4e4`.
+- Feature PR CI: 45790854345, 4/4 PASS.
+- Feature merged-main CI: 45791775230, 4/4 PASS.
+- Authlib: 56 passed, 1 expected strict XFAIL, zero XPASS.
+- WP05 integrated runtime: 278/278 PASS.
+- Nine integrated worker cases and 117 affected WP04 cases passed.
+- Feature scope: 44 files.
+- Feature inventory: 270 paths.
+- Dependency manifests: 14 unchanged.
+- AC01–AC35: technically verified within Development MVP.
+- AC36: subject to binding finalization.
+- No security waivers.
+- No production deployment.
+
+### Binding evidence references
+
+- WP04 R04 SHA256: `2bb27550b71d9e567a45bd39286a49ac505e295a8ede6fa7a3e7f57169a91f8a`
+- WP05 R04 SHA256: `02c38906588b32ae961c1e31d2210fd594f80fe0708851ab88250e279bc357ec`
+- WP06-A SHA256: `50377bfd409b80f8c7522d8154722828d124d586b0aa4cfd25aa7664722e40ab`
+- WP06-B-R01 SHA256: `e818f73e38cfd2ab272eff265f557ad043acd51c3d325fc2fabcc582dab02241`
+- WP06-C SHA256: `7da79f9e7a468e272170aba35cd219ae0b24d4e5349479a4120028b02ec05cff`
+- Approved feature inventory SHA256: `2205e2fb887ca6d451da71c64ac1a9c17408b05f1a58bb985b24fe192bdd04ed`
+
+The final delivery evidence records the exact closeout PR,
+closeout commit, closeout PR CI, final merge commit,
+final main CI, final inventory and activated acceptance results.
+
+See `docs/sprints/S07_CLOSEOUT.md` for the complete reconciliation.
+
+### Mandatory successor obligations
+
+| Obligation | Status | Successor |
+| --- | --- | --- |
+| D06-01 — Provider interoperability | OPEN | S08 |
+| D06-02 — Secure connector verification | CLOSED_VERIFIED_ISOLATED_DEVELOPMENT_MVP | S07 |
+| D06-03 — Execution budgets and deadlines | CLOSED_VERIFIED_ISOLATED_DEVELOPMENT_MVP | S07 |
+| D06-04 — Actual provider usage and cost accounting | OPEN | S08 |
+| D06-05 — Real evidence integration | OPEN | S08 |
+| D06-06 — Integrated external security acceptance | OPEN | S08 |
+
+D06-02 and D06-03 closures are limited to the verified isolated
+Development MVP. They are not production approval.
+
+No claim of hard synchronous-thread termination, remote provider
+cancellation, actual provider billing reconciliation or recovery
+beyond the original authorized deadlines.
+
+Historical S06 acceptance and security records remain historical.
+S06 SG06, SG08 and SG10 are not silently promoted to VERIFIED
+by this separate S07 security reconciliation.
+
+### Release and governance constraints
+
+- PRODUCTION REMAINS NOT APPROVED.
+- External execution remains unconditionally denied.
+- Authentication remains disabled by default.
+- No live credentials, paid inference, paid search or PAYG.
+- No shared database migration.
+- No worker activation outside authorized isolated test scope.
+- No real-user authentication or unauthorized report publication.
+- No production deployment or security waiver.
+- Dependency changes still require separate approval.
+- NO_REQUIRED_CHECKS_REPORTED governance limitation is retained.
+- CI success does not prove enforced branch protection.
+- S09 governance review obligation remains mandatory.
+- Preserve all existing ADR scope restrictions.
+- Protected stash: `13ab03b82e68364c8f4f022821e12dca5ec7b731`.
+- Single canonical workspace: `/Users/namnguyen/agentops-ai`.
+- No additional worktrees, force-push or history rewriting.
+
+### Next sprint handoff
+
+After binding finalization:
+
+| Sprint | Effective status |
+| --- | --- |
+| S00–S07 | CLOSED — scoped Development MVP |
+| S08 | NEXT — NOT STARTED |
+| S09 | PLANNED |
+
+Eight of ten planned sprints will be closed.
+This is not a production-readiness percentage.
+
+S08 must begin by reading AGENTS.md, CURRENT_STATE.md, INDEX.md,
+S07.md and S07_CLOSEOUT.md, reconciling final closeout evidence
+and obtaining separate Owner approval of the S08 contract.
+
+Carry forward D06-01, D06-04, D06-05 and D06-06.
+No S08 implementation or controlled live smoke test is authorized
+by this closeout.
+
+This checkpoint supersedes conflicting historical sprint-status
+and next-action statements, including older AGENTS.md sprint
+checkpoints. All nonconflicting engineering and security
+requirements remain binding.
+
+---
+
+## Historical records — preserved verbatim
+
+The following content is retained for audit history. Earlier pending statuses are superseded by the binding finalization rule above.
+
+---
+
 ## S07 active WP06-A delivery checkpoint
 
 Recorded UTC: 2026-11-26T09:13:17.901371+00:00
