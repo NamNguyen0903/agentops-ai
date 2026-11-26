@@ -50,13 +50,20 @@ expected_tables = {
     "research_operation_ledger",
 }
 
-revision = "d8b3105f0804"
-if phase != "upgraded":
+revision = "f9d3106b0802"
+if phase == "upgraded":
+    expected_tables.update({
+        "research_smoke_grants",
+        "research_real_evidence",
+    })
+elif phase != "accounting":
     expected_tables.remove("research_execution_contexts")
     expected_tables.remove("research_operation_ledger")
-if phase not in {"upgraded", "attempt"}:
+if phase not in {"upgraded", "accounting", "attempt"}:
     expected_tables.remove("research_execution_attempts")
-if phase == "attempt":
+if phase == "accounting":
+    revision = "d8b3105f0804"
+elif phase == "attempt":
     revision = "c7a2104e0702"
 elif phase == "evidence":
     revision = "b6e0326a7103"
@@ -112,7 +119,7 @@ try:
             assert tables == set(), tables
             assert current_revision is None
 
-        elif phase in {"upgraded", "attempt", "evidence", "queue", "research", "identity"}:
+        elif phase in {"upgraded", "accounting", "attempt", "evidence", "queue", "research", "identity"}:
             assert tables == expected_tables, tables
             assert current_revision == revision
 
@@ -145,7 +152,12 @@ try:
 
                     expected = (
                         privilege in {"SELECT", "INSERT"}
-                        if table_name == "research_evidence"
+                        if table_name in {
+                            "research_evidence",
+                            "research_real_evidence",
+                        }
+                        else privilege == "SELECT"
+                        if table_name == "research_smoke_grants"
                         else privilege in {"SELECT", "INSERT", "UPDATE"}
                         if table_name in {
                             "research_execution_attempts",
@@ -203,7 +215,7 @@ try:
                     f"{accounting_table}"
                 )
 
-            if phase in {"upgraded", "attempt"}:
+            if phase in {"upgraded", "accounting", "attempt"}:
                 present = connection.scalar(
                     text(
                         "SELECT count(*) FROM pg_constraint "
@@ -215,7 +227,7 @@ try:
                 )
 
                 assert present == (
-                    1 if phase == "upgraded" else 0
+                    1 if phase in {"upgraded", "accounting"} else 0
                 )
 
             if "research_execution_attempts" in expected_tables:
@@ -344,6 +356,17 @@ PY
 python -m alembic -c alembic.ini upgrade head
 check_state upgraded
 python -m alembic -c alembic.ini check
+
+echo "=== S08 Provider-foundation migration lifecycle ==="
+
+python -m alembic -c alembic.ini downgrade d8b3105f0804
+check_state accounting
+
+python -m alembic -c alembic.ini upgrade head
+check_state upgraded
+python -m alembic -c alembic.ini check
+
+echo "PASS: S08 provider-foundation downgrade and upgrade"
 
 echo "=== S07 Durable-accounting migration lifecycle ==="
 
@@ -478,6 +501,22 @@ python -m pytest -p no:cacheprovider -q --tb=short tests/test_s06_workflow_postg
 
 echo "PASS: S06 workflow PostgreSQL integration tests"
 
+
+echo "=== S08 PostgreSQL Integration ==="
+
+python -m pytest -p no:cacheprovider -q --tb=short \
+    -m integration \
+    tests/test_s08_schema_postgres.py \
+    tests/test_s08_provider_accounting_postgres.py \
+    tests/test_s08_smoke_wire.py \
+    tests/test_s08_real_evidence.py \
+    tests/test_s08_controlled_research.py \
+    tests/test_s08_integrated_security.py \
+    tests/test_s08_persistence_security.py \
+    tests/test_s08_owner_smoke.py \
+    tests/test_s08_retrieval_only.py
+
+echo "PASS: S08 PostgreSQL integration"
 
 echo "=== S07 Backend Regression ==="
 

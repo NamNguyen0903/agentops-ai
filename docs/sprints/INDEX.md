@@ -1,3 +1,21 @@
+# Authoritative S08 v1.1 checkpoint
+
+- Amendment: S08-AMEND-001, Owner approved.
+- Original v1.0 requirements preserved.
+- WP05: scoped technical milestone complete.
+- WP06-A: integrated evidence and static feature review complete.
+- Next: G05 separate feature delivery authorization.
+- Official final acceptance: not yet granted.
+- Mandatory S09: outstanding AC22/23 and AC26–29.
+- D06-05 and D06-06 remain OPEN.
+- AC31, AC33 and applicable security gates remain open
+  pending complete reconciliation.
+- S09: NOT STARTED.
+- Production: NOT APPROVED.
+
+Evidence and traceability:
+`docs/sprints/S08_AMEND_001.md`.
+
 # Authoritative active roadmap — 2026-11-26
 
 S08 Contract v1.0 — OWNER APPROVED.

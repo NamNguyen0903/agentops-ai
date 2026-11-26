@@ -10,6 +10,9 @@ the application service under the approved transaction lock order.
 from datetime import datetime
 from uuid import UUID, uuid4
 
+import sqlalchemy as sa
+from sqlalchemy.schema import conv
+
 from sqlalchemy import (
     CheckConstraint,
     DateTime,
@@ -298,6 +301,24 @@ class ResearchOperationReservation(Base):
             "AND actual_cost_microusd IS NULL)",
             name="actual_usage_resolution",
         ),
+        UniqueConstraint(
+            'owner_id', 'task_id', 'attempt_id', 'id', 'acquisition_origin', 'kind', 'status',
+            name="uq_s08_operation_scope",
+        ),
+        ForeignKeyConstraint(
+            ['owner_id', 'task_id', 'smoke_grant_id'],
+            ['app.research_smoke_grants.owner_id', 'app.research_smoke_grants.task_id', 'app.research_smoke_grants.id'],
+            name="fk_s08_operation_grant",
+            ondelete="RESTRICT",
+        ),
+        CheckConstraint(
+            "(\n    (\n        acquisition_origin IS NULL\n        AND provider_name IS NULL\n        AND reserved_provider_credits IS NULL\n        AND observed_provider_credits IS NULL\n        AND smoke_grant_id IS NULL\n        AND request_sha256 IS NULL\n    )\n    OR\n    (\n        acquisition_origin IN ('synthetic', 'live')\n        AND kind IN ('search', 'retrieval')\n        AND request_sha256 IS NOT NULL\n        AND octet_length(request_sha256) = 32\n        AND (\n            (acquisition_origin = 'synthetic'\n             AND smoke_grant_id IS NULL)\n            OR\n            (acquisition_origin = 'live'\n             AND smoke_grant_id IS NOT NULL\n             AND retry_ordinal = 0\n             AND NOT retry_eligible)\n        )\n        AND (\n            (\n                kind = 'search'\n                AND provider_name = 'tavily'\n                AND reserved_provider_credits = 1\n                AND (\n                    observed_provider_credits IS NULL\n                    OR (\n                        observed_provider_credits = 1\n                        AND dispatched_at IS NOT NULL\n                        AND resolved_at IS NOT NULL\n                    )\n                )\n                AND (\n                    status <> 'succeeded'\n                    OR observed_provider_credits = 1\n                )\n            )\n            OR\n            (\n                kind = 'retrieval'\n                AND provider_name IS NULL\n                AND reserved_provider_credits IS NULL\n                AND observed_provider_credits IS NULL\n            )\n        )\n    )\n) IS TRUE",
+            name=conv("ck_s08_operation_provider"),
+        ),
+        Index(
+            "ix_s08_operation_grant",
+            "smoke_grant_id",
+        ),
         Index(
             "uq_operation_unresolved_task",
             "task_id",
@@ -376,4 +397,166 @@ class ResearchOperationReservation(Base):
 
     actual_cost_microusd: Mapped[int | None] = mapped_column(
         Integer
+    )
+
+    acquisition_origin: Mapped[str | None] = mapped_column(sa.String(16))
+
+    provider_name: Mapped[str | None] = mapped_column(sa.String(32))
+
+    reserved_provider_credits: Mapped[int | None] = mapped_column(sa.Integer())
+
+    observed_provider_credits: Mapped[int | None] = mapped_column(sa.Integer())
+
+    smoke_grant_id: Mapped[UUID | None] = mapped_column(sa.UUID())
+
+    request_sha256: Mapped[bytes | None] = mapped_column(sa.LargeBinary(32))
+
+class ResearchSmokeGrant(Base):
+    """Durable scope; no grant issuance or live authorization on import."""
+
+    __table__ = sa.Table(
+        "research_smoke_grants",
+        Base.metadata,
+        sa.Column("id", sa.UUID(), primary_key=True),
+        sa.Column("owner_id", sa.UUID(), nullable=False),
+        sa.Column("task_id", sa.UUID(), nullable=False),
+        sa.Column("provider_name", sa.String(32), nullable=False),
+        sa.Column("endpoint", sa.String(512), nullable=False),
+        sa.Column(
+            "grant_kind", sa.String(24), nullable=False,
+            server_default=sa.text("'search_bound'"),
+        ),
+        sa.Column("query_sha256", sa.LargeBinary(32)),
+        sa.Column("retrieval_url_sha256", sa.LargeBinary(32)),
+        sa.Column("issued_at", sa.DateTime(timezone=True), nullable=False),
+        sa.Column("expires_at", sa.DateTime(timezone=True), nullable=False),
+        sa.Column("max_search_requests", sa.Integer(), nullable=False),
+        sa.Column("max_provider_credits", sa.Integer(), nullable=False),
+        sa.Column("max_retrieval_requests", sa.Integer(), nullable=False),
+        sa.Column(
+            "lock_marker",
+            sa.Integer(),
+            nullable=False,
+            server_default=sa.text("0"),
+        ),
+        sa.ForeignKeyConstraint(
+            ["owner_id", "task_id"],
+            [
+                "app.research_execution_contexts.owner_id",
+                "app.research_execution_contexts.task_id",
+            ],
+            name="fk_s08_grant_context",
+            ondelete="RESTRICT",
+        ),
+        sa.UniqueConstraint(
+            "owner_id", "task_id",
+            name="uq_s08_grant_task",
+        ),
+        sa.UniqueConstraint(
+            "owner_id", "task_id", "id",
+            name="uq_s08_grant_scope_id",
+        ),
+        sa.CheckConstraint(
+            "((grant_kind = 'search_bound' AND (provider_name = 'tavily' AND endpoint = 'https://api.tavily.com/search')) OR (grant_kind = 'retrieval_only' AND provider_name = 'rfc_editor' AND endpoint = 'https://www.rfc-editor.org/rfc/rfc9110.txt')) IS TRUE",
+            name=conv("ck_s08_grant_provider"),
+        ),
+        sa.CheckConstraint(
+            "((grant_kind = 'search_bound' AND query_sha256 IS NOT NULL AND (octet_length(query_sha256) = 32)) OR (grant_kind = 'retrieval_only' AND query_sha256 IS NULL)) IS TRUE",
+            name=conv("ck_s08_grant_query"),
+        ),
+        sa.CheckConstraint(
+            "expires_at > issued_at "
+            "AND expires_at <= issued_at + interval '15 minutes'",
+            name=conv("ck_s08_grant_expiry"),
+        ),
+        sa.CheckConstraint(
+            "((grant_kind = 'search_bound' AND (max_search_requests BETWEEN 1 AND 6 AND max_provider_credits = max_search_requests)) OR (grant_kind = 'retrieval_only' AND max_search_requests = 0 AND max_provider_credits = 0 AND max_retrieval_requests = 1)) IS TRUE",
+            name=conv("ck_s08_grant_credits"),
+        ),
+        sa.CheckConstraint(
+            "((((max_retrieval_requests = 0 AND retrieval_url_sha256 IS NULL) OR (max_retrieval_requests = 1 AND retrieval_url_sha256 IS NOT NULL AND octet_length(retrieval_url_sha256) = 32))) AND (grant_kind <> 'retrieval_only' OR retrieval_url_sha256 = decode('b0a7ba3817a5518b609f59cf294e1f585487af51d71ceb697ee2a722cd448b00', 'hex'))) IS TRUE",
+            name=conv("ck_s08_grant_retrieval"),
+        ),
+        sa.CheckConstraint(
+            "lock_marker = 0",
+            name=conv("ck_s08_grant_lock_marker"),
+        ),
+        schema="app",
+    )
+
+
+class ResearchRealEvidence(Base):
+    """Separate immutable real-evidence persistence foundation."""
+
+    __table__ = sa.Table(
+        "research_real_evidence",
+        Base.metadata,
+        sa.Column("id", sa.UUID(), primary_key=True),
+        sa.Column("owner_id", sa.UUID(), nullable=False),
+        sa.Column("task_id", sa.UUID(), nullable=False),
+        sa.Column("attempt_id", sa.UUID(), nullable=False),
+        sa.Column("operation_ledger_id", sa.UUID(), nullable=False),
+        sa.Column("acquisition_origin", sa.String(16), nullable=False),
+        sa.Column("operation_kind", sa.String(16), nullable=False),
+        sa.Column("operation_status", sa.String(16), nullable=False),
+        sa.Column("title", sa.String(512), nullable=False),
+        sa.Column("source_url", sa.String(2048), nullable=False),
+        sa.Column("retrieved_url", sa.String(2048), nullable=False),
+        sa.Column("source_identity_sha256", sa.LargeBinary(32), nullable=False),
+        sa.Column("content_hash", sa.LargeBinary(32), nullable=False),
+        sa.Column("excerpt", sa.Text(), nullable=False),
+        sa.Column("acquisition_method", sa.String(32), nullable=False),
+        sa.Column("retrieved_at", sa.DateTime(timezone=True), nullable=False),
+        sa.Column("published_at", sa.DateTime(timezone=True)),
+        sa.ForeignKeyConstraint(
+            [
+                "owner_id", "task_id", "attempt_id",
+                "operation_ledger_id", "acquisition_origin",
+                "operation_kind", "operation_status",
+            ],
+            [
+                "app.research_operation_ledger.owner_id",
+                "app.research_operation_ledger.task_id",
+                "app.research_operation_ledger.attempt_id",
+                "app.research_operation_ledger.id",
+                "app.research_operation_ledger.acquisition_origin",
+                "app.research_operation_ledger.kind",
+                "app.research_operation_ledger.status",
+            ],
+            name="fk_s08_real_operation",
+            ondelete="RESTRICT",
+        ),
+        sa.UniqueConstraint(
+            "owner_id", "task_id", "attempt_id",
+            "source_identity_sha256", "content_hash",
+            name="uq_s08_real_dedup",
+        ),
+        sa.CheckConstraint(
+            "acquisition_origin = 'live' "
+            "AND operation_kind = 'retrieval' "
+            "AND operation_status = 'succeeded' "
+            "AND acquisition_method = 'http_retrieval'",
+            name=conv("ck_s08_real_origin"),
+        ),
+        sa.CheckConstraint(
+            "octet_length(source_identity_sha256) = 32 "
+            "AND octet_length(content_hash) = 32",
+            name=conv("ck_s08_real_hashes"),
+        ),
+        sa.CheckConstraint(
+            "length(btrim(title)) BETWEEN 1 AND 512 "
+            "AND length(excerpt) BETWEEN 1 AND 4096 "
+            "AND length(btrim(excerpt)) > 0",
+            name=conv("ck_s08_real_text"),
+        ),
+        sa.CheckConstraint(
+            "source_url ~ '^https?://' "
+            "AND retrieved_url ~ '^https?://'",
+            name=conv("ck_s08_real_urls"),
+        ),
+        sa.CheckConstraint(
+            "published_at IS NULL OR published_at <= retrieved_at",
+            name=conv("ck_s08_real_publication"),
+        ),
+        schema="app",
     )

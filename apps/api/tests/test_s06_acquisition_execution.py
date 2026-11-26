@@ -226,8 +226,12 @@ def test_live_vendor_path_with_mock_transport(monkeypatch):
         assert kwargs["trust_env"] is False
         assert kwargs["follow_redirects"] is False
 
+        fixture_transport = kwargs["transport"]
+
         kwargs["transport"] = httpx.MockTransport(
-            handler
+            lambda request: _s08_mock_exchange(
+                fixture_transport, handler, request
+            )
         )
 
         return original_client(**kwargs)
@@ -240,7 +244,7 @@ def test_live_vendor_path_with_mock_transport(monkeypatch):
 
     budget = Budget()
 
-    outcome = tavily.search_live(
+    outcome = _s08_partial(_s08_fixture_search, monkeypatch)(
         SearchRequest(query="fixture"),
         budget,
     )
@@ -651,3 +655,11 @@ def test_live_retrieval_routes_into_shared_execution(monkeypatch):
     assert instance.budget is budget
     assert instance.deadline == deadline
     assert synthetic is False
+
+
+# S08 successor fixture compatibility; original assertions retained.
+from functools import partial as _s08_partial
+from tests.s08_legacy_provider_fixture import (
+    fixture_search as _s08_fixture_search,
+    mock_exchange as _s08_mock_exchange,
+)

@@ -58,6 +58,8 @@ def run_migrations_online() -> None:
         "app.research_execution_attempts",
         "app.research_execution_contexts",
         "app.research_operation_ledger",
+        "app.research_smoke_grants",
+        "app.research_real_evidence",
     }:
         raise CommandError(
             "Expected identity, research, queue, evidence, execution and accounting models."

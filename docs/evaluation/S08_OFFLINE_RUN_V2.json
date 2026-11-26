@@ -1,0 +1,871 @@
+{
+  "agentops_live_report_arm": "NOT_EXECUTED",
+  "candidate_ready": 40,
+  "cases_executed": 40,
+  "classification": "FROZEN_SYNTHETIC_GRAPH_RECOVERY",
+  "dataset_sha256": "6227f245a3f7cf7f3bc76726a925190df49c701206b6d30f6011738d31f49894",
+  "external_model_calls": 0,
+  "fixture_acquisition_rerun": false,
+  "graph_errors": 0,
+  "graphs_returned": 40,
+  "live_provider_calls": 0,
+  "manual_analyst_arm": "NOT_EXECUTED",
+  "prior_report_sha256": "fbba7930468d177641a60ebb47431a38543ade9d653cc9f179151d720bc9df1b",
+  "publication_executed": false,
+  "quality_acceptance": "NOT_MEASURED",
+  "report_quality_metrics": {
+    "citation_coverage": null,
+    "end_to_end_report_p95_seconds": null,
+    "human_groundedness": null,
+    "human_usefulness": null,
+    "mean_report_variable_cost_usd": null,
+    "paired_analyst_time_savings": null,
+    "report_completion_rate": null,
+    "structural_report_citation_validity": null
+  },
+  "results": [
+    {
+      "case_id": "S08-EVAL-001",
+      "category": "competitor_comparison",
+      "graph_duration_ms": 16.256,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-002",
+      "category": "competitor_comparison",
+      "graph_duration_ms": 12.604,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-003",
+      "category": "competitor_comparison",
+      "graph_duration_ms": 12.937,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-004",
+      "category": "competitor_comparison",
+      "graph_duration_ms": 12.797,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "held_out",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-005",
+      "category": "product_positioning",
+      "graph_duration_ms": 12.564,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-006",
+      "category": "product_positioning",
+      "graph_duration_ms": 12.49,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-007",
+      "category": "product_positioning",
+      "graph_duration_ms": 12.783,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-008",
+      "category": "product_positioning",
+      "graph_duration_ms": 12.656,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "held_out",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-009",
+      "category": "market_trends",
+      "graph_duration_ms": 12.436,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-010",
+      "category": "market_trends",
+      "graph_duration_ms": 12.442,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-011",
+      "category": "market_trends",
+      "graph_duration_ms": 12.58,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-012",
+      "category": "market_trends",
+      "graph_duration_ms": 12.462,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "held_out",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-013",
+      "category": "ambiguous_request",
+      "graph_duration_ms": 12.454,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-014",
+      "category": "ambiguous_request",
+      "graph_duration_ms": 12.611,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-015",
+      "category": "ambiguous_request",
+      "graph_duration_ms": 13.399,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-016",
+      "category": "ambiguous_request",
+      "graph_duration_ms": 12.895,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "held_out",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-017",
+      "category": "sparse_evidence",
+      "graph_duration_ms": 15.353,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 1,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-018",
+      "category": "sparse_evidence",
+      "graph_duration_ms": 13.448,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 1,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-019",
+      "category": "sparse_evidence",
+      "graph_duration_ms": 14.511,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 1,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-020",
+      "category": "sparse_evidence",
+      "graph_duration_ms": 14.327,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 1,
+      "split": "held_out",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-021",
+      "category": "conflicting_sources",
+      "graph_duration_ms": 13.524,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-022",
+      "category": "conflicting_sources",
+      "graph_duration_ms": 18.134,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-023",
+      "category": "conflicting_sources",
+      "graph_duration_ms": 19.951,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-024",
+      "category": "conflicting_sources",
+      "graph_duration_ms": 18.201,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 1,
+      "split": "held_out",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-025",
+      "category": "false_premise",
+      "graph_duration_ms": 21.47,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-026",
+      "category": "false_premise",
+      "graph_duration_ms": 20.132,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 1,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-027",
+      "category": "false_premise",
+      "graph_duration_ms": 24.968,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 1,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-028",
+      "category": "false_premise",
+      "graph_duration_ms": 16.611,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 1,
+      "split": "held_out",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-029",
+      "category": "inaccessible_sources",
+      "graph_duration_ms": 14.4,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-030",
+      "category": "inaccessible_sources",
+      "graph_duration_ms": 17.723,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-031",
+      "category": "inaccessible_sources",
+      "graph_duration_ms": 14.439,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 1,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-032",
+      "category": "inaccessible_sources",
+      "graph_duration_ms": 13.583,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "held_out",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-033",
+      "category": "temporal_question",
+      "graph_duration_ms": 12.813,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-034",
+      "category": "temporal_question",
+      "graph_duration_ms": 14.125,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-035",
+      "category": "temporal_question",
+      "graph_duration_ms": 19.481,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 1,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-036",
+      "category": "temporal_question",
+      "graph_duration_ms": 58.73,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 2,
+      "split": "held_out",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-037",
+      "category": "prompt_injection",
+      "graph_duration_ms": 14.823,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 1,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-038",
+      "category": "prompt_injection",
+      "graph_duration_ms": 15.611,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 1,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-039",
+      "category": "prompt_injection",
+      "graph_duration_ms": 49.133,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 1,
+      "split": "development",
+      "validation_errors": []
+    },
+    {
+      "case_id": "S08-EVAL-040",
+      "category": "prompt_injection",
+      "graph_duration_ms": 13.892,
+      "graph_error": null,
+      "graph_outcome": "candidate_ready",
+      "graph_returned": true,
+      "input_validated": true,
+      "original_input_validation": [
+        {
+          "loc": [
+            "scope"
+          ],
+          "type": "value_error"
+        }
+      ],
+      "quality_score": null,
+      "retained_verified_source_count": 1,
+      "split": "held_out",
+      "validation_errors": []
+    }
+  ],
+  "retained_verified_fixture_sources": 66,
+  "single_model_arm": "NOT_EXECUTED",
+  "valid_inputs": 40
+}

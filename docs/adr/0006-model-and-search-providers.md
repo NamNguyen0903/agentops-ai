@@ -1,3 +1,43 @@
+# S08 G03 — Owner-approved persistence extension
+
+Status: ACCEPTED — DEVELOPMENT MVP ONLY.
+
+Approval authority: AD08-G03-01 through AD08-G03-03.
+
+Accepted WP02-B evidence SHA256:
+`a62751e8a47726f41adeb9041f918569f5471a73f230bbfa2912e046426c2143`.
+
+Approved scope:
+
+- Add dedicated provider usage identity and credit fields to
+  the existing durable operation ledger.
+- Preserve the distinction between synthetic and live observations.
+- Introduce durable task-bound controlled smoke grant persistence.
+- Derive spent allowance from persistent reservations under a
+  transaction lock; do not refund indeterminate execution.
+- Grant policy fields remain non-writable by the application role.
+- Introduce separate real-evidence persistence linked by
+  composite owner/task/attempt/operation lineage.
+- Preserve original synthetic evidence table and its constraints.
+- Preserve original historical Alembic revisions.
+- Execute migrations only on explicitly disposable databases.
+
+Schema foundation does not issue a grant or activate a provider.
+Service-level authorization, usage settlement, recovery,
+provenance validation and deletion fencing require further tests.
+
+Initial grant schema permits up to six Basic Search requests,
+one explicitly scoped retrieval, and a maximum 15-minute
+grant lifetime. These are schema ceilings, not live permission.
+G04 must set the exact narrower authorized values.
+
+No dependency change, shared migration, live credential use,
+paid request, deployment or Git delivery is authorized.
+
+PRODUCTION REMAINS NOT APPROVED.
+
+---
+
 # ADR-0006 — S08 scoped provider and authorization amendment
 
 Date: 2026-11-26.

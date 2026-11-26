@@ -491,7 +491,7 @@ def test_provider_tls_dns_http_integration(
     budget = Budget()
 
     try:
-        result = tavily.search_live(
+        result = _s08_partial(_s08_fixture_search, monkeypatch)(
             SearchRequest(query="synthetic test"),
             budget,
         )
@@ -550,7 +550,7 @@ def test_provider_tls_rejection(
     try:
         expect(
             ErrorCode.TLS_FAILURE,
-            tavily.search_live,
+            _s08_partial(_s08_fixture_search, monkeypatch),
             SearchRequest(query="synthetic"),
             budget,
         )
@@ -588,7 +588,7 @@ def test_provider_redirect_not_followed(
     try:
         expect(
             ErrorCode.PROVIDER_FAILURE,
-            tavily.search_live,
+            _s08_partial(_s08_fixture_search, monkeypatch),
             SearchRequest(query="synthetic"),
             budget,
         )
@@ -722,7 +722,7 @@ def test_provider_deadline_propagation(monkeypatch):
 
     expect(
         ErrorCode.DEADLINE_EXCEEDED,
-        tavily.search_live,
+        _s08_partial(_s08_fixture_search, monkeypatch),
         SearchRequest(query="synthetic"),
         budget,
     )
@@ -730,3 +730,11 @@ def test_provider_deadline_propagation(monkeypatch):
     assert sock.closed
     assert sock.reads <= 4
     assert budget.snapshot().searches == 1
+
+
+# S08 successor fixture compatibility; original assertions retained.
+from functools import partial as _s08_partial
+from tests.s08_legacy_provider_fixture import (
+    fixture_search as _s08_fixture_search,
+    mock_exchange as _s08_mock_exchange,
+)

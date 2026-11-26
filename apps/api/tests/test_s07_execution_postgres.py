@@ -133,7 +133,7 @@ async def database(owner_count=8):
                 "SELECT version_num FROM app.alembic_version"
             ))
 
-            assert revision == "d8b3105f0804"
+            assert revision == "f9d3106b0802"
 
             # These tests exercise global capacity. They must not
             # silently depend on unrelated pre-existing tasks.

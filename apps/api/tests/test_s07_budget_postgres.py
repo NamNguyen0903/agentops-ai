@@ -44,7 +44,7 @@ async def database():
     try:
         async with admin() as session, session.begin():
             assert tuple((await session.execute(text("SELECT current_database(), current_user"))).one()) == ("agentops_migration_test", "agentops_migrator")
-            assert await session.scalar(text("SELECT version_num FROM app.alembic_version")) == "d8b3105f0804"
+            assert await session.scalar(text("SELECT version_num FROM app.alembic_version")) == "f9d3106b0802"
             assert await session.scalar(select(func.count()).select_from(ResearchTask)) == 0
             session.add(User(id=owner))
         initialized = True

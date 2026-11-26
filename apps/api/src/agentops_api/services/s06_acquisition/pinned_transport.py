@@ -79,6 +79,9 @@ def _connect_bound(
     target,
     budget,
     deadline,
+    *,
+    _smoke_kind=None,
+    _smoke_ticket=None,
 ):
     """Internal connector; no direct graph/API integration."""
     destination, ip = validated_target(target)
@@ -101,7 +104,22 @@ def _connect_bound(
     active = None
 
     try:
-        raw = _open_socket(family, socket.SOCK_STREAM)
+        if _smoke_kind is None and _smoke_ticket is None:
+            raw = _open_socket(family, socket.SOCK_STREAM)
+        else:
+            from agentops_api.services.smoke_runtime import authorize_network
+
+            deadline = min(
+                deadline,
+                authorize_network(
+                    _smoke_ticket,
+                    _smoke_kind,
+                    destination.url,
+                    "connect",
+                ),
+            )
+            budget.check(deadline)
+            raw = socket.socket(family, socket.SOCK_STREAM)
         active = raw
 
         raw.settimeout(budget.remaining(deadline))

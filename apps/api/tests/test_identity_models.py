@@ -90,4 +90,6 @@ def test_model_import_registers_only_expected_tables():
         "app.research_execution_attempts",
         "app.research_execution_contexts",
         "app.research_operation_ledger",
+        "app.research_smoke_grants",
+        "app.research_real_evidence",
     }
