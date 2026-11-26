@@ -1,6 +1,7 @@
 """Application-owned offline search provider."""
 
 from typing import Protocol
+from .budgets import acquisition_boundary
 
 from .contracts import (
     SearchRequest,
@@ -35,6 +36,7 @@ class FixtureSearchProvider:
         }
 
 
+@acquisition_boundary("search")
 def search_offline(
     request: SearchRequest,
     budget: Budget,

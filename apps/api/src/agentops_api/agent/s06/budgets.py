@@ -34,6 +34,7 @@ class Budget:
         self._deadline = self._now() + MAX_EXECUTION_SECONDS
         self._searches = 0
         self._retrievals = 0
+        self._durable_observer = None
 
     def _now(self) -> float:
         try:
@@ -113,3 +114,20 @@ class Budget:
             )
 
         self._retrievals += 1
+
+
+def acquisition_boundary(kind, *, hop=False):
+    """Observe application-bound Budget calls without importing I/O layers."""
+    def decorate(operation):
+        def invoke(*args, **kwargs):
+            budget = args[1] if len(args) > 1 else kwargs.get("budget")
+            observer = budget._durable_observer if type(budget) is Budget else None
+            if observer is None:
+                return operation(*args, **kwargs)
+            return observer.acquire(kind, operation, args, kwargs, hop=hop)
+        invoke.__name__ = operation.__name__
+        invoke.__qualname__ = operation.__qualname__
+        invoke.__doc__ = operation.__doc__
+        invoke.__wrapped__ = operation
+        return invoke
+    return decorate

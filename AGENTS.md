@@ -1,3 +1,22 @@
+# Active S07 WP04 FAST-TRACK authority — 2026-11-26
+
+The Owner's MASTER EXECUTION DIRECTIVE — COMPLETE SPRINT S07 supersedes
+older immediate-WP01-only and WP04-not-authorized status statements below.
+WP04 implementation, scoped debugging, tests and documentation preparation
+are authorized. Preserve the Owner-operated workflow: the assistant prepares
+complete reviewable source/Terminal packages; the Owner applies changes and
+executes local checks. No autonomous repository mutation or Git delivery.
+WP05 follows verified WP04 acceptance; WP06 retains consequential Owner
+delivery/merge/closeout approval and exact feature/main CI requirements.
+
+Authoritative current checkpoint: docs/handoff/CURRENT_STATE.md.
+C3C prepared code is not runtime verification. D06-03 stays OPEN until all
+mandatory requirements have actual evidence. No test result is inferred.
+All nonconflicting security, dependency, canonical workspace, stash, release
+and governance restrictions below remain binding. Production NOT APPROVED.
+
+---
+
 # AgentOps AI — Active S07 Engineering Policy Amendment
 
 Recorded at: 2026-11-25T15:19:46.940631+00:00.

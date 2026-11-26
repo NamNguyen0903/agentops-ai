@@ -43,7 +43,40 @@ def require_transaction(session):
         )
 
 
-async def require_task(session, scope):
+async def require_task(
+    session, scope, *, execution_handle=None
+):
+    # Worker-owned evidence is authorized by durable lifecycle
+    # and accounting authority, not merely an execution UUID.
+    if execution_handle is not None:
+        from agentops_api.services.execution import (
+            ExecutionHandle,
+        )
+        from agentops_api.services.execution_budget import (
+            ExecutionBudgetService, UNRESOLVED,
+        )
+
+        if (
+            type(execution_handle) is not ExecutionHandle
+            or execution_handle.owner_id != scope.owner_id
+            or execution_handle.task_id != scope.task_id
+            or execution_handle.attempt_id != scope.execution_id
+        ):
+            raise EvidenceUnavailable()
+
+        service = ExecutionBudgetService(
+            session, isolated_test_scope=True,
+        )
+
+        _, _, _, rows, _ = await service._owned_context(
+            execution_handle
+        )
+
+        if any(row.status in UNRESOLVED for row in rows):
+            raise EvidenceUnavailable()
+
+        return
+
     # Serialize writes and reject deleted/unowned tasks.
     task_id = await session.scalar(
         select(ResearchTask.id)
@@ -56,6 +89,27 @@ async def require_task(session, scope):
     )
 
     if task_id != scope.task_id:
+        raise EvidenceUnavailable()
+
+    # Preserve the legacy offline S06 path for tasks that
+    # have never had durable worker ownership. Check attempt
+    # history AFTER obtaining the task lock.
+    from agentops_api.models.execution import (
+        ResearchExecutionAttempt,
+    )
+
+    has_attempt = await session.scalar(
+        select(
+            select(ResearchExecutionAttempt.id)
+            .where(
+                ResearchExecutionAttempt.owner_id == scope.owner_id,
+                ResearchExecutionAttempt.task_id == scope.task_id,
+            )
+            .exists()
+        )
+    )
+
+    if has_attempt is not False:
         raise EvidenceUnavailable()
 
 
@@ -108,13 +162,17 @@ async def store_evidence(
     *,
     scope,
     record,
+    execution_handle=None,
 ) -> EvidenceInsertResult:
     require_transaction(session)
 
     scope = validate_scope(scope)
     record = validate_record(record, scope)
 
-    await require_task(session, scope)
+    await require_task(
+        session, scope,
+        execution_handle=execution_handle,
+    )
 
     existing = await find_row(
         session, scope, record.id
@@ -179,13 +237,17 @@ async def get_evidence(
     *,
     scope,
     evidence_id,
+    execution_handle=None,
 ) -> EvidenceRecord | None:
     require_transaction(session)
 
     scope = validate_scope(scope)
     evidence_id = valid_uuid(evidence_id)
 
-    await require_task(session, scope)
+    await require_task(
+        session, scope,
+        execution_handle=execution_handle,
+    )
 
     row = await find_row(
         session, scope, evidence_id
@@ -201,12 +263,16 @@ async def list_evidence(
     session: AsyncSession,
     *,
     scope,
+    execution_handle=None,
 ) -> tuple[EvidenceRecord, ...]:
     require_transaction(session)
 
     scope = validate_scope(scope)
 
-    await require_task(session, scope)
+    await require_task(
+        session, scope,
+        execution_handle=execution_handle,
+    )
 
     rows = (
         await session.scalars(

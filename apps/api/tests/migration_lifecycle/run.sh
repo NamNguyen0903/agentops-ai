@@ -45,10 +45,22 @@ expected_tables = {
     "research_tasks",
     "queue_control",
     "research_evidence",
+    "research_execution_attempts",
+    "research_execution_contexts",
+    "research_operation_ledger",
 }
 
-revision = "b6e0326a7103"
-if phase == "queue":
+revision = "d8b3105f0804"
+if phase != "upgraded":
+    expected_tables.remove("research_execution_contexts")
+    expected_tables.remove("research_operation_ledger")
+if phase not in {"upgraded", "attempt"}:
+    expected_tables.remove("research_execution_attempts")
+if phase == "attempt":
+    revision = "c7a2104e0702"
+elif phase == "evidence":
+    revision = "b6e0326a7103"
+elif phase == "queue":
     expected_tables.remove("research_evidence")
     revision = "94e4c1a20902"
 elif phase == "research":
@@ -100,7 +112,7 @@ try:
             assert tables == set(), tables
             assert current_revision is None
 
-        elif phase in {"upgraded", "queue", "research", "identity"}:
+        elif phase in {"upgraded", "attempt", "evidence", "queue", "research", "identity"}:
             assert tables == expected_tables, tables
             assert current_revision == revision
 
@@ -134,6 +146,12 @@ try:
                     expected = (
                         privilege in {"SELECT", "INSERT"}
                         if table_name == "research_evidence"
+                        else privilege in {"SELECT", "INSERT", "UPDATE"}
+                        if table_name in {
+                            "research_execution_attempts",
+                            "research_execution_contexts",
+                            "research_operation_ledger",
+                        }
                         else (
                             table_name != "queue_control"
                             or privilege in {"SELECT", "UPDATE"}
@@ -143,6 +161,87 @@ try:
                         f"Unexpected {privilege} permission "
                         f"on app.{table_name}"
                     )
+
+            for accounting_table in (
+                "research_execution_contexts",
+                "research_operation_ledger",
+            ):
+                if accounting_table not in expected_tables:
+                    continue
+
+                owner = connection.scalar(
+                    text(
+                        "SELECT tableowner FROM pg_tables "
+                        "WHERE schemaname = 'app' "
+                        "AND tablename = :table_name"
+                    ),
+                    {"table_name": accounting_table},
+                )
+
+                assert owner == "agentops_migrator"
+
+                for privilege in (
+                    "DELETE", "TRUNCATE", "REFERENCES", "TRIGGER"
+                ):
+                    allowed = connection.scalar(
+                        text(
+                            "SELECT has_table_privilege("
+                            "'agentops_app', :table_name, :privilege)"
+                        ),
+                        {
+                            "table_name": f"app.{accounting_table}",
+                            "privilege": privilege,
+                        },
+                    )
+
+                    assert not allowed, (
+                        accounting_table, privilege
+                    )
+
+                print(
+                    f"PASS: S07 accounting ownership and grants: "
+                    f"{accounting_table}"
+                )
+
+            if phase in {"upgraded", "attempt"}:
+                present = connection.scalar(
+                    text(
+                        "SELECT count(*) FROM pg_constraint "
+                        "WHERE conname = "
+                        "'uq_execution_attempt_owner_task_id' "
+                        "AND conrelid = "
+                        "'app.research_execution_attempts'::regclass"
+                    )
+                )
+
+                assert present == (
+                    1 if phase == "upgraded" else 0
+                )
+
+            if "research_execution_attempts" in expected_tables:
+                owner = connection.scalar(text(
+                    "SELECT tableowner FROM pg_tables "
+                    "WHERE schemaname = 'app' "
+                    "AND tablename = 'research_execution_attempts'"
+                ))
+
+                assert owner == "agentops_migrator"
+
+                for privilege in (
+                    "DELETE", "TRUNCATE", "REFERENCES", "TRIGGER"
+                ):
+                    allowed = connection.scalar(
+                        text(
+                            "SELECT has_table_privilege("
+                            "'agentops_app', "
+                            "'app.research_execution_attempts', "
+                            ":privilege)"
+                        ),
+                        {"privilege": privilege},
+                    )
+                    assert not allowed, privilege
+
+                print("PASS: S07 attempt ownership and grants")
 
             if "research_evidence" in expected_tables:
                 owner = connection.scalar(text(
@@ -246,16 +345,44 @@ python -m alembic -c alembic.ini upgrade head
 check_state upgraded
 python -m alembic -c alembic.ini check
 
-echo "=== S06 Evidence-only migration lifecycle ==="
+echo "=== S07 Durable-accounting migration lifecycle ==="
 
-python -m alembic -c alembic.ini downgrade 94e4c1a20902
-check_state queue
+python -m alembic -c alembic.ini downgrade c7a2104e0702
+check_state attempt
 
 python -m alembic -c alembic.ini upgrade head
 check_state upgraded
 python -m alembic -c alembic.ini check
 
+echo "PASS: S07 accounting-only downgrade and upgrade"
+
+echo "=== S07 Execution-attempt migration lifecycle ==="
+
+python -m alembic -c alembic.ini downgrade b6e0326a7103
+check_state evidence
+
+python -m alembic -c alembic.ini upgrade head
+check_state upgraded
+python -m alembic -c alembic.ini check
+
+echo "PASS: S07 attempt-only downgrade and upgrade"
+
+echo "=== S06 Evidence-only migration lifecycle ==="
+
+python -m alembic -c alembic.ini downgrade b6e0326a7103
+check_state evidence
+
+python -m alembic -c alembic.ini downgrade 94e4c1a20902
+check_state queue
+
+python -m alembic -c alembic.ini upgrade b6e0326a7103
+check_state evidence
+
 echo "PASS: S06 evidence-only downgrade and upgrade"
+
+python -m alembic -c alembic.ini upgrade head
+check_state upgraded
+python -m alembic -c alembic.ini check
 
 echo "=== 2a. Queue-only downgrade preserves WP01 schema ==="
 python -m alembic -c alembic.ini downgrade 94e4c1a20902
@@ -292,6 +419,31 @@ python -m alembic -c alembic.ini upgrade head
 check_state upgraded
 
 echo "PASS: Alembic migration lifecycle"
+echo "=== S07 Durable Execution Verification ==="
+
+AGENTOPS_RUN_DB_INTEGRATION=1 \
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+python -m pytest -p no:cacheprovider -v --tb=short \
+    tests/test_s07_execution.py \
+    tests/test_s07_execution_postgres.py
+
+echo "PASS: S07 durable execution verification"
+
+echo "=== S07 WP04/WP05 Integrated Runtime ==="
+
+AGENTOPS_RUN_DB_INTEGRATION=1 \
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+LANGSMITH_TRACING=false \
+LANGSMITH_TRACING_V2=false \
+LANGCHAIN_TRACING=false \
+LANGCHAIN_TRACING_V2=false \
+python -m pytest -p no:cacheprovider -q --tb=short \
+    tests/test_s07_budget_postgres.py \
+    tests/test_s07_worker_postgres.py
+
+echo "PASS: S07 WP04/WP05 integrated runtime"
+
+
 echo "=== 5. PostgreSQL Integration Tests ==="
 
 export AGENTOPS_RUN_DB_INTEGRATION=1
@@ -325,3 +477,13 @@ export LANGCHAIN_TRACING_V2=false
 python -m pytest -p no:cacheprovider -q --tb=short tests/test_s06_workflow_postgres.py
 
 echo "PASS: S06 workflow PostgreSQL integration tests"
+
+
+echo "=== S07 Backend Regression ==="
+
+AGENTOPS_RUN_DB_INTEGRATION=0 \
+AGENTOPS_RUN_LEGACY_COMPOSE_TESTS=0 \
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+python -m pytest -p no:cacheprovider -q --tb=short
+
+echo "PASS: S07 backend regression"

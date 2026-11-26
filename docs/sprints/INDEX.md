@@ -1,3 +1,746 @@
+## S07 active WP06-A delivery checkpoint
+
+Recorded UTC: 2026-11-26T09:13:17.901371+00:00
+
+Status: IN PROGRESS — DEVELOPMENT MVP ONLY.
+
+### Authoritative technical review
+
+- S07 Contract v1.0 remains unchanged.
+- WP01 through WP04 retain their reviewed technical evidence.
+- WP05 R04 evidence SHA256: `02c38906588b32ae961c1e31d2210fd594f80fe0708851ab88250e279bc357ec`.
+- All 30 embedded artifacts independently integrity-verified.
+- All 44 changed source files independently integrity-verified.
+- Actual integrated PostgreSQL/runtime tests: 278/278 PASS.
+- Nine worker integration tests passed.
+- All 117 affected WP04 regression tests passed.
+- Recovery positive and prior-operation negative controls passed.
+- AC31–AC33: TECHNICALLY VERIFIED.
+- AC34: PENDING FINAL HISTORICAL/SECURITY CI RECONCILIATION.
+- Technical readiness: 33/36.
+- Candidate readiness after AC34 reconciliation: 34/36.
+- AC35 and AC36 remain pending.
+- Official final acceptance remains 0/36 until closeout.
+
+### Release and delivery controls
+
+- Exact reviewed feature delivery scope: 44 files.
+- Reviewed source inventory: 270 paths.
+- All 14 dependency manifests unchanged from the Git baseline.
+- Targeted credential-signature and assignment review passed.
+- Only known isolated synthetic credential fixtures permitted.
+- No claim that pattern-based scanning proves absence of secrets.
+- Strict Authlib XFAIL declaration preserved; runtime CI pending.
+- All four mandatory CI jobs retained.
+- Actual WP03 connector evidence retained separately.
+- No local regression suites repeated during this review.
+- No commit, push, PR creation, merge or deployment performed.
+
+### Security and successor obligations
+
+- D06-02: CLOSED_VERIFIED_ISOLATED_DEVELOPMENT_MVP.
+- D06-03: CLOSED_VERIFIED_ISOLATED_DEVELOPMENT_MVP.
+- D06-01, D06-04, D06-05 and D06-06 remain OPEN.
+- All four remain mandatory S08 obligations.
+- No hard synchronous-thread cancellation claim.
+- No remote cancellation or provider billing reconciliation claim.
+- No external execution, live provider credentials, paid usage,
+  shared migrations, production worker activation or publication.
+
+WP06-A: PREDELIVERY_REVIEW_PASSED_PENDING_OWNER_AUTHORIZATION.
+
+Immediate next action:
+Owner authorization for exact-scope feature commit, push,
+feature PR creation and mandatory PR CI verification.
+
+Merge, final closure and S08 start are not authorized.
+
+PRODUCTION REMAINS NOT APPROVED.
+
+---
+
+## S07 active WP05-R04 checkpoint
+
+Recorded UTC: 2026-11-26T09:09:52.669654+00:00
+
+Contract v1.0 — Development MVP only.
+
+### Retained WP04 acceptance
+
+- R04 evidence SHA256: `2bb27550b71d9e567a45bd39286a49ac505e295a8ede6fa7a3e7f57169a91f8a`.
+- Original reviewed inventory SHA256: `dd10446c511eca93d7fe7d32729cda08784f733887b44df9ba26111eff35b6b7`.
+- AC21–AC30: technically verified.
+- D06-02 and D06-03 retain scoped isolated MVP closure.
+- No hard synchronous-thread or remote cancellation claim.
+
+### WP05 R03 failure and recovery
+
+- R03 evidence SHA256: `1c004109d86a803504fcf6802e2a0c896f0b136bee8a7881f645657a6ae1ed69`.
+- R03 observed 159 passing tests and one recovery failure.
+- All eight R03 source mutations were rolled back.
+- No rollback conflicts.
+
+### WP05 R04 implementation
+
+- Explicit isolated deterministic worker harness.
+- Durable S05/S06 acquisition accounting.
+- Attempt-fenced evidence and outcome acceptance.
+- Synthetic evidence insertion, outcome revalidation and
+  terminal mutation under authoritative transaction.
+- Legacy offline evidence path denies worker-attempt bypass.
+- No report publication or real report completion.
+- A replacement generation can initiate an adapter graph
+  only when no operation belongs to an earlier generation.
+- Prior-generation operation history denies graph restart.
+- Existing lifecycle reconciliation remains unchanged.
+- Cumulative budgets, original deadlines, lease validity,
+  stage history and duplicate operation barriers remain.
+- Positive recovery test uses isolated aged-attempt fixtures
+  and retains the original task deadline.
+- No claim that recovery can restart an adapter after its
+  original 30-second execution deadline has elapsed.
+
+### Observed runtime
+
+- 278 successful test executions.
+- Nine integrated worker cases passed.
+- All 117 affected WP04 cases passed.
+- Previous failed recovery case passed.
+- Prior-operation recovery negative control passed.
+- Zero failures, errors or skips.
+- Disposable cleanup and runtime import compatibility passed.
+
+WP05: INTEGRATED_RUNTIME_PASSED_PENDING_ACCEPTANCE_REVIEW.
+
+Technical readiness candidate: 34/36.
+Official acceptance: 0/36 until final reconciliation.
+WP06: NOT STARTED.
+
+D06-01, D06-04, D06-05 and D06-06 remain OPEN,
+mandatory S08 obligations.
+
+Strict Authlib XFAIL and historical security gates remain
+mandatory. No security waiver, external activation,
+live provider usage, shared migration, dependency change,
+commit, push, merge, deployment or S08 start authorized.
+
+PRODUCTION REMAINS NOT APPROVED.
+
+---
+
+## S07 WP04-C3C-R04 — actual cancellation verification
+
+Recorded UTC: 2026-11-26T07:46:31.735157+00:00
+
+Contract v1.0 — Development MVP only.
+
+R03 evidence SHA256: `c3753a8b3b6d17b788106d9550fb48df8f1b1de4d9ecf46db9691036ff9aaea1`.
+
+R04 changes bounded local deadline observation so a narrowed
+reservation or lease deadline is observed by the application
+caller rather than waiting for the original outer deadline.
+
+Observed R04 runtime:
+- PostgreSQL application-boundary cases: 22 PASS.
+- New actual S05/S06 cancellation/deadline cases: 4 PASS.
+- Execution-budget unit cases: 55 PASS.
+- Synthetic runner cases: 40 PASS.
+- Total R04 successful executions: 117.
+- Failures, errors and skips: zero.
+- Runtime dependency compatibility: PASS.
+- Disposable infrastructure cleanup: PASS.
+
+Cancellation capability reconciliation under AD07-08:
+- Actual S05 synchronous adapter and actual S06 isolated
+  acquisition boundaries demonstrate bounded caller observation,
+  dispatch revocation, retained local cleanup ownership,
+  durable indeterminate outcomes and late-result rejection.
+- Synchronous threads are not forcibly terminated.
+- Synthetic subprocess termination is separately verified and
+  does not certify actual synchronous adapter cancellation.
+- Neither local termination nor caller cancellation certifies
+  remote provider cancellation or billing reconciliation.
+- Process isolation was evaluated but is not mandated by
+  Contract v1.0 for every synchronous adapter.
+- Deterministic isolated execution remains the authorized scope.
+
+The shortened-deadline tests use a conservative timing seam
+after actual durable authority is read. They do not claim that
+a production provider or remote operation was cancelled.
+
+R03 evidence and previous WP01-WP03 verification are retained.
+R04 does not rerun the 891-case affected regression or the
+19-case actual connector suite.
+
+WP04: R04 TARGETED RUNTIME PASSED; final evidence reconciliation
+pending. Technical readiness candidate: 30/36 after review.
+Previously accepted technical readiness: 20/36.
+Official final acceptance: 0/36.
+D06-03 remains OPEN pending final evidence reconciliation.
+D06-02 retains isolated Development MVP closure.
+D06-01/04/05/06 remain mandatory OPEN successor obligations.
+
+WP05 follows verified WP04 acceptance.
+WP06 remains pending.
+No dependency changes, live provider execution, publication,
+shared database migration, Git delivery or deployment.
+
+Production remains NOT APPROVED.
+
+---
+
+## Observed R03 execution — 2026-11-26T07:18:22.437911+00:00
+
+- Status: TARGETED_RUNTIME_PASSED_PENDING_ACCEPTANCE_REVIEW.
+- Source applied: True.
+- Evidence directory: `/private/tmp/agentops-s07-wp04-c3c-r03-kes_j32d`.
+- retained-r02/focused-tests.xml: 17 cases, 0 failures, 0 errors, 0 skipped.
+- retained-r02/affected-tests.xml: 891 cases, 0 failures, 0 errors, 0 skipped.
+- s07-budget.xml: 18 cases, 0 failures, 0 errors, 0 skipped.
+- Actual isolated connector: 19 PASS, zero skips; cleanup PASS.
+- R02 focused 17 and affected 891 PASS retained; not rerun. R03 reruns PostgreSQL only to verify corrected evidence export.
+- Runtime totals are executions and may overlap historical counts.
+- WP04 final acceptance and D06-03 remain pending requirements/evidence review.
+- S07 readiness retained 20/36; official acceptance 0/36; WP05/WP06 pending.
+- No commit, push, merge, dependency change or security waiver.
+- Exactly one next action: review the R03 evidence and resolve any remaining WP04 gate.
+- Production remains NOT APPROVED.
+
+---
+
+## Active S07 WP04-C3C-R03 evidence recovery — 2026-11-26
+
+R02 evidence SHA256:
+`06fc5d97eedffe5daafdbfa292ef7e2289542e78cf7744ee3aa350535f0f4771`.
+All embedded artifact hashes and the final source inventory were reconciled.
+Focused regression: 17 PASS. Affected regression: 891 PASS. Preserve both
+JUnit artifacts without repeating these unchanged tests. R02 PostgreSQL log
+reports 18 PASS, zero skips; its harness and cleanup returned success, but
+the outer verifier failed because the JUnit file was unavailable. Actual
+locked-runtime imports and migration checks passed in that recorded scope.
+
+Root cause: the runner wrote JUnit into /tmp tmpfs, then stopped; copying it
+from the stopped container could not retain the ephemeral mount. R03 exports
+the XML losslessly through stdout while the runner is alive and validates
+its SHA256 and length before writing host evidence. Read-only container,
+isolated network, existing tests and dependency manifests are preserved.
+
+R03 repeats only the 18 PostgreSQL cases under the corrected evidence
+collection harness, then executes the actual connector suite that R02 never
+reached. Runtime acceptance remains PENDING until the new evidence passes.
+This recovery changes the PostgreSQL harness and these three checkpoint
+documents only; application runtime code and assertions remain unchanged.
+
+WP04 AC21–AC30 still require final evidence reconciliation. D06-03 OPEN;
+readiness 20/36 retained, official acceptance 0/36, WP05/WP06 pending.
+Owner operates this package. No Git delivery or activation is authorized by
+this correction. All prior security/release boundaries and S09 governance
+obligations remain binding. Production remains NOT APPROVED.
+
+Exactly one next action: execute R03, then review its actual evidence against
+remaining WP04 acceptance and cancellation requirements before WP05.
+
+---
+
+## Observed R02 execution — 2026-11-26T05:38:29.974314+00:00
+
+- Status: FAILED.
+- Source applied: True.
+- Evidence directory: `/private/tmp/agentops-s07-wp04-c3c-r02-ujoh0_cx`.
+- focused-tests.xml: 17 cases, 0 failures, 0 errors, 0 skipped.
+- affected-tests.xml: 891 cases, 0 failures, 0 errors, 0 skipped.
+- Earlier C3C evidence retained: 896 passed, 2 failed; R01 made no corrections.
+- Runtime totals are executions and may overlap historical counts.
+- WP04 final acceptance and D06-03 remain pending requirements/evidence review.
+- S07 readiness retained 20/36; official acceptance 0/36; WP05/WP06 pending.
+- No commit, push, merge, dependency change or security waiver.
+- Exactly one next action: review the R02 evidence and resolve any remaining WP04 gate.
+- Production remains NOT APPROVED.
+
+---
+
+## Active S07 WP04-C3C-R02 recovery — 2026-11-26
+
+Owner-authorized MAXIMUM FAST-TRACK, owner-operated execution.
+C3C source applied; runtime recorded 896 PASS and 2 FAIL. R01 stopped at
+checkpoint validation and applied no source corrections. Both evidence bundles
+were decoded and every embedded artifact verified against SHA256 and size.
+
+C3C evidence: `0933b2d4e69b4c1695ebd0512f212e92dbfed9e2dbce7f00b9db3b3d1a594a9c`.
+R01 evidence: `26f9fe5000853b1d70652e9c252833d5d1c8e8ac730b1bab1a0e086ed764c948`.
+The original manifest digest is SHA256 of UTF-8 `json.dumps(manifest,
+sort_keys=True)` with Python default separators, not raw file bytes or compact
+JSON. R02 preserves this exact legacy identity and independently verifies
+embedded raw bytes; it does not skip an integrity gate.
+
+Corrections prepared: pure S05 observer binding without upward imports;
+S06 Budget-owned observer without upward imports; transport-only exception
+sanitization preserving pre-dispatch budget/deadline/DNS errors; execution
+slot cleanup conditional on its owner. Original security tests and allowlists
+remain unchanged. Additional regression and disposable PostgreSQL cases
+cover real S05 repair, S06 TLS/HTTP redirects, invalid HTTP, reservations,
+late results, deadlines, grants and deterministic model/token/cost ceilings.
+
+Runtime execution for R02 remains PENDING until its exported evidence records
+actual results. The block continues automatically from focused tests through
+affected regression, disposable PostgreSQL, locked-runtime compatibility and
+affected actual connector verification when preceding checks pass.
+Local TLS/HTTP tests simulate DNS/public peer metadata. Retained D06-02 tests
+exercise actual isolated DNS/TCP/peer/TLS. Combining those scopes is not an
+unsupported claim that every cross-component cancellation race is verified.
+
+Branch `feat/s07-worker-reliability`; base main
+`37f26e5549e063eaa7fa2ec9e9dade0e23601b85`; canonical workspace and stash retained.
+WP01 delivered; WP02/WP03 evidence retained. Technical readiness 20/36;
+official acceptance 0/36; D06-03 OPEN. D06-02 retains isolated verified closure.
+D06-01/04/05/06 OPEN. WP05/WP06 pending. No security gate waived.
+All dependency manifests, Authlib restrictions, external denial, release and
+S09 governance requirements remain binding. Production NOT APPROVED.
+
+Exactly one next action: execute R02 and reconcile its actual runtime evidence
+against AC21–AC30 before accepting WP04 or advancing to WP05.
+
+---
+
+## Active S07 WP04-C3C checkpoint — 2026-11-26
+
+Owner-authorized WP04 implementation is prepared for execution and evidence
+review. WP01 is delivered; WP02/WP03 verified evidence is retained. C3C adds
+actual S05/S06 durable accounting boundaries and targeted verification.
+No runtime acceptance is inferred from prepared code. Readiness remains
+20/36, official acceptance 0/36; D06-03 OPEN, WP05 not started, WP06 pending.
+See [S07](S07.md) and [current checkpoint](../handoff/CURRENT_STATE.md).
+Next action: execute and review C3C evidence. Production NOT APPROVED.
+
+---
+
+## Active S07 WP03 technical acceptance checkpoint
+
+Recorded UTC: 2026-11-26T04:05:11.272588+00:00
+
+### Authoritative status
+
+- S07 Contract v1.0, Development MVP only.
+- S00-S06 remain CLOSED.
+- WP01: DELIVERED.
+- WP02: TECHNICALLY VERIFIED, LOCAL DELIVERY PENDING.
+- WP03: TECHNICALLY VERIFIED, LOCAL DELIVERY PENDING.
+- WP04: NEXT, NOT STARTED; applicable Owner authorization required.
+- WP05 and WP06: PLANNED.
+- Feature branch: `feat/s07-worker-reliability`.
+- Base main: `37f26e5549e063eaa7fa2ec9e9dade0e23601b85`.
+- Canonical workspace: `/Users/namnguyen/agentops-ai`.
+- Single worktree and existing backup stash preserved.
+
+This active checkpoint supersedes earlier WP03 verification-pending,
+recovery-pending and D06-02 OPEN statements for the verified isolated
+Development MVP scope. Historical records remain unchanged below.
+
+### WP02 retained technical verification
+
+- Final WP02 evidence SHA256:
+  `65c13d4bc27f45c81aab48766c43892853317529551513e1e8959e9688d0e53e`.
+- Final WP02 complete diff SHA256:
+  `1d476e31161b2cd729921bdc22d3b370bc90c90794603bce6e9de706c5c4201d`.
+- AC04-AC13: 10/10 technically verified.
+- Preserved successful test executions: 2244.
+- No WP02 test reruns.
+- No changes to WP02 runtime source in WP03.
+
+### WP03 integrated secure acquisition
+
+WP03 verifies the existing secure connector through controlled actual
+OS DNS resolution, numeric kernel TCP connections, actual peer checks,
+OpenSSL TLS handshakes, hostname and certificate trust verification,
+bounded HTTP exchange, redirect revalidation and resource cleanup.
+
+The isolated test suite uses test-scoped authorization and socket
+factory seams. It does not enable live production retrieval or modify
+production connector authorization, SSRF or TLS policies.
+
+Docker capability normalization recovery R02 preserves the exact
+capability policy while accounting for the CAP_ representation prefix.
+The fixture servers require only NET_BIND_SERVICE, and the test runner
+requires no additional capabilities.
+
+### Retained WP03 evidence
+
+- WP03-B-R02 final evidence SHA256:
+  `c6e3fe07e23a35e0544d23db705a34924c6bbe35c2ebbee5e2eb7fca38648be8`.
+- Exact tested complete diff SHA256:
+  `782515d614cfcb7e082ea15290a400151bfddcdf3ed7a4ae134ef77ffcf515f9`.
+- R02 embedded evidence artifacts: 18/18 MATCH.
+- Raw log integrity: 6/6 MATCH.
+- Integrated connector tests: 19/19 passed.
+- Recovery capability/gateway negative controls:
+  4/4 passed per retained recovery summary.
+- Primary actual TCP connections: 15.
+- Secondary actual TCP connections: 2.
+- Successful TLS handshakes: 14.
+- Server connections closed: 17/17.
+- DNS rebinding A queries: 2.
+- DNS rebinding HTTP requests: 1.
+- Secondary successful HTTP requests: 1.
+- Client descriptor cleanup: passing test assertions.
+- Internal network, isolated gateway mode and route checks: PASS.
+- Temporary certificates and disposable infrastructure: removed.
+- Cumulative preserved successful test executions: 2263.
+  Counts represent test executions, not unique test cases.
+- Local test reruns in WP03-C: 0.
+- Runtime source changes in WP03-C: 0.
+- Dependency manifests unchanged: 15/15.
+
+### Technical acceptance
+
+AC14 through AC20 are technically verified within the authorized
+isolated Development MVP scope.
+
+WP02 technical acceptance: 10/10.
+WP03 technical acceptance: 7/7.
+Cumulative S07 technical readiness: 20/36.
+Official final S07 acceptance remains 0/36 pending sprint closeout.
+
+WP02 and WP03 remain local and uncommitted.
+Technical verification is not feature PR delivery or production approval.
+
+### Mandatory obligation reconciliation
+
+- D06-01: OPEN; mandatory S08 obligation.
+- D06-02: CLOSED — VERIFIED ISOLATED DEVELOPMENT MVP.
+- D06-03: OPEN; mandatory S07 WP04 obligation.
+- D06-04: OPEN; mandatory S08 obligation.
+- D06-05: OPEN; mandatory S08 obligation.
+- D06-06: OPEN; mandatory S08 obligation.
+
+D06-02 closure establishes the approved integrated connector
+verification scope only. It does not establish production readiness,
+authorization for live execution, complete IPv6 coverage, complete
+DNS-over-TCP coverage or hard operation cancellation.
+
+All remaining obligations are retained without waiver.
+
+### Authentication wording correction
+
+The earlier historical statement "Authentication remains disabled
+by default" was inaccurate and is superseded by this clarification:
+
+Worker activation remains disabled by default.
+Existing Development MVP authentication remains available under its
+approved restrictions. Production authentication remains NOT APPROVED.
+
+ADR-0002's conditional Development MVP authentication adoption,
+existing authentication security restrictions and mandatory strict
+Authlib XFAIL remain unchanged. Historical wording is retained below
+for auditability and must not be interpreted as active authorization
+policy.
+
+### Security and release boundaries
+
+Production external execution remains unconditionally denied.
+No live providers, paid inference, shared database migrations,
+unauthorized worker activation, real evidence publication or deployment.
+No dependency changes without separate Owner approval.
+
+Application-level fencing is not database RLS.
+Lease expiry does not establish remote cancellation.
+Durable cumulative accounting and hard cancellation reconciliation
+remain mandatory WP04 work.
+Attempt-fenced evidence/outcome integration and adversarial
+cross-component verification remain mandatory WP05 work.
+
+The isolated network suite is not yet a mandatory CI gate.
+Its final delivery integration must be reconciled before S07 closeout.
+
+Historical partial security gates SG06, SG08 and SG10 remain open.
+Strict Authlib XFAIL source and existing compatibility tests are preserved.
+The separate Authlib compatibility suite was not rerun in WP03-C.
+NO_REQUIRED_CHECKS_REPORTED remains a governance limitation.
+Branch protection is not independently certified.
+S09 governance review remains mandatory.
+
+No security gate waiver.
+
+### Next action
+
+Review the WP03-C consolidated evidence and final local checkpoint.
+Obtain applicable Owner authorization for WP04 before implementation.
+No commit, push, merge, deployment or WP04 implementation occurred
+during WP03-C.
+
+Production remains NOT APPROVED.
+
+---
+
+## Active S07 WP02 technical acceptance checkpoint
+
+Recorded UTC: 2026-11-25T16:15:24.256572+00:00
+
+### Authoritative status
+
+- S07 Contract v1.0, Development MVP only.
+- S00-S06 remain CLOSED.
+- WP00: COMPLETED.
+- WP01: DELIVERED.
+- WP02: TECHNICALLY VERIFIED, LOCAL DELIVERY PENDING.
+- WP03: NOT STARTED; requires the next authorized package.
+- Feature branch: `feat/s07-worker-reliability`.
+- Base main: `37f26e5549e063eaa7fa2ec9e9dade0e23601b85`.
+- Canonical workspace: `/Users/namnguyen/agentops-ai`.
+- Existing backup stash preserved; single worktree.
+
+This active checkpoint supersedes prior WP02 IN_PROGRESS
+and verification-pending statements for the verified local scope.
+Historical content is retained below.
+
+### WP02 implementation
+
+Durable execution attempts use additive migration c7a2104e0702
+following b6e0326a7103. The isolated lifecycle service coordinates
+admission and claiming through the singleton queue_control row.
+
+The service enforces atomic claim, application-level attempt fencing,
+bounded leases, stale ownership rejection, bounded recovery,
+original running deadline preservation and deletion barriers.
+
+Admission hard cap: 50 pending tasks.
+Global running limit: 5. Per-user running limit: 1.
+Queue deadline: 60 seconds. Running deadline: 180 seconds.
+Lease duration: at most 30 seconds.
+Heartbeat default: 10 seconds. Idle polling default: 1 second.
+Recovery inspection default: 5 seconds.
+Maximum attempts: 2 including the initial attempt.
+
+### Retained verification
+
+- WP02-B final evidence SHA256:
+  `b974e54915acdbf88b5f3b59319c3e9c6ec728a002e39582d45fb7a7eb564709`.
+- Exact tested complete diff SHA256:
+  `493e25d93cb575f716a7048c7312d9227ab2751416465f4672fcb8de819e3742`.
+- Original raw PostgreSQL log SHA256:
+  `685aea0104ab2ff11f1369d23eefc946b38210b3f8ea124804b5ea9dc023b07c`.
+- Original artifact integrity: 10/10 MATCH.
+- Original evidence bundle reproduced byte-for-byte.
+- Log serialization reconciliation:
+  UNIVERSAL_NEWLINE_NORMALIZATION.
+- Raw log retained losslessly in WP02-C evidence.
+- S07 unit and PostgreSQL tests: 36 passed.
+- Required S07 PostgreSQL tests: 14/14 passed.
+- Historical PostgreSQL integration: 48 passed.
+- S06 evidence integration: 17 passed.
+- S06 workflow integration: 9 passed.
+- Backend regression: 2134 passed, 89 skipped.
+- Total successful test executions: 2244.
+  Counts include overlapping test suites.
+- Migration lifecycle, metadata parity and runtime grants: PASS.
+- Disposable Compose cleanup evidence: PASS.
+- No local test reruns in WP02-C.
+- No runtime source changes in WP02-C.
+- Dependency manifests unchanged: 15/15.
+- Heuristic secret screening: zero findings, with the existing
+  public disposable database fixture explicitly accounted for.
+
+### Technical acceptance
+
+AC04 through AC13 are technically verified within the authorized
+isolated Development MVP test scope.
+
+WP02 technical acceptance: 10/10.
+Cumulative S07 technical readiness: 13/36, including AC01-AC03.
+Official final S07 acceptance remains 0/36 pending sprint closeout.
+
+WP02 remains local and uncommitted at this checkpoint.
+Technical verification is not feature PR delivery or production approval.
+
+### Limitations and mandatory remaining obligations
+
+Application lifecycle fencing does not imply PostgreSQL row-level
+security or protection against every direct privileged SQL write.
+Admission coordination requires READ COMMITTED.
+The isolated lifecycle service rejects unsupported transaction isolation.
+Database identity and Compose configuration do not independently
+certify physical infrastructure isolation or network egress isolation.
+
+Recovery is verified without external dispatch.
+Lease expiration is not proof of remote cancellation.
+Durable operation accounting and cancellation reconciliation remain
+mandatory WP04 obligations.
+Integrated connector verification remains mandatory WP03.
+Attempt-fenced evidence/outcome integration and adversarial
+cross-component verification remain mandatory WP05 obligations.
+No completed-report publication is enabled.
+
+All D06-01 through D06-06 remain OPEN.
+D06-02 and D06-03 remain mandatory S07 obligations.
+D06-01, D06-04, D06-05 and D06-06 remain mandatory S08 obligations.
+
+Historical partial security gates SG06, SG08 and SG10 remain open.
+Strict Authlib security XFAIL remains mandatory.
+Authlib source and existing tests are preserved.
+The separate compatibility suite was not rerun in WP02-C.
+
+Authentication remains disabled by default.
+External execution remains unconditionally denied.
+No unauthorized worker activation, shared database migrations,
+live providers, paid inference, report publication or deployment.
+No dependency changes without separate Owner approval.
+No security gate waiver.
+
+NO_REQUIRED_CHECKS_REPORTED remains a governance limitation.
+Branch protection is not independently certified.
+S09 governance review remains mandatory.
+
+### Next action
+
+Review the WP02-C consolidated evidence and final local checkpoint.
+Obtain applicable Owner authorization before subsequent work or delivery.
+No commit, push, merge or WP03 implementation performed by WP02-C.
+
+Production remains NOT APPROVED.
+
+---
+
+## Active S07 WP02-A2 checkpoint — 2026-11-25
+
+- WP01: DELIVERED.
+- WP02-A1: static implementation reviewed.
+- A1 complete diff SHA256:
+  `037cd30b84fc3382afa5253e3c62db160dd3a855e5caefddc95fb4d6799c8cab`.
+- WP02-A2: lifecycle implementation prepared for local verification.
+- Feature branch: `feat/s07-worker-reliability`.
+- Base main: `37f26e5549e063eaa7fa2ec9e9dade0e23601b85`.
+
+### Lifecycle implementation
+
+The internal execution service uses explicit short transactions
+and the shared queue_control singleton as its coordination lock.
+Lock ordering is queue_control, research task, execution attempt.
+
+Initial claim creates a durable generation-1 attempt.
+Heartbeat validates owner, task, attempt UUID, worker UUID,
+generation, running state, deletion state, lease and running deadline.
+
+Lease expiration permits at most one replacement generation in
+isolated synthetic execution. The original task started_at is retained.
+Leases are bounded by the original execution deadline.
+Missing active ownership fails closed.
+
+The service is disabled by default and checks the disposable
+database identity and runtime role before lifecycle writes.
+This does not independently certify infrastructure isolation.
+
+No worker entrypoint, background loop, external dispatch or
+completed-report publication is enabled by this package.
+
+### Verification boundary
+
+Unit policy test source is included. Actual database lifecycle,
+migration parity, concurrency, stale ownership, deletion and
+least-privilege verification remain pending WP02-B.
+
+Admission capacity enforcement must also be reconciled with the
+existing configurable research queue capacity during WP02-B.
+The current implementation does not claim that declaring a
+50-task policy constant enforces the admission limit.
+
+AC04–AC13 remain pending actual verification.
+Official final S07 acceptance remains 0/36.
+
+### Preserved restrictions
+
+D06-01 through D06-06 remain OPEN.
+No shared migrations or dependency changes.
+Authentication remains disabled by default.
+External execution remains unconditionally denied.
+No unauthorized worker activation or deployment.
+Strict Authlib security XFAIL remains mandatory.
+Historical partial security gates remain open.
+NO_REQUIRED_CHECKS_REPORTED remains a governance limitation.
+No security gate waiver.
+WP03 must not begin before WP02 is verified.
+Production remains NOT APPROVED.
+
+---
+
+## Active S07 WP02 implementation checkpoint — 2026-11-25
+
+- Contract: S07 v1.0, Owner-approved Development MVP only.
+- WP00: COMPLETED.
+- WP01: DELIVERED; documentation PR #24 merged.
+- WP01 authoritative merged main:
+  `37f26e5549e063eaa7fa2ec9e9dade0e23601b85`.
+- WP01 merged tree:
+  `93facf3d4671f1190a743b4a1afdc47f65e9d50d`.
+- WP01 PR CI: 45646958808, 4/4 PASS.
+- WP01 main CI: 45649302780, 4/4 PASS.
+- WP01 cumulative delivery CI: 8/8 PASS.
+- WP01 final evidence SHA256:
+  `7fb3abf1411c7583a7cfb5b2d8dc07a75ba56c0c2b8ab512eb5054724c32f3dd`.
+- AC01–AC03: technical readiness reconciled, 3/3.
+- Official final sprint acceptance remains 0/36 pending closeout.
+- WP02: IN_PROGRESS, Owner-authorized.
+- Current feature branch: `feat/s07-worker-reliability`.
+- Canonical workspace: `/Users/namnguyen/agentops-ai`.
+- Preserve the existing backup stash and single worktree.
+
+### WP02-A1 schema foundation
+
+The additive revision `c7a2104e0702` follows `b6e0326a7103`.
+It introduces `app.research_execution_attempts` with:
+
+- UUID attempt identity and worker identity.
+- Composite owner/task foreign key.
+- Unique task/generation pair.
+- Generation allowance 1 through 2.
+- At most one unfinished attempt per task using a partial unique index.
+- Timezone-aware claim, heartbeat, lease and termination timestamps.
+- Lease duration bounded by 30 seconds.
+- Controlled termination reason and timestamp consistency.
+- Runtime role SELECT/INSERT/UPDATE only; no DELETE or DDL authority.
+
+Migration execution, metadata parity and constraint enforcement
+remain PENDING actual disposable PostgreSQL verification.
+
+The existing research task status model is unchanged.
+Recovery is designed to retain the original started_at and
+running deadline. It must not requeue an already started task
+by clearing started_at.
+
+Schema constraints are defense in depth. They do not by themselves
+enforce worker authority, monotonic lifecycle writes or terminal
+immutability. Those behaviors require the WP02 lifecycle service
+and adversarial PostgreSQL tests.
+
+### Next implementation action
+
+Implement WP02-A2 lifecycle service and associated tests:
+atomic claim, admission coordination, fencing, heartbeat,
+bounded recovery, queue expiration, terminal and deletion barriers.
+No worker process startup or external dispatch is authorized.
+
+AC04–AC13 remain PENDING verification.
+WP03 must not begin before WP02 is verified.
+
+### Preserved security and release boundaries
+
+- D06-01 through D06-06 remain OPEN.
+- D06-02 and D06-03 remain mandatory S07 obligations.
+- D06-01, D06-04, D06-05 and D06-06 remain mandatory S08 obligations.
+- Historical partial security gates SG06, SG08 and SG10 remain open.
+- Strict Authlib security XFAIL remains mandatory.
+- Authentication remains disabled by default.
+- External execution remains unconditionally denied.
+- Worker activation is restricted to authorized isolated tests.
+- Shared database migrations and report publication are not authorized.
+- Dependency manifest and lockfile changes require separate approval.
+- NO_REQUIRED_CHECKS_REPORTED remains a governance limitation.
+- Branch protection and manual Web UI bypass were not independently audited.
+- No security gate waiver.
+- No commit, push, merge or deployment in this implementation block.
+- Production remains NOT APPROVED.
+
+
+---
+
 # AgentOps AI — Authoritative S07 roadmap checkpoint
 
 Recorded at: 2026-11-25T15:19:46.940631+00:00.

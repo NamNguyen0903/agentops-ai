@@ -35,6 +35,7 @@ from agentops_api.agent.s06.transport import (
 )
 
 from .authorization import require_live_authorization
+from agentops_api.agent.durable_hooks import acquisition_boundary
 from .bounded_http import exchange
 from .resolver import DeadlineResolver
 from .transport_failures import RetryableTransportFailure
@@ -125,20 +126,11 @@ def _retrieve(
 
     while True:
         budget.check(deadline)
-        budget.reserve_retrieval(deadline)
-
-        target = bind_destination(
-            current.url,
-            resolver,
-        )
-
-        budget.check(deadline)
 
         try:
-            response = exchange(
-                target,
-                budget,
-                deadline,
+            target, response = _accounted_hop(
+                current, budget, resolver, deadline,
+                redirects=redirects,
             )
 
         except AcquisitionError as exc:
@@ -231,3 +223,13 @@ def _retrieve(
             },
             output=True,
         )
+
+
+@acquisition_boundary("retrieval", hop=True)
+def _accounted_hop(current, budget, resolver, deadline, *, redirects):
+    budget.check(deadline)
+    budget.reserve_retrieval(deadline)
+    target = bind_destination(current.url, resolver)
+    budget.check(deadline)
+    response = exchange(target, budget, deadline)
+    return target, response

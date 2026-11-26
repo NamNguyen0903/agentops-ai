@@ -325,6 +325,11 @@ class ExecutionController:
 # Execution-local binding. The default contains no
 # mutable controller and grants no execution authority.
 
+# Application-owned observer binding. The pure S05 layer imports no service,
+# network or persistence module; the application binds it for isolated runs.
+_DURABLE_OBSERVER = ContextVar("s07_durable_observer", default=None)
+
+
 _ACTIVE_CONTROLLER = ContextVar(
     "s05_execution_controller",
     default=None,
@@ -425,6 +430,17 @@ def _invoke_fixture_mode(
             boundary_category
         )
 
+    original_operation = operation
+
+    def accounted_operation(*values, **options):
+        observer = _DURABLE_OBSERVER.get()
+        if observer is None:
+            return original_operation(*values, **options)
+        return observer.adapter(
+            adapter, repair, original_operation, values, options
+        )
+
+    operation = accounted_operation
     failed = False
     result = None
 

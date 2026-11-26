@@ -6,6 +6,7 @@ from uuid import UUID
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from agentops_api.services.execution import PENDING_LIMIT
 from agentops_api.models.queue import QueueControl
 from agentops_api.models.research import ResearchTask
 from agentops_api.repositories.research import (
@@ -85,7 +86,8 @@ async def admit_task(
     if pending is None:
         raise QueueUnavailable()
 
-    if pending >= capacity:
+    # Configurations may tighten, but never raise the approved hard cap.
+    if pending >= min(capacity, PENDING_LIMIT):
         raise QueueFull()
 
     return await submit_task(
