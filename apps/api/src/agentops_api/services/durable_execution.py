@@ -49,6 +49,7 @@ class _Observer:
         self.stopped = Event()
         self.retries = {}
         self.operation_deadline = None
+        self.synthetic_provider = False
 
     def check(self):
         if self.stopped.is_set() or monotonic() >= self.deadline:
@@ -76,8 +77,13 @@ class _Observer:
         self.deadline = min(self.deadline, started + remaining)
         self.check()
 
-    def finish(self, reservation, outcome, *, retryable=False):
-        receipt = _issue(reservation, outcome, retryable=retryable)
+    def finish(
+        self, reservation, outcome, *, retryable=False, credits=None
+    ):
+        receipt = _issue(
+            reservation, outcome,
+            retryable=retryable, provider_credits=credits,
+        )
         accepted = self.call("_complete_actual", reservation, receipt)
         if accepted == "indeterminate":
             raise BudgetRejected("indeterminate_operation")
@@ -93,6 +99,9 @@ class _Observer:
         reservation = self.call(
             "reserve", ReservationRequest(operation_id, kind, retry_ordinal=ordinal),
             _root_operation_id=root,
+            _synthetic_provider_request=(
+                self.request if self.synthetic_provider else None
+            ),
         )
         self.begin(reservation)
         try:
@@ -107,8 +116,83 @@ class _Observer:
             if eligible:
                 self.retries[index] = ordinal + 1
             raise
-        self.finish(reservation, "succeeded")
+        credits = None
+        if self.synthetic_provider:
+            from agentops_api.services.provider_accounting import (
+                observed_synthetic_credits,
+            )
+            try:
+                credits = observed_synthetic_credits(result)
+            except Exception:
+                self.finish(reservation, "indeterminate")
+                raise
+
+        self.finish(reservation, "succeeded", credits=credits)
         return result
+
+    def search_smoke(self, request, budget):
+        from agentops_api.services.s06_acquisition.tavily import search_live
+
+        self.check()
+
+        reservation = self.call("_reserve_smoke_search", request)
+
+        ticket, deadline = self.call(
+            "_begin_smoke_search_wire",
+            reservation, request, self.stopped,
+        )
+
+        self.deadline = min(self.deadline, deadline)
+        budget._deadline = min(budget._deadline, self.deadline)
+
+        # This controlled operation already owns durable accounting.
+        # Do not enter the generic synthetic acquisition observer.
+        budget._durable_observer = None
+
+        self.check()
+        # The controlled path already committed its durable reservation.
+        # The Tavily decorator observes a ContextVar, not only Budget.
+        token = _OBSERVER.set(None)
+        try:
+            result = search_live(request, budget, _wire_ticket=ticket)
+        finally:
+            _OBSERVER.reset(token)
+        self.check()
+
+        accepted = self.call(
+            "_complete_smoke_search", reservation, ticket
+        )
+
+        if accepted != "succeeded":
+            raise BudgetRejected("indeterminate_operation")
+
+        return result
+
+    def retrieval_smoke(self, request, budget):
+        from agentops_api.services.s06_acquisition.controlled_retrieval import (
+            retrieve_controlled,
+        )
+
+        self.check()
+
+        reservation = self.call("_reserve_smoke_retrieval", request)
+
+        ticket, deadline = self.call(
+            "_begin_smoke_retrieval_wire",
+            reservation, request, self.stopped,
+        )
+
+        self.deadline = min(self.deadline, deadline)
+        budget._deadline = min(budget._deadline, self.deadline)
+        budget._durable_observer = None
+
+        self.check()
+        retrieve_controlled(request, budget, ticket=ticket)
+        self.check()
+
+        return self.call(
+            "_complete_smoke_retrieval", reservation, ticket
+        )
 
     def adapter(self, name, repair, operation, args, kwargs):
         self.check()
@@ -179,6 +263,17 @@ class DurableExecution:
     async def run_s05(self, handle):
         return await self._run(handle, "s05", None, None)
 
+    async def _search_smoke(self, handle, request):
+        from agentops_api.services.smoke_runtime import (
+            require as require_live_authorization,
+        )
+
+        require_live_authorization()
+
+        return await self._run(
+            handle, "search", request, ("controlled-smoke",)
+        )
+
     async def search_offline(self, handle, request):
         return await self._run(handle, "search", request, ("offline",))
 
@@ -187,6 +282,17 @@ class DurableExecution:
         if type(transport) is not httpx.MockTransport:
             raise BudgetRejected("isolated_transport_required")
         return await self._run(handle, "search", request, ("isolated", transport))
+
+    async def _retrieve_smoke(self, handle, request):
+        from agentops_api.services.smoke_runtime import (
+            require as require_live_authorization,
+        )
+
+        require_live_authorization()
+
+        return await self._run(
+            handle, "retrieval", request, ("controlled-smoke",)
+        )
 
     async def retrieve_offline(self, handle, request, *, resolver, transport):
         from agentops_api.agent.s06.transport import FixtureResolver, FixtureTransport
@@ -214,6 +320,9 @@ class DurableExecution:
         if kind != "s05":
             deadline = min(deadline, started + 15.0)
         observer = _Observer(self, handle, loop, deadline, kind, request)
+        observer.synthetic_provider = (
+            kind == "search" and fixture[0] == "isolated"
+        )
         completion = loop.create_future()
 
         def publish(value, error):
@@ -236,12 +345,16 @@ class DurableExecution:
                     budget._deadline = deadline
                     budget._searches = snapshot.search_calls
                     budget._retrievals = snapshot.retrieval_calls
-                    if kind == "search" and fixture[0] == "offline":
+                    if kind == "search" and fixture[0] == "controlled-smoke":
+                        value = observer.search_smoke(request, budget)
+                    elif kind == "search" and fixture[0] == "offline":
                         from agentops_api.agent.s06.providers import search_offline
                         value = search_offline(request, budget)
                     elif kind == "search":
                         from agentops_api.services.s06_acquisition.tavily import search_isolated
                         value = search_isolated(request, budget, transport=fixture[1])
+                    elif fixture[0] == "controlled-smoke":
+                        value = observer.retrieval_smoke(request, budget)
                     elif fixture[0] == "offline":
                         from agentops_api.agent.s06.retrieval import retrieve_offline
                         value = retrieve_offline(request, budget, resolver=fixture[1], transport=fixture[2])
@@ -262,7 +375,24 @@ class DurableExecution:
                 except RuntimeError:
                     pass
 
-        thread = Thread(target=execute, name="s07-isolated-operation", daemon=True)
+        if kind != "s05" and fixture[0] == "controlled-smoke":
+            from contextvars import copy_context
+            from agentops_api.services.smoke_runtime import check_operation
+
+            check_operation(handle, kind, request)
+            runtime_context = copy_context()
+            thread = Thread(
+                target=runtime_context.run,
+                args=(execute,),
+                name="s08-controlled-operation",
+                daemon=True,
+            )
+        else:
+            thread = Thread(
+                target=execute,
+                name="s07-isolated-operation",
+                daemon=True,
+            )
         with _ACTIVE_LOCK:
             if handle.task_id in _ACTIVE or len(_ACTIVE) >= 5:
                 raise BudgetRejected("local_execution_capacity")

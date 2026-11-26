@@ -184,10 +184,23 @@ async def store_evidence(
             created=False,
         )
 
-    # Count across all executions of this task.
-    # Duplicates above do not consume a new record slot.
-    count = await session.scalar(
+    # Count across both evidence stores and every attempt.
+    # The existing task lock serializes repository writers.
+    # Duplicates above do not consume another record slot.
+    from agentops_api.models.execution_context import ResearchRealEvidence
+
+    real_count = (
         select(func.count())
+        .select_from(ResearchRealEvidence)
+        .where(
+            ResearchRealEvidence.owner_id == scope.owner_id,
+            ResearchRealEvidence.task_id == scope.task_id,
+        )
+        .scalar_subquery()
+    )
+
+    count = await session.scalar(
+        select(func.count() + real_count)
         .select_from(ResearchEvidence)
         .where(
             ResearchEvidence.owner_id == scope.owner_id,

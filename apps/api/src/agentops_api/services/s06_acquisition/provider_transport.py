@@ -19,7 +19,12 @@ from agentops_api.agent.s06.network_policy import (
 from agentops_api.agent.s06.retrieval import validated_headers
 from agentops_api.agent.s06.transport import TransportResponse
 
-from .authorization import require_live_authorization
+from agentops_api.services.smoke_runtime import require as require_live_authorization
+from . import smoke_wire
+from .request_policy import (
+    MAX_REQUEST_BYTES,
+    validate_basic_wire_request,
+)
 from .resolver import DeadlineResolver
 from . import bounded_http as wire
 from . import pinned_transport as pinned
@@ -27,7 +32,6 @@ from .transport_failures import transport_failure
 
 
 ENDPOINT = "https://api.tavily.com/search"
-MAX_REQUEST_BYTES = 16384
 
 
 def fail(code):
@@ -35,13 +39,15 @@ def fail(code):
 
 
 class TavilyPinnedTransport(httpx.BaseTransport):
-    def __init__(self, budget, deadline):
+    def __init__(self, budget, deadline, *, _wire_ticket=None):
         if type(budget) is not Budget:
             fail(ErrorCode.INVALID_INPUT)
 
         self.budget = budget
         self.deadline = deadline
         self._used = False
+        self._wire_ticket = _wire_ticket
+        self._claimant = object()
 
     def handle_request(self, request):
         require_live_authorization()
@@ -79,9 +85,24 @@ class TavilyPinnedTransport(httpx.BaseTransport):
             ):
                 fail(ErrorCode.INVALID_INPUT)
 
+            checked = validate_basic_wire_request(body)
+            deadline = min(
+                deadline,
+                smoke_wire.claim(
+                    self._wire_ticket, checked, self._claimant
+                ),
+            )
+            self.deadline = deadline
+            budget.check(deadline)
+
             target = bind_destination(
                 ENDPOINT,
-                DeadlineResolver(budget, deadline),
+                DeadlineResolver(
+                    budget, deadline,
+                    _smoke_kind="search",
+                    _smoke_ticket=self._wire_ticket,
+                    _smoke_url=ENDPOINT,
+                ),
             )
 
             budget.check(deadline)
@@ -103,9 +124,16 @@ class TavilyPinnedTransport(httpx.BaseTransport):
 
     def _exchange(self, target, body, credential):
         require_live_authorization()
+        checked = validate_basic_wire_request(body)
+        authority_deadline = smoke_wire.enter_exchange(
+            self._wire_ticket, checked, self._claimant
+        )
 
         budget = self.budget
         deadline = self.deadline
+
+        deadline = min(deadline, authority_deadline)
+        budget.check(deadline)
 
         destination, ip = pinned.validated_target(target)
 
@@ -119,6 +147,8 @@ class TavilyPinnedTransport(httpx.BaseTransport):
                 target,
                 budget,
                 deadline,
+                _smoke_kind="search",
+                _smoke_ticket=self._wire_ticket,
             )
 
             pinned.verify_peer(sock, ip)
@@ -146,6 +176,11 @@ class TavilyPinnedTransport(httpx.BaseTransport):
                 budget.remaining(deadline)
             )
 
+            require_live_authorization()
+            smoke_wire.check_exchange(
+                self._wire_ticket, checked, self._claimant
+            )
+            budget.check(deadline)
             sock.sendall(request)
 
             budget.check(deadline)

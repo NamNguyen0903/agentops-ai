@@ -115,6 +115,12 @@ def parse_head(data):
             (name, value.strip(" "))
         )
 
+    if match.group(1) != b"1" and any(
+        name.lower() == "transfer-encoding"
+        for name, _ in headers
+    ):
+        fail(ErrorCode.INVALID_RESPONSE)
+
     return status, tuple(headers)
 
 
@@ -180,6 +186,100 @@ def declared_length(headers):
     return length
 
 
+
+def _reject_chunk_framing():
+    fail(ErrorCode.INVALID_RESPONSE)
+
+
+def _reject_transfer_framing():
+    fail(ErrorCode.INVALID_RESPONSE)
+
+
+def _reject_body_truncated():
+    fail(ErrorCode.INVALID_RESPONSE)
+
+
+def _reject_body_overrun():
+    fail(ErrorCode.INVALID_RESPONSE)
+
+
+def _read_chunked(sock, initial, budget, deadline):
+    """Strict bounded HTTP/1.1 chunked subset.
+
+    Extensions and nonempty trailers are intentionally rejected.
+    No compression, redirect, connection reuse or extra request.
+    """
+    buffer = bytearray(initial)
+    output = bytearray()
+    count = 0
+
+    def receive_more(size):
+        budget.check(deadline)
+        chunk = receive(sock, budget, deadline, size)
+
+        if not chunk:
+            _reject_body_truncated()
+
+        buffer.extend(chunk)
+
+    def take(size):
+        while len(buffer) < size:
+            receive_more(min(READ_SIZE, size - len(buffer)))
+
+        value = bytes(buffer[:size])
+        del buffer[:size]
+        return value
+
+    def read_size():
+        while True:
+            budget.check(deadline)
+            position = buffer.find(CRLF)
+
+            if position >= 0:
+                if not 1 <= position <= 8:
+                    _reject_chunk_framing()
+
+                raw = take(position + 2)[:-2]
+
+                if re.fullmatch(rb"[0-9A-Fa-f]{1,8}", raw) is None:
+                    _reject_chunk_framing()
+
+                return int(raw, 16)
+
+            if len(buffer) >= 10:
+                _reject_chunk_framing()
+
+            receive_more(10 - len(buffer))
+
+    while True:
+        budget.check(deadline)
+        size = read_size()
+
+        if size == 0:
+            # Only an empty trailer section is supported.
+            if take(2) != CRLF:
+                _reject_chunk_framing()
+
+            if buffer:
+                _reject_body_overrun()
+
+            budget.check(deadline)
+            return bytes(output)
+
+        count += 1
+
+        if count > 4096:
+            _reject_chunk_framing()
+
+        if size > MAX_BODY_BYTES - len(output):
+            fail(ErrorCode.RESPONSE_TOO_LARGE)
+
+        output.extend(take(size))
+
+        if take(2) != CRLF:
+            _reject_chunk_framing()
+
+
 def bounded_body(
     sock,
     initial,
@@ -188,9 +288,17 @@ def bounded_body(
     deadline,
     *,
     accepted_types=CONTENT_TYPES,
+    allow_chunked=False,
 ):
-    if "transfer-encoding" in headers:
-        fail(ErrorCode.INVALID_RESPONSE)
+    chunked = "transfer-encoding" in headers
+
+    if chunked:
+        if (
+            allow_chunked is not True
+            or headers["transfer-encoding"].lower() != "chunked"
+            or "content-length" in headers
+        ):
+            _reject_transfer_framing()
 
     if headers.get(
         "content-encoding", "identity"
@@ -204,13 +312,18 @@ def bounded_body(
     if content_type not in accepted_types:
         fail(ErrorCode.UNSUPPORTED_CONTENT)
 
+    if chunked:
+        return _read_chunked(
+            sock, initial, budget, deadline
+        )
+
     expected = declared_length(headers)
 
     if len(initial) > MAX_BODY_BYTES:
         fail(ErrorCode.RESPONSE_TOO_LARGE)
 
     if expected is not None and len(initial) > expected:
-        fail(ErrorCode.INVALID_RESPONSE)
+        _reject_body_overrun()
 
     body = bytearray(initial)
 
@@ -237,7 +350,7 @@ def bounded_body(
 
         if not chunk:
             if expected is not None:
-                fail(ErrorCode.INVALID_RESPONSE)
+                _reject_body_truncated()
 
             break
 
@@ -284,17 +397,29 @@ def request_bytes(destination):
     ])
 
 
-def exchange(target, budget, deadline):
+def exchange(target, budget, deadline, *, _smoke_ticket=None):
     destination, ip = pinned.validated_target(target)
+
+    if _smoke_ticket is not None:
+        from .controlled_retrieval import _before_exchange
+
+        deadline = min(
+            deadline,
+            _before_exchange(_smoke_ticket, destination.url),
+        )
+        budget.check(deadline)
 
     sock = None
 
     try:
-        sock = pinned._connect_bound(
-            target,
-            budget,
-            deadline,
-        )
+        if _smoke_ticket is None:
+            sock = pinned._connect_bound(target, budget, deadline)
+        else:
+            sock = pinned._connect_bound(
+                target, budget, deadline,
+                _smoke_kind="retrieval",
+                _smoke_ticket=_smoke_ticket,
+            )
 
         pinned.verify_peer(sock, ip)
 
@@ -303,6 +428,16 @@ def exchange(target, budget, deadline):
         sock.settimeout(
             budget.remaining(deadline)
         )
+
+        if _smoke_ticket is not None:
+            from .controlled_retrieval import _before_send
+
+            deadline = min(
+                deadline,
+                _before_send(_smoke_ticket, destination.url),
+            )
+            budget.check(deadline)
+            sock.settimeout(budget.remaining(deadline))
 
         sock.sendall(
             request_bytes(destination)
@@ -355,7 +490,23 @@ def exchange(target, budget, deadline):
             headers,
             budget,
             deadline,
+            allow_chunked=_smoke_ticket is not None,
         )
+
+        # The application receives decoded entity bytes, not
+        # raw chunk framing. No unvalidated headers are retained.
+        if "transfer-encoding" in headers:
+            pairs = tuple(
+                (name, value)
+                for name, value in pairs
+                if name.lower() != "transfer-encoding"
+            ) + (("Content-Length", str(len(body))),)
+
+            headers = {
+                key: value for key, value in headers.items()
+                if key != "transfer-encoding"
+            }
+            headers["content-length"] = str(len(body))
 
         response = TransportResponse(
             status=status,

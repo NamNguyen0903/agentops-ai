@@ -55,6 +55,8 @@ def test_metadata_registers_approved_identity_models() -> None:
         "app.research_execution_attempts",
         "app.research_execution_contexts",
         "app.research_operation_ledger",
+        "app.research_smoke_grants",
+        "app.research_real_evidence",
     }
 
     assert set(Base.metadata.tables) == expected_tables

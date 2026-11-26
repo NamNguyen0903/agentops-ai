@@ -31,12 +31,41 @@ def fail(code):
 
 
 class DeadlineResolver:
-    def __init__(self, budget, deadline):
+    def __init__(
+        self, budget, deadline, *,
+        _smoke_kind=None, _smoke_ticket=None, _smoke_url=None,
+    ):
         self.budget = budget
         self.deadline = deadline
+        self._smoke_kind = _smoke_kind
+        self._smoke_ticket = _smoke_ticket
+        self._smoke_url = _smoke_url
 
     def resolve(self, host):
-        require_live_authorization()
+        if (
+            self._smoke_kind is None
+            and self._smoke_ticket is None
+            and self._smoke_url is None
+        ):
+            require_live_authorization()
+        else:
+            from agentops_api.agent.s06.network_policy import validate_url
+            from agentops_api.services.smoke_runtime import authorize_network
+
+            destination = validate_url(self._smoke_url)
+
+            if destination.host != host:
+                fail(ErrorCode.UNSAFE_DESTINATION)
+
+            self.deadline = min(
+                self.deadline,
+                authorize_network(
+                    self._smoke_ticket,
+                    self._smoke_kind,
+                    destination.url,
+                    "dns",
+                ),
+            )
 
         self.budget.check(self.deadline)
 

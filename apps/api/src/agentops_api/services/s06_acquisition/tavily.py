@@ -19,7 +19,11 @@ from agentops_api.agent.s06.errors import (
 )
 from agentops_api.agent.s06.network_policy import validate_url
 
-from .authorization import require_live_authorization
+from agentops_api.services.smoke_runtime import require as require_live_authorization
+from . import smoke_wire
+from .request_policy import (
+    prepare_basic_request as _prepare_basic_request,
+)
 from .provider_transport import TavilyPinnedTransport
 from .credentials import (
     read_tavily_credential,
@@ -144,7 +148,7 @@ def map_response(payload, max_results):
     )
 
 
-def search_live(request, budget):
+def search_live(request, budget, *, _wire_ticket=None):
     require_live_authorization()
 
     if type(budget) is not Budget:
@@ -157,7 +161,14 @@ def search_live(request, budget):
 
     deadline = budget.operation_deadline()
 
-    credential = read_tavily_credential()
+    deadline = min(
+        deadline,
+        smoke_wire.check_ready(_wire_ticket, request),
+    )
+
+    from agentops_api.services.smoke_runtime import read_credential
+
+    credential = read_credential(_wire_ticket, request)
 
     budget.check(deadline)
 
@@ -168,6 +179,7 @@ def search_live(request, budget):
         header=authorization_header(credential),
         transport=None,
         synthetic=False,
+        _wire_ticket=_wire_ticket,
     )
 
 
@@ -199,9 +211,8 @@ def search_isolated(
 
 
 def prepare_basic_request(request):
-    """Build the existing basic request without I/O."""
-    request = validate_contract(SearchRequest, request)
-    return {'query': request.query, 'search_depth': 'basic', 'topic': 'general', 'max_results': request.max_results, 'auto_parameters': False, 'include_answer': False, 'include_raw_content': False, 'include_images': False, 'include_image_descriptions': False, 'include_favicon': False, 'include_usage': True}
+    """Build the approved Basic Search request."""
+    return _prepare_basic_request(request)
 
 
 @acquisition_boundary("search")
@@ -213,6 +224,7 @@ def _execute(
     header,
     transport,
     synthetic,
+    _wire_ticket=None,
 ):
     if synthetic is not True:
         require_live_authorization()
@@ -223,9 +235,15 @@ def _execute(
         if transport is not None:
             fail(ErrorCode.EXTERNAL_DISABLED)
 
+        deadline = min(
+            deadline,
+            smoke_wire.check_ready(_wire_ticket, request),
+        )
+
         transport = TavilyPinnedTransport(
             budget,
             deadline,
+            _wire_ticket=_wire_ticket,
         )
 
     budget.reserve_search(deadline)
@@ -334,8 +352,13 @@ def _execute(
     )
 
     budget.check(deadline)
-    return VerifiedSearchResponse(
+    verified = VerifiedSearchResponse(
         hits=result.hits,
         credits=result.credits,
         synthetic=synthetic,
     )
+
+    if synthetic is not True:
+        smoke_wire._record(_wire_ticket, request, verified)
+
+    return verified

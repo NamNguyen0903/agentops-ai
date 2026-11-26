@@ -1,0 +1,778 @@
+{
+  "agentops_live_report_arm": "NOT_EXECUTED",
+  "cases_executed": 40,
+  "classification": "FROZEN_SYNTHETIC_COMPONENT_EVALUATION",
+  "dataset_sha256": "6227f245a3f7cf7f3bc76726a925190df49c701206b6d30f6011738d31f49894",
+  "external_model_calls": 0,
+  "external_provider_cost_usd": 0,
+  "fixture_sources": 66,
+  "graph_completed": 0,
+  "graph_errors": 40,
+  "live_provider_calls": 0,
+  "manual_analyst_arm": "NOT_EXECUTED",
+  "quality_acceptance": "NOT_MEASURED",
+  "report_quality_metrics": {
+    "citation_coverage": null,
+    "end_to_end_report_p95_seconds": null,
+    "human_groundedness": null,
+    "human_usefulness": null,
+    "mean_report_variable_cost_usd": null,
+    "paired_analyst_time_savings": null,
+    "report_completion_rate": null,
+    "structural_report_citation_validity": null
+  },
+  "results": [
+    {
+      "case_id": "S08-EVAL-001",
+      "category": "competitor_comparison",
+      "component_duration_ms": 0.293,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.03,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-001-SRC-01",
+        "S08-EVAL-001-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-002",
+      "category": "competitor_comparison",
+      "component_duration_ms": 0.121,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.011,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-002-SRC-01",
+        "S08-EVAL-002-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-003",
+      "category": "competitor_comparison",
+      "component_duration_ms": 0.103,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.008,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-003-SRC-01",
+        "S08-EVAL-003-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-004",
+      "category": "competitor_comparison",
+      "component_duration_ms": 0.109,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.007,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-004-SRC-01",
+        "S08-EVAL-004-SRC-02"
+      ],
+      "split": "held_out",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-005",
+      "category": "product_positioning",
+      "component_duration_ms": 0.093,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.007,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-005-SRC-01",
+        "S08-EVAL-005-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-006",
+      "category": "product_positioning",
+      "component_duration_ms": 0.09,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.007,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-006-SRC-01",
+        "S08-EVAL-006-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-007",
+      "category": "product_positioning",
+      "component_duration_ms": 0.09,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-007-SRC-01",
+        "S08-EVAL-007-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-008",
+      "category": "product_positioning",
+      "component_duration_ms": 0.093,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-008-SRC-01",
+        "S08-EVAL-008-SRC-02"
+      ],
+      "split": "held_out",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-009",
+      "category": "market_trends",
+      "component_duration_ms": 0.085,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-009-SRC-01",
+        "S08-EVAL-009-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-010",
+      "category": "market_trends",
+      "component_duration_ms": 0.085,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-010-SRC-01",
+        "S08-EVAL-010-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-011",
+      "category": "market_trends",
+      "component_duration_ms": 0.085,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-011-SRC-01",
+        "S08-EVAL-011-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-012",
+      "category": "market_trends",
+      "component_duration_ms": 0.084,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-012-SRC-01",
+        "S08-EVAL-012-SRC-02"
+      ],
+      "split": "held_out",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-013",
+      "category": "ambiguous_request",
+      "component_duration_ms": 0.083,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-013-SRC-01",
+        "S08-EVAL-013-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-014",
+      "category": "ambiguous_request",
+      "component_duration_ms": 0.084,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-014-SRC-01",
+        "S08-EVAL-014-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-015",
+      "category": "ambiguous_request",
+      "component_duration_ms": 0.086,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-015-SRC-01",
+        "S08-EVAL-015-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-016",
+      "category": "ambiguous_request",
+      "component_duration_ms": 0.092,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-016-SRC-01",
+        "S08-EVAL-016-SRC-02"
+      ],
+      "split": "held_out",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-017",
+      "category": "sparse_evidence",
+      "component_duration_ms": 0.047,
+      "fixture_source_count": 1,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-017-SRC-01"
+      ],
+      "split": "development",
+      "verified_source_count": 1
+    },
+    {
+      "case_id": "S08-EVAL-018",
+      "category": "sparse_evidence",
+      "component_duration_ms": 0.047,
+      "fixture_source_count": 1,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-018-SRC-01"
+      ],
+      "split": "development",
+      "verified_source_count": 1
+    },
+    {
+      "case_id": "S08-EVAL-019",
+      "category": "sparse_evidence",
+      "component_duration_ms": 0.046,
+      "fixture_source_count": 1,
+      "graph_duration_ms": 0.005,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-019-SRC-01"
+      ],
+      "split": "development",
+      "verified_source_count": 1
+    },
+    {
+      "case_id": "S08-EVAL-020",
+      "category": "sparse_evidence",
+      "component_duration_ms": 0.046,
+      "fixture_source_count": 1,
+      "graph_duration_ms": 0.005,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-020-SRC-01"
+      ],
+      "split": "held_out",
+      "verified_source_count": 1
+    },
+    {
+      "case_id": "S08-EVAL-021",
+      "category": "conflicting_sources",
+      "component_duration_ms": 0.083,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-021-SRC-01",
+        "S08-EVAL-021-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-022",
+      "category": "conflicting_sources",
+      "component_duration_ms": 0.083,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-022-SRC-01",
+        "S08-EVAL-022-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-023",
+      "category": "conflicting_sources",
+      "component_duration_ms": 0.084,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-023-SRC-01",
+        "S08-EVAL-023-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-024",
+      "category": "conflicting_sources",
+      "component_duration_ms": 0.047,
+      "fixture_source_count": 1,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-024-SRC-01"
+      ],
+      "split": "held_out",
+      "verified_source_count": 1
+    },
+    {
+      "case_id": "S08-EVAL-025",
+      "category": "false_premise",
+      "component_duration_ms": 0.088,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-025-SRC-01",
+        "S08-EVAL-025-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-026",
+      "category": "false_premise",
+      "component_duration_ms": 0.047,
+      "fixture_source_count": 1,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-026-SRC-01"
+      ],
+      "split": "development",
+      "verified_source_count": 1
+    },
+    {
+      "case_id": "S08-EVAL-027",
+      "category": "false_premise",
+      "component_duration_ms": 0.047,
+      "fixture_source_count": 1,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-027-SRC-01"
+      ],
+      "split": "development",
+      "verified_source_count": 1
+    },
+    {
+      "case_id": "S08-EVAL-028",
+      "category": "false_premise",
+      "component_duration_ms": 0.046,
+      "fixture_source_count": 1,
+      "graph_duration_ms": 0.005,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-028-SRC-01"
+      ],
+      "split": "held_out",
+      "verified_source_count": 1
+    },
+    {
+      "case_id": "S08-EVAL-029",
+      "category": "inaccessible_sources",
+      "component_duration_ms": 0.083,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.005,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-029-SRC-01",
+        "S08-EVAL-029-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-030",
+      "category": "inaccessible_sources",
+      "component_duration_ms": 0.084,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-030-SRC-01",
+        "S08-EVAL-030-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-031",
+      "category": "inaccessible_sources",
+      "component_duration_ms": 0.047,
+      "fixture_source_count": 1,
+      "graph_duration_ms": 0.005,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-031-SRC-01"
+      ],
+      "split": "development",
+      "verified_source_count": 1
+    },
+    {
+      "case_id": "S08-EVAL-032",
+      "category": "inaccessible_sources",
+      "component_duration_ms": 0.082,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.005,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-032-SRC-01",
+        "S08-EVAL-032-SRC-02"
+      ],
+      "split": "held_out",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-033",
+      "category": "temporal_question",
+      "component_duration_ms": 0.083,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.005,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-033-SRC-01",
+        "S08-EVAL-033-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-034",
+      "category": "temporal_question",
+      "component_duration_ms": 0.085,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-034-SRC-01",
+        "S08-EVAL-034-SRC-02"
+      ],
+      "split": "development",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-035",
+      "category": "temporal_question",
+      "component_duration_ms": 0.048,
+      "fixture_source_count": 1,
+      "graph_duration_ms": 0.005,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-035-SRC-01"
+      ],
+      "split": "development",
+      "verified_source_count": 1
+    },
+    {
+      "case_id": "S08-EVAL-036",
+      "category": "temporal_question",
+      "component_duration_ms": 0.086,
+      "fixture_source_count": 2,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-036-SRC-01",
+        "S08-EVAL-036-SRC-02"
+      ],
+      "split": "held_out",
+      "verified_source_count": 2
+    },
+    {
+      "case_id": "S08-EVAL-037",
+      "category": "prompt_injection",
+      "component_duration_ms": 0.05,
+      "fixture_source_count": 1,
+      "graph_duration_ms": 0.008,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-037-SRC-01"
+      ],
+      "split": "development",
+      "verified_source_count": 1
+    },
+    {
+      "case_id": "S08-EVAL-038",
+      "category": "prompt_injection",
+      "component_duration_ms": 0.047,
+      "fixture_source_count": 1,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-038-SRC-01"
+      ],
+      "split": "development",
+      "verified_source_count": 1
+    },
+    {
+      "case_id": "S08-EVAL-039",
+      "category": "prompt_injection",
+      "component_duration_ms": 0.047,
+      "fixture_source_count": 1,
+      "graph_duration_ms": 0.005,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-039-SRC-01"
+      ],
+      "split": "development",
+      "verified_source_count": 1
+    },
+    {
+      "case_id": "S08-EVAL-040",
+      "category": "prompt_injection",
+      "component_duration_ms": 0.047,
+      "fixture_source_count": 1,
+      "graph_duration_ms": 0.006,
+      "graph_error": "ValidationError",
+      "graph_outcome": null,
+      "graph_publishable": null,
+      "origin": "synthetic_fixture",
+      "quality_score": null,
+      "source_errors": [],
+      "source_ids": [
+        "S08-EVAL-040-SRC-01"
+      ],
+      "split": "held_out",
+      "verified_source_count": 1
+    }
+  ],
+  "single_model_arm": "NOT_EXECUTED",
+  "splits": {
+    "development": 30,
+    "held_out": 10
+  },
+  "verified_fixture_sources": 66
+}

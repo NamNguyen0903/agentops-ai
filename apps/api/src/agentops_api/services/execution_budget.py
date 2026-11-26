@@ -544,8 +544,119 @@ class ExecutionBudgetService:
 
         return result
 
-    async def reserve(self, handle, request, *, _root_operation_id=None):
+    async def _assess_smoke_search(self, handle, request):
+        """Read and assess scope under existing ownership locks.
+
+        This method deliberately does not return a dispatch token,
+        issue a grant, reserve credits or activate a provider.
+        """
+        from agentops_api.models.execution_context import ResearchSmokeGrant
+        from agentops_api.services.execution import _clock
+        from agentops_api.services.provider_accounting import assess_search_scope
+
+        async with self._session.begin():
+            task, attempt, context, rows, _ = await self._owned_context(handle)
+            grant = await self._session.scalar(
+                select(ResearchSmokeGrant)
+                .where(
+                    ResearchSmokeGrant.owner_id == task.owner_id,
+                    ResearchSmokeGrant.task_id == task.id,
+                )
+                .with_for_update()
+                .execution_options(populate_existing=True)
+            )
+            now = await _clock(self._session)
+
+            if any(row.status in UNRESOLVED for row in rows):
+                raise BudgetRejected("unresolved_operation")
+
+            deadline = reservation_deadline(context, attempt, now, "search")
+            assess_search_scope(grant, task, rows, request, now, deadline)
+
+        # A successful assessment is still not execution permission.
+        return None
+
+    async def _reserve_smoke_search(self, handle, provider_request):
+        # The existing unconditional live gate is deliberately
+        # retained. No grant can authorize this path before G04.
+        from agentops_api.services.smoke_runtime import (
+            require as require_live_authorization,
+        )
+        require_live_authorization()
+        from agentops_api.services.smoke_runtime import check_operation
+        check_operation(handle, "search", provider_request)
+
+        from agentops_api.services.durable_execution import operation_identity
+
+        operation_id = operation_identity(
+            handle.task_id, "search", provider_request
+        )
+
+        return await self.reserve(
+            handle,
+            ReservationRequest(operation_id, "search"),
+            _smoke_provider_request=provider_request,
+        )
+
+    async def reserve(
+        self, handle, request, *,
+        _root_operation_id=None,
+        _synthetic_provider_request=None,
+        _smoke_provider_request=None,
+    ):
+        if _smoke_provider_request is not None:
+            from agentops_api.services.smoke_runtime import (
+                require as require_live_authorization,
+            )
+            require_live_authorization()
+            from agentops_api.services.smoke_runtime import check_operation
+            check_operation(handle, "search", _smoke_provider_request)
+
         validate_request(request)
+        provider_fields = {}
+
+        if (
+            _synthetic_provider_request is not None
+            and _smoke_provider_request is not None
+        ):
+            raise BudgetRejected("provider_origin_invalid")
+
+        provider_request = (
+            _smoke_provider_request
+            if _smoke_provider_request is not None
+            else _synthetic_provider_request
+        )
+
+        if provider_request is not None:
+            from agentops_api.services.durable_execution import operation_identity
+
+            if (
+                request.kind != "search"
+                or request.retry_ordinal != 0
+                or request.reserved_tokens != 0
+                or request.reserved_cost_microusd != 0
+                or request.operation_id != operation_identity(
+                    handle.task_id, "search", provider_request
+                )
+            ):
+                raise BudgetRejected("invalid_provider_reservation")
+
+        if _synthetic_provider_request is not None:
+            from agentops_api.services.provider_accounting import (
+                synthetic_reservation_fields,
+            )
+
+            if (
+                request.kind != "search"
+                or request.retry_ordinal != 0
+                or request.reserved_tokens != 0
+                or request.reserved_cost_microusd != 0
+            ):
+                raise BudgetRejected("invalid_provider_reservation")
+
+            provider_fields = synthetic_reservation_fields(
+                _synthetic_provider_request
+            )
 
         async with self._session.begin():
             task, attempt, context, rows, now = (
@@ -583,6 +694,49 @@ class ExecutionBudgetService:
                 if deadline <= now:
                     raise BudgetRejected("operation_deadline_expired")
 
+            if _smoke_provider_request is not None:
+                from agentops_api.models.execution_context import (
+                    ResearchSmokeGrant,
+                )
+                from agentops_api.services.execution import _clock
+                from agentops_api.services.provider_accounting import (
+                    plan_smoke_search,
+                )
+                from agentops_api.services.smoke_runtime import (
+                    require as require_live_authorization,
+                )
+
+                require_live_authorization()
+
+                grant = await self._session.scalar(
+                    select(ResearchSmokeGrant)
+                    .where(
+                        ResearchSmokeGrant.owner_id == task.owner_id,
+                        ResearchSmokeGrant.task_id == task.id,
+                    )
+                    .with_for_update()
+                    .execution_options(populate_existing=True)
+                )
+
+                # Re-read the DB clock after acquiring the grant lock.
+                # Never extend the previously established deadline.
+                now = await _clock(self._session)
+                deadline = min(
+                    deadline,
+                    reservation_deadline(context, attempt, now, "search"),
+                )
+
+                deadline, provider_fields = plan_smoke_search(
+                    grant, task, rows, _smoke_provider_request,
+                    now, deadline,
+                )
+                from agentops_api.services.smoke_runtime import check_grant
+                deadline = check_grant(
+                    handle, grant, 'search', _smoke_provider_request, now, deadline,
+                )
+
+                require_live_authorization()
+
             values = calculate_charge(
                 context, request
             )
@@ -609,6 +763,7 @@ class ExecutionBudgetService:
                 ),
                 status="reserved",
                 retry_eligible=False,
+                **provider_fields,
             )
 
             self._session.add(row)
@@ -671,6 +826,395 @@ class ExecutionBudgetService:
 
         return row
 
+    async def _begin_smoke_search_wire(
+        self, handle, reservation, provider_request, stopped
+    ):
+        from time import monotonic
+        from agentops_api.models.execution_context import ResearchSmokeGrant
+        from agentops_api.services.execution import _clock
+        from agentops_api.services.provider_accounting import plan_smoke_search
+        from agentops_api.services.smoke_runtime import (
+            require as require_live_authorization,
+        )
+        from agentops_api.services.s06_acquisition.smoke_wire import _issue
+
+        require_live_authorization()
+        started = monotonic()
+
+        async with self._session.begin():
+            task, attempt, context, rows, now = await self._owned_context(
+                handle
+            )
+            row = self._select_reservation(
+                handle, reservation, attempt, rows
+            )
+
+            if (
+                row.status != "reserved"
+                or row.acquisition_origin != "live"
+                or row.kind != "search"
+            ):
+                raise BudgetRejected("live_dispatch_not_authorized")
+
+            grant = await self._session.scalar(
+                select(ResearchSmokeGrant)
+                .where(
+                    ResearchSmokeGrant.owner_id == task.owner_id,
+                    ResearchSmokeGrant.task_id == task.id,
+                )
+                .with_for_update()
+                .execution_options(populate_existing=True)
+            )
+
+            now = await _clock(self._session)
+
+            deadline, fields = plan_smoke_search(
+                grant,
+                task,
+                tuple(item for item in rows if item.id != row.id),
+                provider_request,
+                now,
+                min(
+                    row.deadline_at,
+                    reservation_deadline(context, attempt, now, "search"),
+                ),
+            )
+            from agentops_api.services.smoke_runtime import check_grant
+            deadline = check_grant(
+                handle, grant, 'search', provider_request, now, deadline,
+            )
+
+            if any(
+                getattr(row, name) != value
+                for name, value in fields.items()
+            ):
+                raise BudgetRejected("provider_accounting_integrity")
+
+            if stopped.is_set():
+                raise BudgetRejected("execution_observation_expired")
+
+            require_live_authorization()
+
+            remaining = (deadline - now).total_seconds()
+            if remaining <= 0:
+                raise BudgetRejected("operation_deadline_expired")
+
+            grant_id = row.smoke_grant_id
+            digest = row.request_sha256
+
+            row.status = "dispatching"
+            row.dispatched_at = now
+            context.updated_at = now
+            await self._session.flush()
+
+        # Issue only after the dispatch transaction has committed.
+        # The pre-transaction monotonic anchor is conservative.
+        local_deadline = started + remaining
+        ticket = _issue(
+            reservation, grant_id, digest, local_deadline, stopped
+        )
+        return ticket, local_deadline
+
+    async def _complete_smoke_search(
+        self, handle, reservation, ticket
+    ):
+        from agentops_api.services.smoke_runtime import (
+            require as require_live_authorization,
+        )
+        from agentops_api.services.s06_acquisition.smoke_wire import _settle
+
+        require_live_authorization()
+
+        async with self._session.begin():
+            _, attempt, context, rows, now = await self._owned_context(
+                handle
+            )
+            row = self._select_reservation(
+                handle, reservation, attempt, rows
+            )
+
+            if (
+                row.status != "dispatching"
+                or row.acquisition_origin != "live"
+                or row.kind != "search"
+                or row.provider_name != "tavily"
+                or row.reserved_provider_credits != 1
+                or row.observed_provider_credits is not None
+                or row.retry_ordinal != 0
+                or row.retry_eligible
+                or now >= row.deadline_at
+            ):
+                raise BudgetRejected("provider_accounting_integrity")
+
+            from agentops_api.services.smoke_runtime import check_row
+            check_row(handle, row, "search")
+            grant_id, digest, credits = _settle(ticket, reservation)
+
+            if (
+                grant_id != row.smoke_grant_id
+                or digest != row.request_sha256
+            ):
+                raise BudgetRejected("provider_accounting_integrity")
+
+            row.observed_provider_credits = credits
+            row.status = "succeeded"
+            row.resolved_at = now
+            row.retry_eligible = False
+            context.updated_at = now
+            await self._session.flush()
+
+        return "succeeded"
+
+    async def _reserve_smoke_retrieval(self, handle, provider_request):
+        from agentops_api.models.execution_context import ResearchSmokeGrant
+        from agentops_api.services.execution import _clock
+        from agentops_api.services.durable_execution import operation_identity
+        from agentops_api.services.smoke_runtime import (
+            require as require_live_authorization,
+        )
+        from agentops_api.services.retrieval_only import (
+            plan_authorized_retrieval as plan_smoke_retrieval,
+        )
+
+        require_live_authorization()
+        from agentops_api.services.smoke_runtime import check_operation
+        check_operation(handle, "retrieval", provider_request)
+
+        request = ReservationRequest(
+            operation_identity(handle.task_id, "retrieval", provider_request),
+            "retrieval",
+        )
+        validate_request(request)
+
+        async with self._session.begin():
+            task, attempt, context, rows, now = await self._owned_context(
+                handle
+            )
+
+            if any(row.status in UNRESOLVED for row in rows):
+                raise BudgetRejected("unresolved_operation")
+
+            validate_retry(request, rows)
+            deadline = reservation_deadline(context, attempt, now, "retrieval")
+
+            grant = await self._session.scalar(
+                select(ResearchSmokeGrant)
+                .where(
+                    ResearchSmokeGrant.owner_id == task.owner_id,
+                    ResearchSmokeGrant.task_id == task.id,
+                )
+                .with_for_update()
+                .execution_options(populate_existing=True)
+            )
+
+            now = await _clock(self._session)
+            deadline = min(
+                deadline,
+                reservation_deadline(context, attempt, now, "retrieval"),
+            )
+
+            deadline, fields = plan_smoke_retrieval(
+                grant, task, rows, provider_request,
+                now, deadline, attempt.id,
+            )
+            from agentops_api.services.smoke_runtime import check_grant
+            deadline = check_grant(
+                handle, grant, 'retrieval', provider_request, now, deadline,
+            )
+
+            require_live_authorization()
+
+            values = calculate_charge(context, request)
+            for name, value in values.items():
+                setattr(context, name, value)
+
+            context.updated_at = now
+
+            row = ResearchOperationReservation(
+                id=uuid4(),
+                owner_id=task.owner_id,
+                task_id=task.id,
+                attempt_id=attempt.id,
+                operation_id=request.operation_id,
+                kind="retrieval",
+                retry_ordinal=0,
+                is_repair=False,
+                reserved_at=now,
+                deadline_at=deadline,
+                reserved_tokens=0,
+                reserved_cost_microusd=0,
+                status="reserved",
+                retry_eligible=False,
+                **fields,
+            )
+
+            self._session.add(row)
+            await self._session.flush()
+
+            result = ReservationHandle(
+                reservation_id=row.id,
+                operation_id=row.operation_id,
+                task_id=task.id,
+                owner_id=task.owner_id,
+                attempt_id=attempt.id,
+                generation=attempt.generation,
+                deadline_at=deadline,
+            )
+
+        return result
+
+    async def _complete_smoke_retrieval(
+        self, handle, reservation, ticket
+    ):
+        from agentops_api.services.smoke_runtime import (
+            require as require_live_authorization,
+        )
+        from agentops_api.services.s06_acquisition.controlled_retrieval import (
+            _settle,
+        )
+        from agentops_api.services.real_evidence import _insert_settled
+        from agentops_api.agent.s06.contracts import RetrievalRequest
+
+        require_live_authorization()
+
+        async with self._session.begin():
+            _, attempt, context, rows, now = await self._owned_context(
+                handle
+            )
+            row = self._select_reservation(
+                handle, reservation, attempt, rows
+            )
+
+            if (
+                row.status != "dispatching"
+                or row.acquisition_origin != "live"
+                or row.kind != "retrieval"
+                or row.retry_ordinal != 0
+                or row.retry_eligible
+                or now >= row.deadline_at
+            ):
+                raise BudgetRejected("retrieval_accounting_integrity")
+
+            from agentops_api.services.smoke_runtime import check_row
+            check_row(handle, row, "retrieval")
+            grant_id, digest, page = _settle(ticket, reservation)
+
+            if (
+                grant_id != row.smoke_grant_id
+                or digest != row.request_sha256
+            ):
+                raise BudgetRejected("retrieval_accounting_integrity")
+
+            row.status = "succeeded"
+            row.resolved_at = now
+            row.retry_eligible = False
+            context.updated_at = now
+
+            # The evidence FK references a succeeded ledger row.
+            # Both writes belong to the same transaction.
+            await self._session.flush()
+
+            evidence_id = await _insert_settled(
+                self._session,
+                handle,
+                row,
+                RetrievalRequest(url=page.source_url),
+                page,
+                now,
+            )
+
+        return evidence_id
+
+    async def _begin_smoke_retrieval_wire(
+        self, handle, reservation, provider_request, stopped
+    ):
+        from time import monotonic
+        from agentops_api.models.execution_context import ResearchSmokeGrant
+        from agentops_api.services.execution import _clock
+        from agentops_api.services.retrieval_only import plan_authorized_retrieval as plan_smoke_retrieval
+        from agentops_api.services.smoke_runtime import (
+            require as require_live_authorization,
+        )
+        from agentops_api.services.s06_acquisition.controlled_retrieval import _issue
+
+        require_live_authorization()
+        started = monotonic()
+
+        async with self._session.begin():
+            task, attempt, context, rows, now = await self._owned_context(
+                handle
+            )
+            row = self._select_reservation(
+                handle, reservation, attempt, rows
+            )
+
+            if (
+                row.status != "reserved"
+                or row.acquisition_origin != "live"
+                or row.kind != "retrieval"
+            ):
+                raise BudgetRejected("live_dispatch_not_authorized")
+
+            grant = await self._session.scalar(
+                select(ResearchSmokeGrant)
+                .where(
+                    ResearchSmokeGrant.owner_id == task.owner_id,
+                    ResearchSmokeGrant.task_id == task.id,
+                )
+                .with_for_update()
+                .execution_options(populate_existing=True)
+            )
+
+            now = await _clock(self._session)
+
+            deadline, fields = plan_smoke_retrieval(
+                grant,
+                task,
+                tuple(item for item in rows if item.id != row.id),
+                provider_request,
+                now,
+                min(
+                    row.deadline_at,
+                    reservation_deadline(context, attempt, now, "retrieval"),
+                ),
+                attempt.id,
+            )
+            from agentops_api.services.smoke_runtime import check_grant
+            deadline = check_grant(
+                handle, grant, 'retrieval', provider_request, now, deadline,
+            )
+
+            if any(
+                getattr(row, name) != value
+                for name, value in fields.items()
+            ):
+                raise BudgetRejected("provider_accounting_integrity")
+
+            if stopped.is_set():
+                raise BudgetRejected("execution_observation_expired")
+
+            require_live_authorization()
+
+            remaining = (deadline - now).total_seconds()
+            if remaining <= 0:
+                raise BudgetRejected("operation_deadline_expired")
+
+            grant_id = row.smoke_grant_id
+            digest = row.request_sha256
+
+            row.status = "dispatching"
+            row.dispatched_at = now
+            context.updated_at = now
+            await self._session.flush()
+
+        # Issue only after the dispatch transaction has committed.
+        # The pre-transaction monotonic anchor is conservative.
+        local_deadline = started + remaining
+        ticket = _issue(
+            reservation, grant_id, digest, local_deadline, stopped
+        )
+        return ticket, local_deadline
+
     async def begin_dispatch(self, handle, reservation):
         async with self._session.begin():
             _, attempt, context, rows, now = (
@@ -680,6 +1224,10 @@ class ExecutionBudgetService:
             row = self._select_reservation(
                 handle, reservation, attempt, rows
             )
+
+            if row.acquisition_origin == "live":
+                # A generic reservation is not a live wire authority.
+                raise BudgetRejected("live_dispatch_not_authorized")
 
             if row.status != "reserved":
                 raise BudgetRejected("dispatch_already_consumed")
@@ -826,6 +1374,9 @@ class ExecutionBudgetService:
 
             if row.status != "dispatching":
                 raise BudgetRejected("operation_not_dispatching")
+
+            if row.acquisition_origin is not None:
+                raise BudgetRejected("provider_receipt_required")
 
             outcome = validate_synthetic_result(
                 result, row.kind
@@ -1051,6 +1602,9 @@ class ExecutionBudgetService:
         async with self._session.begin():
             _, attempt, context, rows, now = await self._owned_context(handle)
             row = self._select_reservation(handle, reservation, attempt, rows)
+            if row.acquisition_origin == "live":
+                raise BudgetRejected("live_dispatch_not_authorized")
+
             if row.status != "dispatching":
                 raise BudgetRejected("dispatch_authority_invalid")
             remaining = (min(
@@ -1062,7 +1616,9 @@ class ExecutionBudgetService:
 
     async def _complete_actual(self, handle, reservation, receipt):
         from agentops_api.services.execution_receipts import _consume
-        outcome, retryable = _consume(receipt, reservation)
+        outcome, retryable, credits = _consume(
+            receipt, reservation, include_provider=True,
+        )
         async with self._session.begin():
             _, attempt, context, rows, now = await self._owned_context(handle)
             row = self._select_reservation(handle, reservation, attempt, rows)
@@ -1070,6 +1626,28 @@ class ExecutionBudgetService:
                 raise BudgetRejected("operation_not_dispatching")
             if now >= row.deadline_at:
                 outcome, retryable = "indeterminate", False
+
+            if row.acquisition_origin == "synthetic":
+                if (
+                    row.kind != "search"
+                    or row.provider_name != "tavily"
+                    or row.reserved_provider_credits != 1
+                    or row.smoke_grant_id is not None
+                    or outcome != "succeeded"
+                    or type(credits) is not int
+                    or credits != 1
+                ):
+                    outcome, retryable = "indeterminate", False
+                else:
+                    row.observed_provider_credits = credits
+
+            elif row.acquisition_origin is not None:
+                # No live settlement path is approved in this package.
+                outcome, retryable = "indeterminate", False
+
+            elif credits is not None:
+                outcome, retryable = "indeterminate", False
+
             row.status = outcome
             row.resolved_at = now
             row.retry_eligible = bool(
