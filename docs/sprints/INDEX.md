@@ -1,3 +1,35 @@
+# Authoritative S08 v1.1 closeout candidate
+
+**Status:** WP07-A — CLOSEOUT DELIVERY IN PROGRESS.
+**Sprint:** NOT CLOSED.
+**Production:** NOT APPROVED.
+
+Feature PR #28 merged at `b0aac9f32cd26e02e60b8cf6c67da865f0f35854`.
+Exact main CI 45843273499: 4/4 PASS.
+
+G07 Owner-approved scoped acceptance reconciliation:
+- Original AC: 26 verified scoped, 6 transferred
+  not passed, 3 partial, 1 open.
+- Security: 18 verified scoped, 2 partial,
+  0 open; no waived security gates.
+- D06-01/04 scoped Development MVP closure recorded.
+- D06-05/06 remain OPEN.
+- S09-OB01/02 remain mandatory; S09 NOT STARTED.
+- Full report-quality evaluation remains unmeasured.
+- AC36 and outstanding mandatory gates remain pending.
+
+Authoritative reconciliation: `docs/sprints/S08_CLOSEOUT.md`.
+Original amendment: `docs/sprints/S08_AMEND_001.md`.
+
+Next: exact docs-only closeout PR CI, then separate G08
+review. Final CLOSED status is prohibited until all
+applicable final acceptance conditions are satisfied.
+
+The historical checkpoint material below is retained
+for traceability and is superseded by this status header.
+
+---
+
 # Authoritative S08 v1.1 checkpoint
 
 - Amendment: S08-AMEND-001, Owner approved.
