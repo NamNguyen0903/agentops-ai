@@ -1,3 +1,34 @@
+# Authoritative S08-AMEND-002 milestone record
+
+**Contract:** v1.2.
+**Delivery baseline:** verified main `ca6325f276e49cc24168779b82ca0f705972e66e`.
+**Historical delivery CI:** 24/24 PASS.
+**Milestone closure:** conditional on all eight gates
+in `docs/sprints/S08_AMEND_002.md`, section 4.
+
+Once the final amendment delivery evidence verifies
+every condition, record S08 as CLOSED — DEVELOPMENT MVP
+MILESTONE ONLY. Until then closure is pending.
+
+This is not full original-contract acceptance:
+26/36 original AC verified scoped, six transferred
+not passed, three partially verified, one open.
+18/20 original SG verified scoped; two partial.
+
+S09-OB01 through S09-OB04 are mandatory.
+D06-05 and D06-06 remain OPEN.
+Original AC36 full acceptance remains OPEN.
+
+S09 NOT STARTED.
+PRODUCTION REMAINS NOT APPROVED.
+
+This header supersedes earlier milestone allocation and
+administrative status statements only. Historical evidence,
+acceptance matrices, security requirements and release
+restrictions below remain preserved.
+
+---
+
 # S08 Final Closeout Record
 
 **Status:** CLOSEOUT CANDIDATE — NOT CLOSED.
