@@ -1,3 +1,84 @@
+# AgentOps AI — Authoritative S09 WP01 checkpoint
+
+**Contract:** S09 v1.0 — OWNER APPROVED.
+**Current sprint:** S09.
+**Current package:** WP01 — contract preparation.
+**Delivery:** NOT EXECUTED.
+**Production:** NOT APPROVED.
+
+## Verified predecessor
+
+S00-S08: CLOSED within their respective milestone scopes.
+
+S08-AMEND-002 v1.2:
+CLOSED — DEVELOPMENT MVP MILESTONE ONLY.
+
+- Final main: `d79cf18d9ab8d3f47771401fac7b68a9e42f5dbe`.
+- Final tree: `06a79c4d65efab8c066d7b18670015cba55be112`.
+- Final main CI: 45917540548, 4/4 PASS.
+- Amendment PR: #30, MERGED.
+- Binding closure gates: 8/8 PASS.
+- Final evidence SHA256: `479bc125f045893bdf3d62d9a5e8ad6c5d1c3565d6bbdcf370ad258fcabd27c6`.
+- Authlib: 56 PASS, 1 strict XFAIL, 0 XPASS.
+
+Original S08 full-contract acceptance remains OPEN.
+Original AC ledger: 26 verified scoped, 6 transferred not passed,
+3 partially verified and 1 open.
+Original SG ledger: 18 verified scoped, 2 partial.
+
+## Current authority
+
+- S09-G01: OWNER APPROVED.
+- WP00: verified discovery and predecessor reconciliation.
+- WP01: local documentation preparation authorized.
+- WP02-WP06: pending package prerequisites.
+- Contract: `docs/sprints/S09.md`.
+- ADR: `docs/adr/0005-aws-deployment-architecture.md`.
+- Preparation branch: `docs/s09-contract-adr`.
+- Preparation base HEAD: `d79cf18d9ab8d3f47771401fac7b68a9e42f5dbe`.
+
+The preparation branch identifies intended local work.
+Actual changes and delivery are established by evidence.
+
+## Mandatory open obligations
+
+S09-OB01: real evidence workflow.
+S09-OB02: comparable three-arm evaluation.
+S09-OB03: integrated external security.
+S09-OB04: original obligation reconciliation.
+
+D06-05 and D06-06: OPEN.
+Historical S06 SG06/08/10 require successor reconciliation.
+
+Three-arm evaluation: NOT EXECUTED.
+Quality metrics: NOT MEASURED.
+Cloud deployment: NOT EXECUTED.
+Required-check enforcement: NOT VERIFIED.
+
+## Next action
+
+Review WP01 local preparation evidence.
+Obtain S09-G02-A for contract Git delivery.
+
+No feature implementation before verified contract delivery
+and separately authorized merge with exact main CI.
+
+Preserve the single canonical workspace, protected stash,
+original matrices and all security restrictions.
+
+PRODUCTION REMAINS NOT APPROVED.
+
+---
+
+# Retained historical record
+
+The original content below is preserved byte-for-byte.
+The active S09 record supersedes conflicting historical
+status and authorization statements only.
+All nonconflicting requirements remain binding.
+
+---
+
 # Authoritative S08-AMEND-002 milestone record
 
 **Contract:** v1.2.
