@@ -1,3 +1,49 @@
+# Authoritative active roadmap — 2026-11-27
+
+S09 Contract v1.0 — OWNER APPROVED.
+
+| Sprint | Deliverable | Effective status |
+| --- | --- | --- |
+| S00 | Product planning and architecture | CLOSED |
+| S01 | Application foundation | CLOSED |
+| S02 | Database and authentication | CLOSED |
+| S03 | Research task API and dashboard | CLOSED |
+| S04 | LangGraph workflow baseline | CLOSED |
+| S05 | Specialized agent nodes | CLOSED |
+| S06 | Offline Evidence and Citation Foundation | CLOSED |
+| S07 | Worker Reliability and Secure Acquisition | CLOSED |
+| S08 | Live Research Integration, Evaluation and Security | CLOSED — scoped milestone v1.2 only |
+| S09 | Integrated Research Acceptance, CI/CD and AWS Staging Preparation | IN_PROGRESS — WP01 preparation |
+
+Nine of ten planned sprint milestones are closed.
+This is not a production-readiness measurement.
+
+S08 milestone closure is verified by final main
+`d79cf18d9ab8d3f47771401fac7b68a9e42f5dbe` and CI 45917540548.
+
+Original S08 full-contract acceptance remains OPEN.
+S09-OB01 through OB04 and D06-05/D06-06 remain mandatory.
+
+Current contract: `docs/sprints/S09.md`.
+Current checkpoint: `docs/handoff/CURRENT_STATE.md`.
+
+Immediate next action:
+review WP01 documentation preparation and obtain
+S09-G02-A contract delivery authorization.
+
+PRODUCTION REMAINS NOT APPROVED.
+
+---
+
+# Retained historical record
+
+The original content below is preserved byte-for-byte.
+The active S09 record supersedes conflicting historical
+status and authorization statements only.
+All nonconflicting requirements remain binding.
+
+---
+
 # Authoritative S08-AMEND-002 milestone record
 
 **Contract:** v1.2.

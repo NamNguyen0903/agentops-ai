@@ -1,3 +1,93 @@
+# AgentOps AI — Active S09 Engineering Policy Amendment
+
+**Date:** 2026-11-27.
+**Authority:** S09 Contract v1.0 — OWNER APPROVED.
+**Current package:** WP01 documentation preparation.
+**Scope:** Development MVP and AWS staging preparation only.
+
+Authoritative contract: `docs/sprints/S09.md`.
+Architecture decision: `docs/adr/0005-aws-deployment-architecture.md`.
+Current checkpoint: `docs/handoff/CURRENT_STATE.md`.
+
+## Active execution authority
+
+The Owner approves WP01-WP06, AC01-AC36,
+S09-SG01-SG20 and AD09-01-AD09-12.
+
+Use Owner-operated FAST-TRACK execution with large,
+reviewable Terminal packages.
+
+The assistant prepares implementation, tests, documentation
+and verification instructions.
+The Owner executes local commands.
+
+Immediate authority: WP01 documentation preparation.
+
+WP02 starts only after authorized contract delivery,
+authorized merge and exact main CI verification.
+
+Do not repeat routine approvals inside approved package scope.
+
+Git delivery, merges, material dependency or architecture
+changes, external execution, paid usage, human acceptance,
+cloud resource creation and deployment require separate
+applicable Owner approval.
+
+## Reconciled predecessor
+
+- S00-S08: CLOSED within recorded milestone scopes.
+- S08 final main: `d79cf18d9ab8d3f47771401fac7b68a9e42f5dbe`.
+- S08 final tree: `06a79c4d65efab8c066d7b18670015cba55be112`.
+- S08 final CI: 45917540548.
+- S08 final evidence: `479bc125f045893bdf3d62d9a5e8ad6c5d1c3565d6bbdcf370ad258fcabd27c6`.
+- S08 closure gates: 8/8 PASS.
+- Original S08 full-contract acceptance remains OPEN.
+- S09-OB01 through OB04 remain OPEN and MANDATORY.
+- D06-05 and D06-06 remain OPEN.
+- D06-01/02/03/04 scoped closures remain unchanged.
+- Security waivers: zero.
+
+## Mandatory restrictions
+
+Preserve the original S08 AC and SG matrices,
+S08-AMEND-001, S08-AMEND-002, frozen dataset,
+evaluation protocol and original quality thresholds.
+
+Preserve all consumed S08 external authorization markers.
+No reuse of consumed authorization.
+
+Preserve strict Authlib XFAIL, 56 PASS and zero XPASS baseline.
+No production authentication.
+
+Preserve one canonical worktree and protected stash:
+`13ab03b82e68364c8f4f022821e12dca5ec7b731`.
+
+No destructive Git operation or autonomous repository mutation.
+No unauthorized external dispatch, paid inference,
+cloud resource creation, shared migration, worker activation,
+report publication or deployment.
+
+ADR-0005 is accepted only for scoped staging preparation.
+Existing nonconflicting ADR and security restrictions remain binding.
+
+Repository required-check enforcement remains unverified.
+
+Exactly one next action:
+review WP01 documentation evidence and obtain S09-G02-A.
+
+PRODUCTION REMAINS NOT APPROVED.
+
+---
+
+# Retained historical record
+
+The original content below is preserved byte-for-byte.
+The active S09 record supersedes conflicting historical
+status and authorization statements only.
+All nonconflicting requirements remain binding.
+
+---
+
 # AgentOps AI — Active S08 Engineering Policy Amendment
 
 **Date:** 2026-11-26
